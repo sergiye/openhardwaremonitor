@@ -42,15 +42,15 @@ namespace OpenHardwareMonitor.GUI {
       this.sensor = sensor;
       this.notifyIcon = new NotifyIconAdv();
 
-      Color defaultColor = Color.Black;
-      if (sensor.SensorType == SensorType.Load ||
-          sensor.SensorType == SensorType.Control ||
-          sensor.SensorType == SensorType.Level) 
-      {
-        defaultColor = Color.FromArgb(0xff, 0x70, 0x8c, 0xf1);
-      }
+      //Color defaultColor = Color.Black;
+      //if (sensor.SensorType == SensorType.Load ||
+      //    sensor.SensorType == SensorType.Control ||
+      //    sensor.SensorType == SensorType.Level) 
+      //{
+      //  defaultColor = Color.FromArgb(0xff, 0x70, 0x8c, 0xf1);
+      //}
       Color = settings.GetValue(new Identifier(sensor.Identifier, 
-        "traycolor").ToString(), defaultColor);      
+        "traycolor").ToString(), Color.FromArgb(0xff, 0x00, 0xff, 0xff));      
       
       this.pen = new Pen(Color.FromArgb(96, Color.Black));
 
@@ -104,10 +104,10 @@ namespace OpenHardwareMonitor.GUI {
       height = height < 16 ? 16 : height;
 
       // adjust the font size to the icon size
-      FontFamily family = SystemFonts.MessageBoxFont.FontFamily;
+      FontFamily family = new FontFamily("Segoe UI");// SystemFonts.MessageBoxFont.FontFamily;
       float baseSize;
       switch (family.Name) {
-        case "Segoe UI": baseSize = 12; break;
+        case "Segoe UI": baseSize = 15; break;
         case "Tahoma": baseSize = 11; break;
         default: baseSize = 12; break;
       }
@@ -193,7 +193,7 @@ namespace OpenHardwareMonitor.GUI {
         case SensorType.Level:
           return string.Format("{0:F0}", sensor.Value);
         case SensorType.Power:
-          return string.Format("{0:F0}", sensor.Value);
+          return string.Format("{0:N1}", sensor.Value);
         case SensorType.Data:
           return string.Format("{0:F0}", sensor.Value);
         case SensorType.Factor:
@@ -205,14 +205,15 @@ namespace OpenHardwareMonitor.GUI {
     private Icon CreateTransparentIcon() {
       string text = GetString();
       int count = 0;
-      for (int i = 0; i < text.Length; i++)
-        if ((text[i] >= '0' && text[i] <= '9') || text[i] == '-')
-          count++;
-      bool small = count > 2;
+      //for (int i = 0; i < text.Length; i++)
+      //  if ((text[i] >= '0' && text[i] <= '9') || text[i] == '-')
+      //    count++;
+      //bool small = count > 2;
+      bool small = text.Length > 2;
 
       graphics.Clear(Color.Black);
       TextRenderer.DrawText(graphics, text, small ? smallFont : font,
-        new Point(-2, small ? 1 : 0), Color.White, Color.Black);        
+        new Point(-4, small ? 1 : -2), color, Color.Black);        
 
       BitmapData data = bitmap.LockBits(
         new Rectangle(0, 0, bitmap.Width, bitmap.Height),
@@ -225,17 +226,17 @@ namespace OpenHardwareMonitor.GUI {
       Marshal.Copy(Scan0, bytes, 0, numBytes);
       bitmap.UnlockBits(data);
 
-      byte red, green, blue;
-      for (int i = 0; i < bytes.Length; i += 4) {
-        blue = bytes[i];
-        green = bytes[i + 1];
-        red = bytes[i + 2];
+      //byte red, green, blue;
+      //for (int i = 0; i < bytes.Length; i += 4) {
+      //  blue = bytes[i];
+      //  green = bytes[i + 1];
+      //  red = bytes[i + 2];
 
-        bytes[i] = color.B;
-        bytes[i + 1] = color.G;
-        bytes[i + 2] = color.R;
-        bytes[i + 3] = (byte)(0.3 * red + 0.59 * green + 0.11 * blue);
-      }
+      //  bytes[i] = color.B;
+      //  bytes[i + 1] = color.G;
+      //  bytes[i + 2] = color.R;
+      //  bytes[i + 3] = (byte)(0.3 * red + 0.59 * green + 0.11 * blue);
+      //}
 
       return IconFactory.Create(bytes, bitmap.Width, bitmap.Height, 
         PixelFormat.Format32bppArgb);

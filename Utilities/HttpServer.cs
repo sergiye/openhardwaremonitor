@@ -78,7 +78,7 @@ namespace OpenHardwareMonitor.Utilities {
         return false;
 
       try {
-        listenerThread.Abort();
+        listenerThread?.Abort();
         listener.Stop();
         listenerThread = null;
       } catch (HttpListenerException) {
