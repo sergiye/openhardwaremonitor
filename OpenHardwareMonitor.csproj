@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>OpenHardwareMonitor</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <RootNamespace>OpenHardwareMonitor</RootNamespace>
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
@@ -69,14 +69,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\IReadOnlyArray.cs" />
+    <Compile Include="Collections\ListSet.cs" />
+    <Compile Include="Collections\Pair.cs" />
+    <Compile Include="Collections\ReadOnlyArray.cs" />
+    <Compile Include="Collections\RingCollection.cs" />
     <Compile Include="GUI\DpiHelper.cs" />
     <Compile Include="GUI\GadgetWindow.cs" />
     <Compile Include="GUI\Gadget.cs" />
     <Compile Include="GUI\HardwareTypeImage.cs" />
     <Compile Include="GUI\NotifyIconAdv.cs" />
-    <Compile Include="GUI\PlotPanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="GUI\PortForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,6 +119,90 @@
     <Compile Include="GUI\UpdateVisitor.cs" />
     <Compile Include="GUI\UserOption.cs" />
     <Compile Include="GUI\UserRadioGroup.cs" />
+    <Compile Include="Hardware\ATI\ADL.cs" />
+    <Compile Include="Hardware\ATI\ATIGPU.cs" />
+    <Compile Include="Hardware\ATI\ATIGroup.cs" />
+    <Compile Include="Hardware\Computer.cs" />
+    <Compile Include="Hardware\Control.cs" />
+    <Compile Include="Hardware\CPU\AMD0FCPU.cs" />
+    <Compile Include="Hardware\CPU\AMD10CPU.cs" />
+    <Compile Include="Hardware\CPU\AMD17CPU.cs" />
+    <Compile Include="Hardware\CPU\AMDCPU.cs" />
+    <Compile Include="Hardware\CPU\CPUGroup.cs" />
+    <Compile Include="Hardware\CPU\CPUID.cs" />
+    <Compile Include="Hardware\CPU\CPULoad.cs" />
+    <Compile Include="Hardware\CPU\GenericCPU.cs" />
+    <Compile Include="Hardware\CPU\IntelCPU.cs" />
+    <Compile Include="Hardware\FirmwareTable.cs" />
+    <Compile Include="Hardware\GroupAffinity.cs" />
+    <Compile Include="Hardware\Hardware.cs" />
+    <Compile Include="Hardware\HDD\AbstractHarddrive.cs" />
+    <Compile Include="Hardware\HDD\DebugSmart.cs" />
+    <Compile Include="Hardware\HDD\DriveAttributeValue.cs" />
+    <Compile Include="Hardware\HDD\DriveThresholdValue.cs" />
+    <Compile Include="Hardware\HDD\HarddriveGroup.cs" />
+    <Compile Include="Hardware\HDD\HDDGeneric.cs" />
+    <Compile Include="Hardware\HDD\ISmart.cs" />
+    <Compile Include="Hardware\HDD\NamePrefixAttribute.cs" />
+    <Compile Include="Hardware\HDD\RequireSmartAttribute.cs" />
+    <Compile Include="Hardware\HDD\SmartAttribute.cs" />
+    <Compile Include="Hardware\HDD\SmartNames.cs" />
+    <Compile Include="Hardware\HDD\SSDIndilinx.cs" />
+    <Compile Include="Hardware\HDD\SSDIntel.cs" />
+    <Compile Include="Hardware\HDD\SSDMicron.cs" />
+    <Compile Include="Hardware\HDD\SSDPlextor.cs" />
+    <Compile Include="Hardware\HDD\SSDSamsung.cs" />
+    <Compile Include="Hardware\HDD\SSDSandforce.cs" />
+    <Compile Include="Hardware\HDD\WindowsSmart.cs" />
+    <Compile Include="Hardware\Heatmaster\Heatmaster.cs" />
+    <Compile Include="Hardware\Heatmaster\HeatmasterGroup.cs" />
+    <Compile Include="Hardware\HexStringArray.cs" />
+    <Compile Include="Hardware\IComputer.cs" />
+    <Compile Include="Hardware\IControl.cs" />
+    <Compile Include="Hardware\Identifier.cs" />
+    <Compile Include="Hardware\IElement.cs" />
+    <Compile Include="Hardware\IGroup.cs" />
+    <Compile Include="Hardware\IHardware.cs" />
+    <Compile Include="Hardware\IOControlCode.cs" />
+    <Compile Include="Hardware\IParameter.cs" />
+    <Compile Include="Hardware\ISensor.cs" />
+    <Compile Include="Hardware\ISettings.cs" />
+    <Compile Include="Hardware\IVisitor.cs" />
+    <Compile Include="Hardware\KernelDriver.cs" />
+    <Compile Include="Hardware\LPC\Chip.cs" />
+    <Compile Include="Hardware\LPC\F718XX.cs" />
+    <Compile Include="Hardware\LPC\ISuperIO.cs" />
+    <Compile Include="Hardware\LPC\IT87XX.cs" />
+    <Compile Include="Hardware\LPC\LMSensors.cs" />
+    <Compile Include="Hardware\LPC\LPCIO.cs" />
+    <Compile Include="Hardware\LPC\LPCPort.cs" />
+    <Compile Include="Hardware\LPC\NCT677X.cs" />
+    <Compile Include="Hardware\LPC\W836XX.cs" />
+    <Compile Include="Hardware\Mainboard\GigabyteTAMG.cs" />
+    <Compile Include="Hardware\Mainboard\Identification.cs" />
+    <Compile Include="Hardware\Mainboard\Mainboard.cs" />
+    <Compile Include="Hardware\Mainboard\MainboardGroup.cs" />
+    <Compile Include="Hardware\Mainboard\Manufacturer.cs" />
+    <Compile Include="Hardware\Mainboard\Model.cs" />
+    <Compile Include="Hardware\Mainboard\SuperIOHardware.cs" />
+    <Compile Include="Hardware\Nvidia\NVAPI.cs" />
+    <Compile Include="Hardware\Nvidia\NvidiaGPU.cs" />
+    <Compile Include="Hardware\Nvidia\NvidiaGroup.cs" />
+    <Compile Include="Hardware\Nvidia\NVML.cs" />
+    <Compile Include="Hardware\Opcode.cs" />
+    <Compile Include="Hardware\OperatingSystem.cs" />
+    <Compile Include="Hardware\Parameter.cs" />
+    <Compile Include="Hardware\PInvokeDelegateFactory.cs" />
+    <Compile Include="Hardware\RAM\GenericRAM.cs" />
+    <Compile Include="Hardware\RAM\RAMGroup.cs" />
+    <Compile Include="Hardware\Ring0.cs" />
+    <Compile Include="Hardware\Sensor.cs" />
+    <Compile Include="Hardware\SensorVisitor.cs" />
+    <Compile Include="Hardware\SMBIOS.cs" />
+    <Compile Include="Hardware\TBalancer\FTD2XX.cs" />
+    <Compile Include="Hardware\TBalancer\TBalancer.cs" />
+    <Compile Include="Hardware\TBalancer\TBalancerGroup.cs" />
+    <Compile Include="Hardware\ThreadAffinity.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="Utilities\HttpServer.cs" />
     <Compile Include="Utilities\HttpUtility.cs" />
@@ -172,6 +258,8 @@
     <EmbeddedResource Include="Resources\nvidia.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Hardware\WinRing0.sys" />
+    <EmbeddedResource Include="Hardware\WinRing0x64.sys" />
     <None Include="Resources\app.manifest">
       <SubType>Designer</SubType>
     </None>
@@ -206,18 +294,6 @@
     <ProjectReference Include="External\Aga.Controls\Aga.Controls.csproj">
       <Project>{e73bb233-d88b-44a7-a98f-d71ee158381d}</Project>
       <Name>Aga.Controls</Name>
-    </ProjectReference>
-    <ProjectReference Include="External\OxyPlot\OxyPlot.WindowsForms\OxyPlot.WindowsForms.csproj">
-      <Project>{d4554296-094e-4cac-8eae-44eb250666c6}</Project>
-      <Name>OxyPlot.WindowsForms</Name>
-    </ProjectReference>
-    <ProjectReference Include="External\OxyPlot\OxyPlot\OxyPlot.csproj">
-      <Project>{bcc43e58-e473-403e-a84d-63fedc723040}</Project>
-      <Name>OxyPlot</Name>
-    </ProjectReference>
-    <ProjectReference Include="OpenHardwareMonitorLib.csproj">
-      <Project>{B0397530-545A-471D-BB74-027AE456DF1A}</Project>
-      <Name>OpenHardwareMonitorLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

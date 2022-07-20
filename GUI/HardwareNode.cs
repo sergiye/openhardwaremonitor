@@ -1,11 +1,11 @@
 ﻿/*
- 
+
   This Source Code Form is subject to the terms of the Mozilla Public
   License, v. 2.0. If a copy of the MPL was not distributed with this
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
- 
+
   Copyright (C) 2009-2020 Michael Möller <mmoeller@openhardwaremonitor.org>
-	
+
 */
 
 using System;
@@ -22,8 +22,8 @@ namespace OpenHardwareMonitor.GUI {
 
     private List<TypeNode> typeNodes = new List<TypeNode>();
 
-    public HardwareNode(IHardware hardware, PersistentSettings settings, 
-      UnitManager unitManager) : base() 
+    public HardwareNode(IHardware hardware, PersistentSettings settings,
+      UnitManager unitManager) : base()
     {
       this.settings = settings;
       this.unitManager = unitManager;
@@ -40,7 +40,7 @@ namespace OpenHardwareMonitor.GUI {
       hardware.SensorRemoved += new SensorEventHandler(SensorRemoved);
 
       this.expandedIdentifier = new Identifier(hardware.Identifier, "expanded");
-      base.IsExpanded = 
+      base.IsExpanded =
         settings.GetValue(expandedIdentifier.ToString(), base.IsExpanded);
     }
 
@@ -65,14 +65,14 @@ namespace OpenHardwareMonitor.GUI {
       }
     }
 
-    private void UpdateNode(TypeNode node) {  
+    private void UpdateNode(TypeNode node) {
       if (node.Nodes.Count > 0) {
         if (!Nodes.Contains(node)) {
           int i = 0;
           while (i < Nodes.Count &&
             ((TypeNode)Nodes[i]).SensorType < node.SensorType)
             i++;
-          Nodes.Insert(i, node);  
+          Nodes.Insert(i, node);
         }
       } else {
         if (Nodes.Contains(node))
@@ -82,7 +82,7 @@ namespace OpenHardwareMonitor.GUI {
 
     private void SensorRemoved(ISensor sensor) {
       foreach (TypeNode typeNode in typeNodes)
-        if (typeNode.SensorType == sensor.SensorType) { 
+        if (typeNode.SensorType == sensor.SensorType) {
           SensorNode sensorNode = null;
           foreach (Node node in typeNode.Nodes) {
             SensorNode n = node as SensorNode;
@@ -90,13 +90,10 @@ namespace OpenHardwareMonitor.GUI {
               sensorNode = n;
           }
           if (sensorNode != null) {
-            sensorNode.PlotSelectionChanged -= SensorPlotSelectionChanged;
             typeNode.Nodes.Remove(sensorNode);
             UpdateNode(typeNode);
           }
         }
-      if (PlotSelectionChanged != null)
-        PlotSelectionChanged(this, null);
     }
 
     private void InsertSorted(Node node, ISensor sensor) {
@@ -105,25 +102,15 @@ namespace OpenHardwareMonitor.GUI {
         ((SensorNode)node.Nodes[i]).Sensor.Index < sensor.Index)
         i++;
       SensorNode sensorNode = new SensorNode(sensor, settings, unitManager);
-      sensorNode.PlotSelectionChanged += SensorPlotSelectionChanged;
       node.Nodes.Insert(i, sensorNode);
-    }
-
-    private void SensorPlotSelectionChanged(object sender, EventArgs e) {
-      if (PlotSelectionChanged != null)
-        PlotSelectionChanged(this, null);
     }
 
     private void SensorAdded(ISensor sensor) {
       foreach (TypeNode typeNode in typeNodes)
         if (typeNode.SensorType == sensor.SensorType) {
           InsertSorted(typeNode, sensor);
-          UpdateNode(typeNode);          
+          UpdateNode(typeNode);
         }
-      if (PlotSelectionChanged != null)
-        PlotSelectionChanged(this, null);
     }
-
-    public event EventHandler PlotSelectionChanged;
   }
 }
