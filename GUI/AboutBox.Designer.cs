@@ -40,8 +40,6 @@ namespace OpenHardwareMonitor.GUI {
       this.label2 = new System.Windows.Forms.Label();
       this.label3 = new System.Windows.Forms.Label();
       this.projectLinkLabel = new System.Windows.Forms.LinkLabel();
-      this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-      this.licenseLinkLabel = new System.Windows.Forms.LinkLabel();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
       this.SuspendLayout();
       // 
@@ -82,7 +80,7 @@ namespace OpenHardwareMonitor.GUI {
       this.label2.Location = new System.Drawing.Point(74, 46);
       this.label2.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
       this.label2.Name = "label2";
-      this.label2.Size = new System.Drawing.Size(273, 13);
+      this.label2.Size = new System.Drawing.Size(278, 13);
       this.label2.TabIndex = 3;
       this.label2.Text = "Copyright © 2009-2020 Michael Möller and contributors. ";
       // 
@@ -100,35 +98,13 @@ namespace OpenHardwareMonitor.GUI {
       // 
       this.projectLinkLabel.AutoSize = true;
       this.projectLinkLabel.Location = new System.Drawing.Point(164, 80);
-      this.projectLinkLabel.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+      this.projectLinkLabel.Margin = new System.Windows.Forms.Padding(0);
       this.projectLinkLabel.Name = "projectLinkLabel";
       this.projectLinkLabel.Size = new System.Drawing.Size(82, 13);
       this.projectLinkLabel.TabIndex = 6;
       this.projectLinkLabel.TabStop = true;
       this.projectLinkLabel.Text = "Project Website";
       this.projectLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
-      // 
-      // flowLayoutPanel1
-      // 
-      this.flowLayoutPanel1.AutoSize = true;
-      this.flowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-      this.flowLayoutPanel1.Location = new System.Drawing.Point(10, 100);
-      this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
-      this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-      this.flowLayoutPanel1.Size = new System.Drawing.Size(0, 0);
-      this.flowLayoutPanel1.TabIndex = 8;
-      // 
-      // licenseLinkLabel
-      // 
-      this.licenseLinkLabel.AutoSize = true;
-      this.licenseLinkLabel.Location = new System.Drawing.Point(25, 80);
-      this.licenseLinkLabel.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
-      this.licenseLinkLabel.Name = "licenseLinkLabel";
-      this.licenseLinkLabel.Size = new System.Drawing.Size(107, 13);
-      this.licenseLinkLabel.TabIndex = 9;
-      this.licenseLinkLabel.TabStop = true;
-      this.licenseLinkLabel.Text = "Licensing Information";
-      this.licenseLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
       // 
       // AboutBox
       // 
@@ -137,8 +113,6 @@ namespace OpenHardwareMonitor.GUI {
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.AutoSize = true;
       this.ClientSize = new System.Drawing.Size(359, 115);
-      this.Controls.Add(this.licenseLinkLabel);
-      this.Controls.Add(this.flowLayoutPanel1);
       this.Controls.Add(this.projectLinkLabel);
       this.Controls.Add(this.label3);
       this.Controls.Add(this.label2);
@@ -166,7 +140,5 @@ namespace OpenHardwareMonitor.GUI {
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.Label label3;
     private System.Windows.Forms.LinkLabel projectLinkLabel;
-    private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-    private System.Windows.Forms.LinkLabel licenseLinkLabel;
   }
 }

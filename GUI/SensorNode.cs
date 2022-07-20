@@ -1,11 +1,11 @@
 ﻿/*
- 
+
   This Source Code Form is subject to the terms of the Mozilla Public
   License, v. 2.0. If a copy of the MPL was not distributed with this
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
- 
+
   Copyright (C) 2009-2020 Michael Möller <mmoeller@openhardwaremonitor.org>
-	
+
 */
 
 using OpenHardwareMonitor.Hardware;
@@ -14,12 +14,11 @@ using System.Drawing;
 
 namespace OpenHardwareMonitor.GUI {
   public class SensorNode : Node {
-    
+
     private ISensor sensor;
     private PersistentSettings settings;
     private UnitManager unitManager;
     private string fixedFormat;
-    private bool plot = false;
     private Color? penColor = null;
 
     public string ValueToString(float? value) {
@@ -34,16 +33,16 @@ namespace OpenHardwareMonitor.GUI {
             if (value < 1)
               return string.Format("{0:F1} KB/s", value * 0x400);
             else
-              return string.Format("{0:F1} MB/s", value);  
+              return string.Format("{0:F1} MB/s", value);
           default:
             return string.Format(fixedFormat, value);
-        }              
+        }
       } else
         return "-";
     }
 
-    public SensorNode(ISensor sensor, PersistentSettings settings, 
-      UnitManager unitManager) : base() {      
+    public SensorNode(ISensor sensor, PersistentSettings settings,
+      UnitManager unitManager) : base() {
       this.sensor = sensor;
       this.settings = settings;
       this.unitManager = unitManager;
@@ -62,12 +61,9 @@ namespace OpenHardwareMonitor.GUI {
         default: fixedFormat = ""; break;
       }
 
-      bool hidden = settings.GetValue(new Identifier(sensor.Identifier, 
+      bool hidden = settings.GetValue(new Identifier(sensor.Identifier,
         "hidden").ToString(), sensor.IsDefaultHidden);
       base.IsVisible = !hidden;
-
-      this.Plot = settings.GetValue(new Identifier(sensor.Identifier, 
-        "plot").ToString(), false);
 
       string id = new Identifier(sensor.Identifier, "penColor").ToString();
       if (settings.Contains(id))
@@ -81,7 +77,7 @@ namespace OpenHardwareMonitor.GUI {
 
     public override bool IsVisible {
       get { return base.IsVisible; }
-      set { 
+      set {
         base.IsVisible = value;
         settings.SetValue(new Identifier(sensor.Identifier,
           "hidden").ToString(), !value);
@@ -99,17 +95,6 @@ namespace OpenHardwareMonitor.GUI {
         else
           settings.Remove(id);
 
-        if (PlotSelectionChanged != null)
-          PlotSelectionChanged(this, null);
-      }
-    }
-
-    public bool Plot {
-      get { return plot; }
-      set { 
-        plot = value;
-        settings.SetValue(new Identifier(sensor.Identifier, "plot").ToString(), 
-          value);
         if (PlotSelectionChanged != null)
           PlotSelectionChanged(this, null);
       }
@@ -134,11 +119,11 @@ namespace OpenHardwareMonitor.GUI {
     }
 
     public override bool Equals(System.Object obj) {
-      if (obj == null) 
+      if (obj == null)
         return false;
 
       SensorNode s = obj as SensorNode;
-      if (s == null) 
+      if (s == null)
         return false;
 
       return (sensor == s.sensor);

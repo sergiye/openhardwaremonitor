@@ -13,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
-using Aga.Controls.Tree;
 
 namespace OpenHardwareMonitor.GUI {
   public class Node {

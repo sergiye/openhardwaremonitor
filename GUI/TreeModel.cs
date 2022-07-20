@@ -12,7 +12,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Aga.Controls.Tree;
+using OpenHardwareMonitor.Controls.Tree;
 
 namespace OpenHardwareMonitor.GUI {
   public class TreeModel : ITreeModel {

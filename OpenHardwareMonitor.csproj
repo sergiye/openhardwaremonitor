@@ -40,7 +40,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>Bin\Debug\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -48,21 +48,24 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>Bin\Release\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
@@ -74,6 +77,128 @@
     <Compile Include="Collections\Pair.cs" />
     <Compile Include="Collections\ReadOnlyArray.cs" />
     <Compile Include="Collections\RingCollection.cs" />
+    <Compile Include="Controls\BitmapHelper.cs" />
+    <Compile Include="Controls\GifDecoder.cs" />
+    <Compile Include="Controls\NumericTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\PerformanceAnalyzer.cs" />
+    <Compile Include="Controls\ResourceHelper.cs" />
+    <Compile Include="Controls\StringCollectionEditor.cs" />
+    <Compile Include="Controls\TextHelper.cs" />
+    <Compile Include="Controls\Threading\AbortableThreadPool.cs" />
+    <Compile Include="Controls\Threading\WorkItem.cs" />
+    <Compile Include="Controls\Threading\WorkItemStatus.cs" />
+    <Compile Include="Controls\TimeCounter.cs" />
+    <Compile Include="Controls\Tree\AutoRowHeightLayout.cs" />
+    <Compile Include="Controls\Tree\DrawContext.cs" />
+    <Compile Include="Controls\Tree\DropNodeValidatingEventArgs.cs" />
+    <Compile Include="Controls\Tree\DropPosition.cs" />
+    <Compile Include="Controls\Tree\EditorContext.cs" />
+    <Compile Include="Controls\Tree\Enums.cs" />
+    <Compile Include="Controls\Tree\FixedRowHeightLayout.cs" />
+    <Compile Include="Controls\Tree\IncrementalSearch.cs" />
+    <Compile Include="Controls\Tree\Input\ClickColumnState.cs" />
+    <Compile Include="Controls\Tree\Input\ColumnState.cs" />
+    <Compile Include="Controls\Tree\Input\InputState.cs" />
+    <Compile Include="Controls\Tree\Input\InputWithControl.cs" />
+    <Compile Include="Controls\Tree\Input\InputWithShift.cs" />
+    <Compile Include="Controls\Tree\Input\NormalInputState.cs" />
+    <Compile Include="Controls\Tree\Input\ReorderColumnState.cs" />
+    <Compile Include="Controls\Tree\Input\ResizeColumnState.cs" />
+    <Compile Include="Controls\Tree\IRowLayout.cs" />
+    <Compile Include="Controls\Tree\IToolTipProvider.cs" />
+    <Compile Include="Controls\Tree\ITreeModel.cs" />
+    <Compile Include="Controls\Tree\ListModel.cs" />
+    <Compile Include="Controls\Tree\MemberAdapter.cs" />
+    <Compile Include="Controls\Tree\Node.cs" />
+    <Compile Include="Controls\Tree\NodeControlInfo.cs" />
+    <Compile Include="Controls\Tree\NodeControls\BaseTextControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Tree\NodeControls\BindableControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Tree\NodeControls\DrawEventArgs.cs" />
+    <Compile Include="Controls\Tree\NodeControls\EditableControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Tree\NodeControls\EditEventArgs.cs" />
+    <Compile Include="Controls\Tree\NodeControls\ExpandingIcon.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Tree\NodeControls\InteractiveControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Tree\NodeControls\LabelEventArgs.cs" />
+    <Compile Include="Controls\Tree\NodeControls\NodeCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Tree\NodeControls\NodeComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Tree\NodeControls\NodeControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Tree\NodeControls\NodeControlsCollection.cs" />
+    <Compile Include="Controls\Tree\NodeControls\NodeControlValueEventArgs.cs" />
+    <Compile Include="Controls\Tree\NodeControls\NodeDecimalTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Tree\NodeControls\NodeEventArgs.cs" />
+    <Compile Include="Controls\Tree\NodeControls\NodeIcon.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Tree\NodeControls\NodeIntegerTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Tree\NodeControls\NodeNumericUpDown.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Tree\NodeControls\NodePlusMinus.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Tree\NodeControls\NodeStateIcon.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Tree\NodeControls\NodeTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Tree\SortedTreeModel.cs" />
+    <Compile Include="Controls\Tree\TreeColumn.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Tree\TreeColumnCollection.cs" />
+    <Compile Include="Controls\Tree\TreeColumnEventArgs.cs" />
+    <Compile Include="Controls\Tree\TreeListAdapter.cs" />
+    <Compile Include="Controls\Tree\TreeModel.cs" />
+    <Compile Include="Controls\Tree\TreeModelBase.cs" />
+    <Compile Include="Controls\Tree\TreeModelEventArgs.cs" />
+    <Compile Include="Controls\Tree\TreeNodeAdv.cs" />
+    <Compile Include="Controls\Tree\TreeNodeAdvMouseEventArgs.cs" />
+    <Compile Include="Controls\Tree\TreePath.cs" />
+    <Compile Include="Controls\Tree\TreePathEventArgs.cs" />
+    <Compile Include="Controls\Tree\TreeViewAdv.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Tree\TreeViewAdv.Designer.cs">
+      <DependentUpon>TreeViewAdv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Tree\TreeViewAdv.Draw.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Tree\TreeViewAdv.Editor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Tree\TreeViewAdv.Input.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Tree\TreeViewAdv.Properties.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Tree\TreeViewAdvCancelEventArgs.cs" />
+    <Compile Include="Controls\Tree\TreeViewAdvEventArgs.cs" />
+    <Compile Include="Controls\Tree\TreeViewRowDrawEventArgs.cs" />
     <Compile Include="GUI\DpiHelper.cs" />
     <Compile Include="GUI\GadgetWindow.cs" />
     <Compile Include="GUI\Gadget.cs" />
@@ -204,6 +329,11 @@
     <Compile Include="Hardware\TBalancer\TBalancerGroup.cs" />
     <Compile Include="Hardware\ThreadAffinity.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\HttpServer.cs" />
     <Compile Include="Utilities\HttpUtility.cs" />
     <Compile Include="Utilities\Logger.cs" />
@@ -234,12 +364,20 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\Tree\TreeViewAdv.resx">
+      <DependentUpon>TreeViewAdv.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\PortForm.resx">
       <DependentUpon>PortForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ati.png">
     </EmbeddedResource>
@@ -258,8 +396,16 @@
     <EmbeddedResource Include="Resources\nvidia.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Controls\Resources\minus.bmp" />
+    <Content Include="Controls\Resources\plus.bmp" />
+    <Content Include="Controls\Resources\uncheck.bmp" />
+    <Content Include="Controls\Resources\unknown.bmp" />
     <EmbeddedResource Include="Hardware\WinRing0.sys" />
     <EmbeddedResource Include="Hardware\WinRing0x64.sys" />
+    <Content Include="Controls\Resources\loading_icon" />
+    <None Include="Controls\.editorconfig" />
+    <None Include="Controls\Tree\ClassDiagram.cd" />
+    <None Include="Controls\Tree\NodeControls\ClassDiagram.cd" />
     <None Include="Resources\app.manifest">
       <SubType>Designer</SubType>
     </None>
@@ -289,12 +435,6 @@
       <DependentUpon>ReportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\control.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="External\Aga.Controls\Aga.Controls.csproj">
-      <Project>{e73bb233-d88b-44a7-a98f-d71ee158381d}</Project>
-      <Name>Aga.Controls</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -379,6 +519,13 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\throughput.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Controls\Resources\check.bmp" />
+    <Content Include="Controls\Resources\DVSplit.cur" />
+    <Content Include="Controls\Resources\Folder.bmp" />
+    <Content Include="Controls\Resources\FolderClosed.bmp" />
+    <Content Include="Controls\Resources\Leaf.bmp" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio AllowExistingFolder="true" />
@@ -386,6 +533,7 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>copy "$(ProjectDir)Licenses\*.*" "$(TargetDir)"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
