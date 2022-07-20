@@ -396,13 +396,8 @@
     <EmbeddedResource Include="Resources\nvidia.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Controls\Resources\minus.bmp" />
-    <Content Include="Controls\Resources\plus.bmp" />
-    <Content Include="Controls\Resources\uncheck.bmp" />
-    <Content Include="Controls\Resources\unknown.bmp" />
     <EmbeddedResource Include="Hardware\WinRing0.sys" />
     <EmbeddedResource Include="Hardware\WinRing0x64.sys" />
-    <Content Include="Controls\Resources\loading_icon" />
     <None Include="Controls\.editorconfig" />
     <None Include="Controls\Tree\ClassDiagram.cd" />
     <None Include="Controls\Tree\NodeControls\ClassDiagram.cd" />
@@ -518,13 +513,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\throughput.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Controls\Resources\check.bmp" />
-    <Content Include="Controls\Resources\DVSplit.cur" />
-    <Content Include="Controls\Resources\Folder.bmp" />
-    <Content Include="Controls\Resources\FolderClosed.bmp" />
-    <Content Include="Controls\Resources\Leaf.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

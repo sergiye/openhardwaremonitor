@@ -19,28 +19,35 @@ using OpenHardwareMonitor.GUI;
 namespace OpenHardwareMonitor {
   public static class Program {
 
+    static Mutex mutex = new Mutex(true, "{3661aef2-95dc-433e-932c-2e06112d24ec}");
+
     [STAThread]
     public static void Main() {
-      #if !DEBUG
-        Application.ThreadException +=
-          new ThreadExceptionEventHandler(Application_ThreadException);
-        Application.SetUnhandledExceptionMode(
-          UnhandledExceptionMode.CatchException);
-
-        AppDomain.CurrentDomain.UnhandledException +=
-          new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
-      #endif
 
       if (!IsNetFramework45Installed())
         Environment.Exit(0);
 
+      if (!mutex.WaitOne(TimeSpan.Zero, true)) {
+        MessageBox.Show("Another instance of the application is already running.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        Environment.Exit(0);
+      }
+
+      #if !DEBUG
+      Application.ThreadException +=
+        new ThreadExceptionEventHandler(Application_ThreadException);
+      Application.SetUnhandledExceptionMode(
+        UnhandledExceptionMode.CatchException);
+
+      AppDomain.CurrentDomain.UnhandledException +=
+        new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+      #endif
+
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
-      using (GUI.MainForm form = new GUI.MainForm()) {
-        form.FormClosed += delegate(Object sender, FormClosedEventArgs e) {
-          Application.Exit();
-        };
+      using (var form = new MainForm()) {
+        form.FormClosed += (sender, e) => Application.Exit();
         Application.Run();
+        mutex.ReleaseMutex();
       }
     }
 
