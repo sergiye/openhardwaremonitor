@@ -237,7 +237,6 @@
     </Compile>
     <Compile Include="GUI\SystemTray.cs" />
     <Compile Include="GUI\StartupManager.cs" />
-    <Compile Include="GUI\TaskScheduler.cs" />
     <Compile Include="GUI\TreeModel.cs" />
     <Compile Include="GUI\TypeNode.cs" />
     <Compile Include="GUI\UnitManager.cs" />
