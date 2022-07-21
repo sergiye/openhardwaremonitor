@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Open Hardware Monitor")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Sergiy Egoshyn")]
 [assembly: AssemblyProduct("Open Hardware Monitor")]
 [assembly: AssemblyCopyright("Copyright © 2009-2022 Sergiy Egoshyn")]
 [assembly: AssemblyTrademark("")]

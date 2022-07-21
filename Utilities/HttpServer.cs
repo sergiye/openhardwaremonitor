@@ -1,15 +1,4 @@
-﻿/*
- 
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
- 
-	Copyright (C) 2012 Prince Samuel <prince.samuel@gmail.com>
-  Copyright (C) 2012-2013 Michael Möller <mmoeller@openhardwaremonitor.org>
-
-*/
-
-using System;
+﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;

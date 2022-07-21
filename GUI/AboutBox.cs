@@ -11,7 +11,7 @@ namespace OpenHardwareMonitor.GUI {
 
       projectLinkLabel.Links.Remove(projectLinkLabel.Links[0]);
       projectLinkLabel.Links.Add(0, projectLinkLabel.Text.Length,
-        "http://openhardwaremonitor.org");
+        "https://github.com/sergiye/openhardwaremonitor");
     }
 
     private void linkLabel_LinkClicked(object sender,
