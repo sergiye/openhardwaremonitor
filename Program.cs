@@ -60,17 +60,11 @@ namespace OpenHardwareMonitor {
       return typeof(DefaultDllImportSearchPathsAttribute);
     }
 
-    private static void ReportException(Exception e) {
-      CrashForm form = new CrashForm();
-      form.Exception = e;
-      form.ShowDialog();
-    }
-
     public static void Application_ThreadException(object sender,
       ThreadExceptionEventArgs e)
     {
       try {
-        ReportException(e.Exception);
+        //ReportException(e.Exception);
       } catch {
       } finally {
         Application.Exit();
@@ -81,9 +75,9 @@ namespace OpenHardwareMonitor {
       UnhandledExceptionEventArgs args)
     {
       try {
-        Exception e = args.ExceptionObject as Exception;
-        if (e != null)
-          ReportException(e);
+        //Exception e = args.ExceptionObject as Exception;
+        //if (e != null)
+          //ReportException(e);
       } catch {
       } finally {
         Environment.Exit(0);

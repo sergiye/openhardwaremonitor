@@ -40,7 +40,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -53,7 +53,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -209,18 +209,6 @@
     </Compile>
     <Compile Include="GUI\PortForm.Designer.cs">
       <DependentUpon>PortForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\ReportForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\ReportForm.Designer.cs">
-      <DependentUpon>ReportForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\CrashForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\CrashForm.Designer.cs">
-      <DependentUpon>CrashForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Node.cs" />
     <Compile Include="GUI\ParameterForm.cs">
@@ -397,7 +385,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Hardware\WinRing0.sys" />
     <EmbeddedResource Include="Hardware\WinRing0x64.sys" />
-    <None Include="Controls\.editorconfig" />
     <None Include="Controls\Tree\ClassDiagram.cd" />
     <None Include="Controls\Tree\NodeControls\ClassDiagram.cd" />
     <None Include="Resources\app.manifest">
@@ -415,18 +402,12 @@
     <EmbeddedResource Include="Resources\flow.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GUI\CrashForm.resx">
-      <DependentUpon>CrashForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Resources\mainboard.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\ReportForm.resx">
-      <DependentUpon>ReportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\control.png" />
   </ItemGroup>

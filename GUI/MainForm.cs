@@ -29,7 +29,6 @@ namespace OpenHardwareMonitor.GUI {
     private readonly UserOption showValue;
     private readonly UserOption showMin;
     private readonly UserOption showMax;
-    private UserOption startMinimized;
     private readonly UserOption minimizeToTray;
     private readonly UserOption minimizeOnClose;
     private readonly UserOption autoStart;
@@ -55,6 +54,8 @@ namespace OpenHardwareMonitor.GUI {
 
     public MainForm() {
       InitializeComponent();
+
+      Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
 
       // check if the OpenHardwareMonitorLib assembly has the correct version
       if (Assembly.GetAssembly(typeof(Computer)).GetName().Version !=
@@ -94,7 +95,7 @@ namespace OpenHardwareMonitor.GUI {
       foreach (TreeColumn column in treeView.Columns)
         column.Width = Math.Max(DpiHelper.LogicalToDeviceUnits(20), Math.Min(
           DpiHelper.LogicalToDeviceUnits(400),
-          settings.GetValue("treeView.Columns." + column.Header + ".Width",
+          settings.GetValue("treeView.Columns." + column.Header + ".Width", 
           column.Width)));
 
       treeModel = new TreeModel();
@@ -162,7 +163,7 @@ namespace OpenHardwareMonitor.GUI {
         treeView.Columns[3].IsVisible = showMax.Value;
       };
 
-      startMinimized = new UserOption("startMinMenuItem", false,
+      var startMinimized = new UserOption("startMinMenuItem", false,
         startMinMenuItem, settings);
 
       minimizeToTray = new UserOption("minTrayMenuItem", true,
@@ -656,13 +657,6 @@ namespace OpenHardwareMonitor.GUI {
       celsiusMenuItem.Checked = false;
       fahrenheitMenuItem.Checked = true;
       unitManager.TemperatureUnit = TemperatureUnit.Fahrenheit;
-    }
-
-    private void sumbitReportMenuItem_Click(object sender, EventArgs e)
-    {
-      ReportForm form = new ReportForm();
-      form.Report = computer.GetReport();
-      form.ShowDialog();
     }
 
     private void resetMinMaxMenuItem_Click(object sender, EventArgs e) {
