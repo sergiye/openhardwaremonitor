@@ -184,9 +184,10 @@ namespace OpenHardwareMonitor.GUI {
         case SensorType.Level:
           return string.Format("{0:F0}", sensor.Value);
         case SensorType.Power:
-          return string.Format(sensor.Value < 10 ? "{0:N1}" : "{0:F0}", sensor.Value);
         case SensorType.Data:
-          return string.Format("{0:F0}", sensor.Value);
+          return sensor.Value.Value < 10
+            ? string.Format("{0:0.00}", sensor.Value).Substring(0, 3)
+            : string.Format("{0:F0}", sensor.Value);
         case SensorType.Factor:
           return string.Format("{0:F1}", sensor.Value);
       }
