@@ -28,7 +28,7 @@ namespace OpenHardwareMonitor.GUI {
       this.pictureBox1 = new System.Windows.Forms.PictureBox();
       this.label1 = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
-      this.label3 = new System.Windows.Forms.Label();
+      this.lblVersion = new System.Windows.Forms.Label();
       this.projectLinkLabel = new System.Windows.Forms.LinkLabel();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
       this.SuspendLayout();
@@ -41,7 +41,7 @@ namespace OpenHardwareMonitor.GUI {
       this.okButton.Name = "okButton";
       this.okButton.Size = new System.Drawing.Size(75, 23);
       this.okButton.TabIndex = 0;
-      this.okButton.Text = "OK";
+      this.okButton.Text = "Close";
       this.okButton.UseVisualStyleBackColor = true;
       // 
       // pictureBox1
@@ -70,24 +70,24 @@ namespace OpenHardwareMonitor.GUI {
       this.label2.Location = new System.Drawing.Point(74, 46);
       this.label2.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
       this.label2.Name = "label2";
-      this.label2.Size = new System.Drawing.Size(278, 13);
+      this.label2.Size = new System.Drawing.Size(166, 13);
       this.label2.TabIndex = 3;
-      this.label2.Text = "Copyright © 2009-2022 Sergiy Egoshyn and contributors. ";
+      this.label2.Text = "Copyright © 2022 Sergiy Egoshyn";
       // 
-      // label3
+      // lblVersion
       // 
-      this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(74, 29);
-      this.label3.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
-      this.label3.Name = "label3";
-      this.label3.Size = new System.Drawing.Size(127, 13);
-      this.label3.TabIndex = 4;
-      this.label3.Text = "Version 9.0.30729.1 Beta";
+      this.lblVersion.AutoSize = true;
+      this.lblVersion.Location = new System.Drawing.Point(74, 29);
+      this.lblVersion.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
+      this.lblVersion.Name = "lblVersion";
+      this.lblVersion.Size = new System.Drawing.Size(69, 13);
+      this.lblVersion.TabIndex = 4;
+      this.lblVersion.Text = "Version 9.0.7";
       // 
       // projectLinkLabel
       // 
       this.projectLinkLabel.AutoSize = true;
-      this.projectLinkLabel.Location = new System.Drawing.Point(119, 79);
+      this.projectLinkLabel.Location = new System.Drawing.Point(74, 68);
       this.projectLinkLabel.Margin = new System.Windows.Forms.Padding(0);
       this.projectLinkLabel.Name = "projectLinkLabel";
       this.projectLinkLabel.Size = new System.Drawing.Size(82, 13);
@@ -102,9 +102,10 @@ namespace OpenHardwareMonitor.GUI {
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.AutoSize = true;
+      this.CancelButton = this.okButton;
       this.ClientSize = new System.Drawing.Size(359, 115);
       this.Controls.Add(this.projectLinkLabel);
-      this.Controls.Add(this.label3);
+      this.Controls.Add(this.lblVersion);
       this.Controls.Add(this.label2);
       this.Controls.Add(this.label1);
       this.Controls.Add(this.pictureBox1);
@@ -128,7 +129,7 @@ namespace OpenHardwareMonitor.GUI {
     private System.Windows.Forms.PictureBox pictureBox1;
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.Label label2;
-    private System.Windows.Forms.Label label3;
+    private System.Windows.Forms.Label lblVersion;
     private System.Windows.Forms.LinkLabel projectLinkLabel;
   }
 }
