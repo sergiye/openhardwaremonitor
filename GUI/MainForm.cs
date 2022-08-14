@@ -57,14 +57,10 @@ namespace OpenHardwareMonitor.GUI {
 
       Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
 
-      // check if the OpenHardwareMonitorLib assembly has the correct version
-      if (Assembly.GetAssembly(typeof(Computer)).GetName().Version !=
-        Assembly.GetExecutingAssembly().GetName().Version) {
-        MessageBox.Show(
-          "The version of the file OpenHardwareMonitorLib.dll is incompatible.",
-          "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        Environment.Exit(0);
-      }
+      var asm = Assembly.GetExecutingAssembly();
+      var version = asm.GetName().Version.ToString(3); //Application.ProductVersion;
+      var bitness = Environment.Is64BitProcess ? "x64" : "x32";
+      Text = $"Open Hardware Monitor {bitness} - {version}";
 
       settings = new PersistentSettings();
       settings.Load(Path.ChangeExtension(
