@@ -278,6 +278,9 @@ namespace OpenHardwareMonitor.GUI {
 
       startupMenuItem.Visible = startupManager.IsAvailable;
 
+      StartPosition = FormStartPosition.Manual;
+      RestoreBoundsFromSettings();
+
       if (startMinMenuItem.Checked) {
         if (!minTrayMenuItem.Checked) {
           WindowState = FormWindowState.Minimized;
@@ -407,7 +410,7 @@ namespace OpenHardwareMonitor.GUI {
       }
     }
 
-    private void MainForm_Load(object sender, EventArgs e) {
+    private void RestoreBoundsFromSettings() {
       Rectangle newBounds = new Rectangle {
         X = settings.GetValue("mainForm.Location.X", Location.X),
         Y = settings.GetValue("mainForm.Location.Y", Location.Y),
