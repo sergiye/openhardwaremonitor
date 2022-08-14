@@ -316,7 +316,6 @@
     <Compile Include="Hardware\TBalancer\TBalancer.cs" />
     <Compile Include="Hardware\TBalancer\TBalancerGroup.cs" />
     <Compile Include="Hardware\ThreadAffinity.cs" />
-    <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

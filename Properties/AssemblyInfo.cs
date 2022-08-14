@@ -13,3 +13,5 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 [assembly: DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+
+[assembly: AssemblyVersion("0.9.*")]
