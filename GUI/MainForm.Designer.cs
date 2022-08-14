@@ -96,6 +96,7 @@ namespace OpenHardwareMonitor.GUI {
       this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
       this.timer = new System.Windows.Forms.Timer(this.components);
       this.treeView = new OpenHardwareMonitor.Controls.Tree.TreeViewAdv();
+      this.menuItemCheckUpdates = new System.Windows.Forms.MenuItem();
       this.SuspendLayout();
       // 
       // sensor
@@ -524,12 +525,13 @@ namespace OpenHardwareMonitor.GUI {
       // 
       this.helpMenuItem.Index = 3;
       this.helpMenuItem.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItemCheckUpdates,
             this.aboutMenuItem});
       this.helpMenuItem.Text = "Help";
       // 
       // aboutMenuItem
       // 
-      this.aboutMenuItem.Index = 0;
+      this.aboutMenuItem.Index = 1;
       this.aboutMenuItem.Text = "About";
       this.aboutMenuItem.Click += new System.EventHandler(this.aboutMenuItem_Click);
       // 
@@ -579,6 +581,12 @@ namespace OpenHardwareMonitor.GUI {
       this.treeView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseDown);
       this.treeView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseMove);
       this.treeView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseUp);
+      // 
+      // menuItemCheckUpdates
+      // 
+      this.menuItemCheckUpdates.Index = 0;
+      this.menuItemCheckUpdates.Text = "Check for updates";
+      this.menuItemCheckUpdates.Click += new System.EventHandler(this.menuItemCheckUpdates_Click);
       // 
       // MainForm
       // 
@@ -667,6 +675,7 @@ namespace OpenHardwareMonitor.GUI {
     private System.Windows.Forms.MenuItem log1hMenuItem;
     private System.Windows.Forms.MenuItem log2hMenuItem;
     private System.Windows.Forms.MenuItem log6hMenuItem;
-  }
+        private System.Windows.Forms.MenuItem menuItemCheckUpdates;
+    }
 }
 
