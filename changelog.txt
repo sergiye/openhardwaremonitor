@@ -1,0 +1,1670 @@
+check for updates
+ 8 files changed, 342 insertions(+), 42 deletions(-)
+
+app version info in main form title
+ 2 files changed, 4 insertions(+), 9 deletions(-)
+
+app version associated with build time
+ 3 files changed, 2 insertions(+), 5 deletions(-)
+
+start position & size restore fixed
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+remove saving-loading sensor values to config
+ 1 file changed, 77 insertions(+), 77 deletions(-)
+
+readme
+ 5 files changed, 110 insertions(+), 77 deletions(-)
+
+revert StartupManager changes (scheduler restored)
+ 3 files changed, 1065 insertions(+), 42 deletions(-)
+
+cleanup
+ 97 files changed, 11056 deletions(-)
+
+icon text value rounding issue fix (ex: show 9.9 instead of 10.0)
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+remove crash and reporting to site; fix forms icons
+ 13 files changed, 172 insertions(+), 1377 deletions(-)
+
+removed links to openhardwaremonitor.org and Copyright infos
+ 128 files changed, 145 insertions(+), 1489 deletions(-)
+
+StartupManager cleanup
+ 3 files changed, 43 insertions(+), 1087 deletions(-)
+
+allow only one instance of app to be running
+ 5 files changed, 24 insertions(+), 41 deletions(-)
+
+Show/Hide tray icon menu marked as Default (bold)
+ 2 files changed, 41 insertions(+), 39 deletions(-)
+
+Aga.Controls merged into main project to get single exe file after build
+ 106 files changed, 10919 insertions(+), 685 deletions(-)
+
+OxyPlot removed
+ 225 files changed, 344 insertions(+), 46985 deletions(-)
+
+default temperature icon color fix;
+ 2 files changed, 29 insertions(+), 28 deletions(-)
+
+Added experimental support for AMD family 19h (Zen 3) CPUs.
+ 4 files changed, 6 insertions(+), 4 deletions(-)
+
+Updated the version.
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+Added a check to verify that at least .NET Framework 4.5 is installed.
+ 1 file changed, 24 insertions(+), 2 deletions(-)
+
+Updated the version.
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+Improved the DPI awareness (display scaling) in the TreeViewAdv control.
+ 3 files changed, 17 insertions(+), 7 deletions(-)
+
+Small corrections to improve the DPI awareness (display scaling).
+ 5 files changed, 77 insertions(+), 14 deletions(-)
+
+Added .editorconfig files to the Aga.Controls and OxyPlot projects.
+ 6 files changed, 26 insertions(+)
+
+Scale TreeViewAdv elements based on DPI
+ 5 files changed, 73 insertions(+), 10 deletions(-)
+
+Added experimental support for Intel 06_A5h CPUs (Intel Core i9-10900K and i5-10600K).
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+Changed the notify icon implementation to first try to modify an (existing) icon before trying to add a new one. When the WM_TASKBARCREATED event is raised, sometimes (changing the display scale for example) the icons still exist and fail to get added, while in other cases (explorer task restarted), the icons are lost and need to be added again. This fixes the 8s blocking of the UI thread when changing the display scale.
+ 1 file changed, 25 insertions(+), 24 deletions(-)
+
+Migrated from .NET Framework version 2.0 to .NET Framework version 4.5.
+ 19 files changed, 110 insertions(+), 3201 deletions(-)
+
+Added a .editorconfig file to define some of the coding styles used for the Open Hardware Monitor project.
+ 2 files changed, 145 insertions(+), 4 deletions(-)
+
+Added support for the Global\\Access_PCI mutex to synchronize the PCI bus access for reading AMD temperature sensors.
+ 5 files changed, 128 insertions(+), 72 deletions(-)
+
+Added a PowerModeChanged event handler to reset the hardware tree when resuming from sleep. This should correctly restore fan controls and other states.
+ 3 files changed, 36 insertions(+), 11 deletions(-)
+
+Changed the NCT679XD fan RPM calculation to use the 13-bit fan count register instead of the 16-bit RPM register.
+ 2 files changed, 32 insertions(+), 10 deletions(-)
+
+Added AMD family 15h model 60h and 70h CPU support.
+ 2 files changed, 35 insertions(+), 29 deletions(-)
+
+add temp support for the AMD Athlon X4 845
+ 1 file changed, 13 insertions(+)
+
+Updated the version.
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+Added support for multiple processor groups. Changed the ThreadAffinity class to use a new struct GroupAffinity. Changed operating system checks to make use of a new flag OperatingSystem.IsUnix.
+ 25 files changed, 337 insertions(+), 168 deletions(-)
+
+Added code to persist and restore the expanded state of the tree view (hardware and type nodes).
+ 8 files changed, 161 insertions(+), 71 deletions(-)
+
+Set C# language version to 7.3
+ 1 file changed, 5 insertions(+)
+
+Added fan control support for ITE IT8721F, IT8665E, IT8686E, IT8688E and IT879XE super I/O chips.
+ 2 files changed, 87 insertions(+), 11 deletions(-)
+
+Added the AMD GPU driver version to the report. Added a check for erroneous ActivityPercent values returned by the ADL_Overdrive5_CurrentActivity_Get method.
+ 4 files changed, 45 insertions(+), 4 deletions(-)
+
+Added more ADL (AMD Display Library) functions and extended the AMD GPU report. Added an enum type for ADL function result status values.
+ 4 files changed, 298 insertions(+), 66 deletions(-)
+
+Added more details to the AMD GPU report.
+ 2 files changed, 154 insertions(+), 60 deletions(-)
+
+Improved the AMD CPU and GPU name clean-up filters.
+ 2 files changed, 38 insertions(+), 8 deletions(-)
+
+Updated the version.
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+Extended the support for ADL (AMD Display Library) Overdrive8 GPU sensors.
+ 1 file changed, 33 insertions(+), 5 deletions(-)
+
+Added support for Intel CPUs with Comet Lake (06_A6H) microarchitecture.
+ 1 file changed, 8 insertions(+)
+
+Fixed an IndexOutOfRangeException in the AMD GPU report.
+ 2 files changed, 9 insertions(+), 11 deletions(-)
+
+Added support for ADL (AMD Display Library) Overdrive8 GPU sensors.
+ 3 files changed, 221 insertions(+), 68 deletions(-)
+
+Added ADL (AMD Display Library) overdrive version to the report.
+ 1 file changed, 31 insertions(+)
+
+Added another catch clause to the StartupManager to handle issues with the TaskScheduler.
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+Fixed a NullReferenceException in the NvidiaGPU class.
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+Added missing ITE super I/O chip IDs to the LPCIO class.
+ 1 file changed, 3 insertions(+)
+
+Added more null checks to the MainForm.SaveConfiguration method. Updated the version.
+ 2 files changed, 15 insertions(+), 8 deletions(-)
+
+Attempted fix for the ArgumentException when calling ITaskService.GetRunningTasks on some systems.
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+Changed the max CCD count for AMD family 17h CPUs.
+ 1 file changed, 13 insertions(+), 5 deletions(-)
+
+Fixed a NullReferenceException in the AMD17CPU.Update method.
+ 1 file changed, 15 insertions(+), 13 deletions(-)
+
+Updated the version.
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+Added more filters for cleaning up AMD CPU names.
+ 1 file changed, 10 insertions(+)
+
+Improved the Intel SSD SMART attributes interpretation.
+ 2 files changed, 41 insertions(+), 3 deletions(-)
+
+Added correct formatting for Throughput sensors in the gadget.
+ 1 file changed, 26 insertions(+), 10 deletions(-)
+
+Added support for the NvAPI_GPU_ClientFanCoolersGetStatus NVAPI function (fan RPM and control value).
+ 2 files changed, 119 insertions(+), 16 deletions(-)
+
+Updated NvAPI_GPU_GetDynamicPstatesInfoEx and NvAPI_GPU_GetDynamicPstatesInfo NVAPI function interfaces.
+ 2 files changed, 106 insertions(+), 80 deletions(-)
+
+Added support for the NVML (NVIDIA Management Library). Added support for power and PCIE throughput sensors on NVIDIA GPUs.
+ 10 files changed, 366 insertions(+), 40 deletions(-)
+
+Added an experimental fix for secondary ITE chips.
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+Added the missing calling convention (CallingConvention.Cdecl) for the unmanaged function pointers in the NVAPI wrapper.
+ 1 file changed, 31 insertions(+)
+
+Added partial support for ADL (AMD Display Library) OverDrive6 and OverDrive Next APIs.
+ 3 files changed, 180 insertions(+), 21 deletions(-)
+
+Changed the Fintek F71878AD fan control implementation to support restoring to the default control settings.
+ 1 file changed, 37 insertions(+), 5 deletions(-)
+
+Added support for Fintek F71878AD (vendorId 0x1106)
+ 5 files changed, 36 insertions(+), 6 deletions(-)
+
+Added experimental support for the Nuvoton NCT6792D, NCT6792D-A, NCT6793D, NCT6795D, NCT6796D, NCT6796D-R, NCT6797D, NCT6798D super I/O chips.
+ 5 files changed, 156 insertions(+), 26 deletions(-)
+
+Updated the mainboard manufacturer identification table.
+ 2 files changed, 111 insertions(+), 1 deletion(-)
+
+Added one decimal digit for clock values displayed in the GUI.
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+Added AMD family 17h (Ryzen) CPU support.
+ 4 files changed, 362 insertions(+), 10 deletions(-)
+
+Improved the Micron/Crucial SSD SMART data interpretation.
+ 2 files changed, 85 insertions(+), 8 deletions(-)
+
+Added support for Intel CPUs with Goldmont (06_5FH), Goldmont Plus (06_7AH), Cannon Lake (06_66H), Ice Lake (06_7DH, 06_7EH, 06_6AH, 06_6CH), Tremont (06_86H) and Tiger Lake (06_8CH, 06_8DH) microarchitecture.
+ 1 file changed, 52 insertions(+), 7 deletions(-)
+
+Added experimental support for the ITE IT8655E, IT8665E and IT8686E chips.
+ 3 files changed, 46 insertions(+), 22 deletions(-)
+
+Updated the about box and version info.
+ 4 files changed, 8 insertions(+), 8 deletions(-)
+
+Extended the mainboard specific configuration for the Gigabyte X570 AORUS MASTER to include the ITE IT8795E chip as well. Added default mainboard specific configurations for the ITE IT879XE chips.
+ 1 file changed, 69 insertions(+), 2 deletions(-)
+
+Added experimental support for the ITE IT8792E/IT8795E chips (chip ID 0x8733). Added support for detecting ITE chips on port 0x4E.
+ 4 files changed, 38 insertions(+), 17 deletions(-)
+
+Changed the way hardware nodes are inserted into the GUI tree view. The new code should keep the order (as enumerated by the parent) for hardware of the same type.
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Fixed the "System.UriFormatException: Invalid URI: The Uri string is too long." exception when submitting a longer hardware report.
+ 4 files changed, 47 insertions(+), 11 deletions(-)
+
+Added a mainboard specific configuration for the Gigabyte X570 AORUS MASTER (IT8688E).
+ 3 files changed, 27 insertions(+), 2 deletions(-)
+
+Add ITE configurations for Z390 M Gaming, Z390 Aorus ultra and Z390 UD
+ 1 file changed, 25 insertions(+), 1 deletion(-)
+
+Add support for Z390 Aorus Ultra and Z390 UD
+ 2 files changed, 6 insertions(+)
+
+Add Z390 M Gaming motherboard type
+ 2 files changed, 3 insertions(+)
+
+Added experimental support for the ITE IT8688E chip.
+ 4 files changed, 28 insertions(+), 13 deletions(-)
+
+Added experimental support for Intel Atom CPUs with Apollo Lake microarchitecture. Added experimental support for Intel model 55h Skylake CPUs.
+ 3 files changed, 19 insertions(+), 10 deletions(-)
+
+Bugfix - abandoned ISABus mutex deadlock
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+Update IntelCPU.cs
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+Updated the year to 2017 and fixed a typo in the about box.
+ 4 files changed, 7 insertions(+), 7 deletions(-)
+
+Fixed issue #909 (missing Intel 7700K core temps)
+ 2 files changed, 5 insertions(+), 4 deletions(-)
+
+Add support for AMD Puma CPU architecture
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+Fixed the Samsung SSD Total Bytes Written sensor to use 48-bit raw data (instead of 32-bit) and corrected the label to "Total Bytes Written" instead of "Total LBA Written".
+ 4 files changed, 16 insertions(+), 18 deletions(-)
+
+Updated the version.
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+Added a menu item to reset the pen color (to use again the plotColorPalette based color). Moved the saving/loading code to the SensorNode class (as with the other properties).
+ 6 files changed, 38 insertions(+), 20 deletions(-)
+
+Corrected the source code format.
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+Add support for Intel Kaby Lake microarchitecture
+ 1 file changed, 10 insertions(+), 3 deletions(-)
+
+Added customizable pen colors
+ 6 files changed, 35 insertions(+), 4 deletions(-)
+
+Add support for Intel Airmont microarchitecture
+ 1 file changed, 11 insertions(+), 3 deletions(-)
+
+Fixed the Assembly.GetEntryAssembly() can be null issue when loading the library from unmanaged code.
+ 1 file changed, 16 insertions(+), 12 deletions(-)
+
+Added the .gitignore file.
+ 1 file changed, 4 insertions(+)
+
+Corrected the source code format.
+ 2 files changed, 18 insertions(+), 15 deletions(-)
+
+Added Intel CPU models 0x4F and 0x56.
+ 4 files changed, 11 insertions(+), 9 deletions(-)
+
+Added support for PLEXTOR's host writes/reads
+ 1 file changed, 15 insertions(+), 5 deletions(-)
+
+Broadwell: handle missing desktop model id for 5775C
+ 1 file changed, 1 insertion(+)
+
+Showing Samsung SSD Total LBAs Written. Based on specification http://www.samsung.com/global/business/semiconductor/minisite/SSD/downloads/document/07_Communicating_With_Your_SSD.pdf
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+Update NvidiaGPU.cs
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+Update ISensor.cs
+ 1 file changed, 1 insertion(+)
+
+Update TypeNode.cs
+ 1 file changed, 4 insertions(+)
+
+Update SensorNode.cs
+ 1 file changed, 1 insertion(+)
+
+Add Device ID for Family 15h Model 30h APU
+ 1 file changed, 3 insertions(+)
+
+Targeted application for Windows 10 and 8.1 to fix the incorrect OS version showing up in reports
+ 1 file changed, 14 insertions(+)
+
+Added experimental support for the ITE IT8628E chip (issue #759).
+ 5 files changed, 11 insertions(+), 6 deletions(-)
+
+Corrected the source formatting.
+ 1 file changed, 17 insertions(+), 16 deletions(-)
+
+Prevent plot from reusing line colors if possible
+ 1 file changed, 21 insertions(+)
+
+Added a SensorName property to the SmartAttribute class in order to support sensor names that are different from the attribute name. Used the SensorName property to replace the "Temperature Difference From 100" sensor with a standard "Temperature" sensor. Closed issue #717.
+ 9 files changed, 42 insertions(+), 32 deletions(-)
+
+Updated the about box date.
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Added experimental support for the ITE IT8620E chip (using the same implementation as for the ITE IT8772E).
+ 5 files changed, 14 insertions(+), 8 deletions(-)
+
+Fixed issue #701. Writing temporary 0 values to the sensor (NVIDIA GPU clocks) gets them recorded and leads to wrong sensor min values and wrong recorded/averaged values for plotting.
+ 2 files changed, 8 insertions(+), 7 deletions(-)
+
+VRAM used / free / total as Value? #753
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+Extracted the register and value port state and some methods from the LPCIO class into a new class LPCPort. Fixed issue #733 (unlocking the i/o space after sleep).
+ 4 files changed, 173 insertions(+), 117 deletions(-)
+
+Fixed issue #747 introduced in commit 9e32a33. The IsNuvotonVendor check should be done after setting the vendor ID registers (and not before).
+ 1 file changed, 5 insertions(+), 6 deletions(-)
+
+Added model 0x4E to the Skylake microarchitecture.
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+Skylake support
+ 1 file changed, 12 insertions(+), 4 deletions(-)
+
+Removed the default value for NUVOTON_VENDOR_ID registers.
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+Merged the Nuvoton NCT6102D/NCT6106D implementation back into the NCT677X class.
+ 4 files changed, 98 insertions(+), 328 deletions(-)
+
+Implement Nuvoton NCT6102D/NCT6106D chips.
+ 5 files changed, 344 insertions(+)
+
+Fixed an OverflowException when trying to use (unsupported) 64-bit thread affinity masks on 32-bit systems.
+ 2 files changed, 12 insertions(+), 6 deletions(-)
+
+Fixed the following issue (present only on 32-bit systems):
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Fixed Issue 651.
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+Changed the settings save code to use a two file based approach in order to reduce cases where settings are lost or reset (Fixed Issue 501).
+ 2 files changed, 51 insertions(+), 7 deletions(-)
+
+Added a new "Undefined" control mode. Changed the GPU fan control to restore to default (auto) settings when the Open Hardware Monitor closes (unless the control remained in "Undefined" mode).
+ 6 files changed, 84 insertions(+), 77 deletions(-)
+
+Fixed Issue 645.
+ 4 files changed, 7 insertions(+), 7 deletions(-)
+
+Added support for Intel Atom N2xxx, D2xxx, C2xxx, E3xxx and Z3xxx CPUs (Fixed Issue 610, Issue 422 and Issue 647).
+ 2 files changed, 30 insertions(+), 8 deletions(-)
+
+Added support for Intel Core M-5xxx (14nm) Broadwell CPUs (Fixed Issue 646).
+ 2 files changed, 16 insertions(+), 8 deletions(-)
+
+Added support for Intel Xeon E5-2600/1600 v3, Core i7-59xx CPUs (Fixed Issue 617). Corrected an error in the Intel CPU power calculation (wrong bit mask for "Energy Status Units: bits 12:8").
+ 4 files changed, 9 insertions(+), 7 deletions(-)
+
+Fixed an issue with the Nuvoton NCT6791D (hardware monitor i/o space lock wasn't disabled before attempting to read data).
+ 2 files changed, 22 insertions(+), 2 deletions(-)
+
+Added a configurable logging interval.
+ 4 files changed, 182 insertions(+), 13 deletions(-)
+
+Fixed a few stability issues in the logging implementation. Added support for logging sensors once the reappear.
+ 3 files changed, 53 insertions(+), 40 deletions(-)
+
+Added a first data logging implementation.
+ 5 files changed, 193 insertions(+), 5 deletions(-)
+
+Fixed an issue in the NCT677X class causing a crash when calling Update.
+ 2 files changed, 14 insertions(+), 3 deletions(-)
+
+Changed the Intel core temperature reading to evaluate the "Reading Valid" bit 31 for package level sensors as well (undocumented).
+ 2 files changed, 17 insertions(+), 18 deletions(-)
+
+Added experimental support for Intel Ivy Bridge-E CPUs.
+ 3 files changed, 7 insertions(+), 5 deletions(-)
+
+Refactored the SuperIOHardware class.
+ 2 files changed, 1149 insertions(+), 1047 deletions(-)
+
+Fixed an issue where the voltages, temperatures, fans and controls arrays could be null (instead of zero length) causing NullReferenceExceptions in SuperIOHardware.
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+Small correction for the Nuvoton NCT6791D super I/O chip.
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+Added experimental support for the Nuvoton NCT6791D super I/O chip.
+ 7 files changed, 54 insertions(+), 28 deletions(-)
+
+Updated the version.
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+Improved the code used to draw a line between the different OxyPlot subplots.
+ 3 files changed, 45 insertions(+), 29 deletions(-)
+
+Changed the name of RAM hardware to be always "Generic Memory" because the information from the SMBIOS table is not reliable.
+ 1 file changed, 1 insertion(+), 9 deletions(-)
+
+Changed the HDD enumeration code to drop drives without smart support and without any non-zero-sized logical drives.
+ 1 file changed, 22 insertions(+), 2 deletions(-)
+
+Added support for the Fintek F71869A (F71868AD) super I/O chip.
+ 5 files changed, 16 insertions(+), 6 deletions(-)
+
+Added experimental support for AMD family 15h model 1Xh and family 16h CPUs.
+ 3 files changed, 36 insertions(+), 11 deletions(-)
+
+Added support for new Samsung SSDs (like Samsung SSD 840 PRO).
+ 3 files changed, 43 insertions(+), 9 deletions(-)
+
+Added the NCT6771F and NCT6776F chips to the lm-sensors interface.
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+Added code to handle exceptions when creating the report for drives that are no longer available/ready.
+ 2 files changed, 11 insertions(+), 7 deletions(-)
+
+Changed the HDD detection to list hard drives without SMART support as well (at least if they have any visible partitions on them).
+ 1 file changed, 128 insertions(+), 104 deletions(-)
+
+Added additional exception handling to the http server.
+ 2 files changed, 9 insertions(+), 6 deletions(-)
+
+Fixed an issue in the ram group implementation (sensor values did not get stored to the settings instance).
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+Added Fahrenheit support to the plot.
+ 3 files changed, 38 insertions(+), 13 deletions(-)
+
+Changed OxyPlot to draw a line between the different subplots.
+ 2 files changed, 32 insertions(+)
+
+Small correction to the plot with multiple axes.
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+Added an option to disable stacked axes in the plot.
+ 1 file changed, 54 insertions(+), 13 deletions(-)
+
+Added experimental support for Intel Haswell CPUs.
+ 1 file changed, 15 insertions(+), 5 deletions(-)
+
+Added the new OxyPlot based plot implementation.
+ 8 files changed, 182 insertions(+), 249 deletions(-)
+
+Added binaries for the OxyPlot library and updated the License.html file.
+ 3 files changed, 98 insertions(+), 36 deletions(-)
+
+Some modifications to the OxyPlot library to simplify the use in the Open Hardware Monitor.
+ 2 files changed, 9 insertions(+), 10 deletions(-)
+
+Some modifications to the OxyPlot library to back-port to .NET 2.0. Added the LINQBridge library for the LINQ based code in OxyPlot (the original .NET LINQ is not available in .NET 2.0).
+ 8 files changed, 3165 insertions(+), 438 deletions(-)
+
+Added the source code of OxyPlot as of commit d190d7748a73 (6.5.2013).
+ 207 files changed, 45174 insertions(+)
+
+Fixed Issue 415.
+ 2 files changed, 7 insertions(+), 3 deletions(-)
+
+Changed the super I/O fan control: Fan controls are now always displayed, even if the value is null (as for example for ITE 87XX chips in automatic mode.
+ 2 files changed, 4 insertions(+), 6 deletions(-)
+
+Added additional Fintek chips to the lm-sensors interface.
+ 2 files changed, 11 insertions(+), 3 deletions(-)
+
+Fixed Issue 368. Fixed Issue 369. Fixed Issue 370.
+ 3 files changed, 96 insertions(+), 45 deletions(-)
+
+Changed the source formatting of the HttpServer class to match the rest of the project.
+ 2 files changed, 290 insertions(+), 324 deletions(-)
+
+Fixed Issue 382.
+ 1 file changed, 13 insertions(+), 4 deletions(-)
+
+Reduced the amount of dynamic memory allocation when reading from the T-Balancer or creating tray icons.
+ 4 files changed, 52 insertions(+), 34 deletions(-)
+
+Enabled fan control on mainboards by default.
+ 2 files changed, 24 insertions(+), 2 deletions(-)
+
+Added support for fan control on ITE 87XX chips and a mainboard specific configuration for the Gigabyte GA 970A UD3 (both based on a patch from Eric Hokanson).
+ 5 files changed, 79 insertions(+), 5 deletions(-)
+
+Changed a few types to internal (instead of public) in the Open Hardware Monitor library.
+ 3 files changed, 5 insertions(+), 5 deletions(-)
+
+Fixed Issue 387. The new implementation does not try to start a ring 0 driver that already exists, but could not be opened. It tries to delete the driver and install it new. The driver is now stored temporarily in the application folder. The driver is not correctly removed on system shutdown.
+ 4 files changed, 24 insertions(+), 23 deletions(-)
+
+Added a few checks and delays to the driver loading code to increase the chance of loading the driver.
+ 2 files changed, 22 insertions(+), 3 deletions(-)
+
+Changed a few context menu items to display a radio option style. Added additional information from the SMBIOS to the report.
+ 4 files changed, 89 insertions(+), 11 deletions(-)
+
+Added a RAM sensor for used memory.
+ 2 files changed, 11 insertions(+), 3 deletions(-)
+
+Fixed an error where loading config files from previous versions would crash the application.
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+Updated the version.
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+Added temperature offset parameters to all HDD temperature sensors. Fixed issue 271.
+ 6 files changed, 66 insertions(+), 25 deletions(-)
+
+Added a new icon for RAM hardware.
+ 6 files changed, 23 insertions(+), 13 deletions(-)
+
+Changed the RAM implementation (removed Microsoft.VisualBasic dependency which is not implemented in Mono) and added code to prevent RAM hardware from loading on Linux.
+ 3 files changed, 44 insertions(+), 10 deletions(-)
+
+Added a wrapper for the NotifyIconAdv to use the normal NotifyIcon class on Linux systems and the (fixed) custom implementation on Windows systems.
+ 2 files changed, 705 insertions(+), 402 deletions(-)
+
+Added a RAM hardware and sensor, fixed Issue 115.
+ 14 files changed, 421 insertions(+), 217 deletions(-)
+
+Added used space load sensors for hard drives.
+ 5 files changed, 67 insertions(+), 4 deletions(-)
+
+Added a missing default case in the mainboard specific configuration selection. The missing default case prevented sensor data from getting displayed on unknown Asus mainboards with NCT6779D super I/O.
+ 2 files changed, 30 insertions(+), 2 deletions(-)
+
+Added more report output to the kernel driver loading code. Hopefully this helps to find the problems in Issue 253.
+ 3 files changed, 28 insertions(+), 13 deletions(-)
+
+Changed the system tray icon font scaling to adapt to the size of the tray icon in pixels, because on Windows 7 the tray icon scales with the system font size, while on Windows XP the tray icons are always 16 pixels large.
+ 4 files changed, 34 insertions(+), 10 deletions(-)
+
+Improved the data compression for storing the recorded sensor values in the config file.
+ 1 file changed, 12 insertions(+), 5 deletions(-)
+
+Attempt at fixing Issue 253 without breaking Issue 159 once more.
+ 2 files changed, 23 insertions(+), 11 deletions(-)
+
+Fixed Issue 269.
+ 4 files changed, 509 insertions(+), 4 deletions(-)
+
+Fixed Issue 86.
+ 5 files changed, 45 insertions(+), 12 deletions(-)
+
+Fixed Issue 274. Fixed Issue 107.
+ 4 files changed, 43 insertions(+), 3 deletions(-)
+
+Added the option to enable/disable all hardware groups.
+ 4 files changed, 248 insertions(+), 84 deletions(-)
+
+Added a mainboard specific configuration for the Asus P8Z77-V (Issue 347) and added an additional temperature for the Gigabyte GA-MA78LM-S2H (Issue 358).
+ 4 files changed, 85 insertions(+), 32 deletions(-)
+
+Added support for SSDs with a controller from Micron.
+ 10 files changed, 130 insertions(+), 15 deletions(-)
+
+Added mainboard specific configurations for the following Gigabyte mainboards: EX58-UD3R, G41M-Combo, G41MT-S2, G41MT-S2P, GA-MA770T-UD3P, GA-MA785GM-US2H, GA-MA78LM-S2H, GA-MA790X-UD3P, H55-USB3, H55N-USB3, H61M-DS2 REV 1.2, H61M-USB3-B3 REV 2.0, H67A-USB3-B3, P55A-UD3, P67A-UD3-B3, P67A-UD3R-B3, Z68A-D3H-B3, Z68AP-D3, Z68X-UD3H-B3.
+ 3 files changed, 150 insertions(+), 30 deletions(-)
+
+Corrected the temperature reading on NCT6779D super I/O chips. Added a default mainboard specific configuration for NCT6779D super I/O chips.
+ 2 files changed, 37 insertions(+), 2 deletions(-)
+
+Added experimental support for Nuvoton NCT6779D super I/O chips.
+ 4 files changed, 180 insertions(+), 61 deletions(-)
+
+Fixed Issue 300.
+ 2 files changed, 10 insertions(+), 10 deletions(-)
+
+Added support for IT8705F super I/O chips.
+ 6 files changed, 31 insertions(+), 12 deletions(-)
+
+Integrated the patch for Fintek F71808E super I/O support developed by Andrey Mushatov.
+ 4 files changed, 19 insertions(+), 5 deletions(-)
+
+Added support for reading more than one TBalancer fan controller.
+ 2 files changed, 9 insertions(+), 8 deletions(-)
+
+Added support for Intel Ivy Bridge based CPUs. Added code to prevent displaying wrong information on unknown (future) Intel CPUs.
+ 2 files changed, 30 insertions(+), 22 deletions(-)
+
+Added a missing menu label.
+ 1 file changed, 5 insertions(+)
+
+Added the remote web enhancement developed by Prince Samuel.
+ 41 files changed, 15790 insertions(+), 3 deletions(-)
+
+Added the source code of the WinRing0 device driver.
+ 7 files changed, 1093 insertions(+)
+
+Added the small modifications to the Aga.Controls required by the Open Hardware Monitor.
+ 8 files changed, 79 insertions(+), 16 deletions(-)
+
+Added the source code of Aga.Controls (TreeViewAdv for .Net) version 1.7.0.0.
+ 95 files changed, 10860 insertions(+)
+
+Changed the license to the Mozilla Public License 2.0 and update the licensing information.
+ 126 files changed, 957 insertions(+), 4463 deletions(-)
+
+Fixed a division by zero in the Sandforce write amplification sensor.
+ 2 files changed, 7 insertions(+), 4 deletions(-)
+
+Added a simple way to customize the sensor gadget background. If any of the files gadget_background.png, gadget_image.png, gadget_foreground.png, gadget_bar_background.png or gadget_bar_foreground.png is present in the working directory then these files are used instead of the built in files.
+ 1 file changed, 110 insertions(+), 31 deletions(-)
+
+Added experimental support for ITE IT8771E super I/O chips.
+ 4 files changed, 11 insertions(+), 5 deletions(-)
+
+Added a new sensor type "Factor" for dimensionless values (and similar) that are not to be shown as percent ("Level" type). Changed the write amplification sensor to use the new "Factor" sensor type. Added the temperature SMART attribute for Sandforce SSDs as hidden sensor (as it may show fake results on some hardware).
+ 12 files changed, 42 insertions(+), 31 deletions(-)
+
+Added additional smart attribute identification and a write amplification sensor for Sandforce based SSDs.
+ 4 files changed, 63 insertions(+), 26 deletions(-)
+
+Small correction to the Sandforce SSD detection to prevent Marvell controllers (M4, C300) from getting identified as Sandforce.
+ 3 files changed, 54 insertions(+), 5 deletions(-)
+
+Added a mainboard specific configuration for the ASUS P8Z68-V PRO.
+ 3 files changed, 19 insertions(+)
+
+Added a mainboard specific configuration for the ASUS P6T.
+ 3 files changed, 4 insertions(+)
+
+Fixed Issue 313.
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+Fixed Issue 209.
+ 2 files changed, 27 insertions(+), 2 deletions(-)
+
+Fixed Issue 213.
+ 2 files changed, 25 insertions(+), 8 deletions(-)
+
+Added a mainboard specific configuration for the ASUS P9X79 (detailed fan and control configuration still missing).
+ 3 files changed, 20 insertions(+), 3 deletions(-)
+
+Updated year to 2012 in properties and about box.
+ 4 files changed, 8 insertions(+), 8 deletions(-)
+
+Further restricted the identification for Indilinx SSDs to prevent Maxtor HDDs to be identified as Indilinx SSD.
+ 3 files changed, 65 insertions(+), 26 deletions(-)
+
+Small corrections for AMD family 15h CPUs (based on documentation).
+ 3 files changed, 52 insertions(+), 40 deletions(-)
+
+Added SMART support for Samsung SSDs.
+ 10 files changed, 283 insertions(+), 134 deletions(-)
+
+Added code to save and restore the plot sensor selection.
+ 3 files changed, 55 insertions(+), 29 deletions(-)
+
+Added a context menu to the plot which allows the user to configure the time window for plotting.
+ 3 files changed, 62 insertions(+), 25 deletions(-)
+
+Added the hard drive firmware version to the report. This could be important if the SMART attribute layout changes with firmware versions on some drives.
+ 9 files changed, 65 insertions(+), 43 deletions(-)
+
+Modified and extended version of the patch v4 by Roland Reinl (see Issue 256). Main differences to the original patch: DeviceIoControl refactorings removed, SmartAttribute is now descriptive only and does not hold any state, report is written as one 80 columns table, sensors are created only for meaningful values and without duplicates (remaining life, temperatures, host writes and reads). Also the current implementation should really preserve all the functionality of the old system. Additionally there is now a simple SMART devices emulation class (DebugSmart) that can be used in place of WindowsSmart for testing with reported data.
+ 30 files changed, 2426 insertions(+), 888 deletions(-)
+
+Added first experimental support for fan control on the NCT677X super I/O chips.
+ 7 files changed, 151 insertions(+), 5 deletions(-)
+
+Added additional Intel Sandy Bridge CPU power sensors.
+ 1 file changed, 58 insertions(+), 71 deletions(-)
+
+Added Added a mainboard specific configuration for the Shuttle SH67Hx barebones. Added the SMBIOS system information to the report.
+ 6 files changed, 111 insertions(+), 5 deletions(-)
+
+Added initial support for the ITE IT8772E super I/O chip.
+ 8 files changed, 15 insertions(+), 7 deletions(-)
+
+Fixed the power sensor display in the desktop gadget.
+ 1 file changed, 3 insertions(+)
+
+Added support for Intel CPU power sensors (package and cores).
+ 8 files changed, 94 insertions(+), 7 deletions(-)
+
+Buffered the gadget background drawing in order to improve drawing performance.
+ 1 file changed, 57 insertions(+), 31 deletions(-)
+
+Fixed the Intel CPU package temperature sensor MSR.
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Replaced the more expensive calls to DateTime.Now with DateTime.UtcNow.
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+Improved the CPU load sensors. The values displayed for the load per core and the total load should now be more accurate.
+ 1 file changed, 33 insertions(+), 22 deletions(-)
+
+Added a mainboard specific configuration for the ASUS P8P67 mainboard.
+ 3 files changed, 4 insertions(+)
+
+Added a mainboard specific configuration for the ASUS P8P67 EVO mainboard.
+ 3 files changed, 4 insertions(+)
+
+Improved the mainboard specific configuration for the ASUS P8P67 PRO mainboard.
+ 1 file changed, 11 insertions(+), 14 deletions(-)
+
+Added fan control for Nvidia GPUs based on a patch by Christian Vallières.
+ 2 files changed, 139 insertions(+), 53 deletions(-)
+
+Added support for reading the TAMG ACPI table on Gigabyte mainboards. Fixed a small problem with HDD/SSD names (0 chars are trimmed now as well).
+ 6 files changed, 308 insertions(+), 4 deletions(-)
+
+Small correction for the mainboard specific configuration of the Gigabyte Z68X-UD7-B3 mainboard.
+ 2 files changed, 4 insertions(+), 5 deletions(-)
+
+Added support for package level temperature sensors on new Intel Sandy Bridge CPUs.
+ 1 file changed, 38 insertions(+), 4 deletions(-)
+
+Added a mainboard specific configuration for the Gigabyte Z68X-UD7-B3 mainboard.
+ 4 files changed, 24 insertions(+), 2 deletions(-)
+
+Changed the maximum buffer size for double buffering of controls that isn't disposed after each draw call to the size of the screen. This should reduce the memory allocation and disposing on each sensor update. Also page faults are no longer increasing with this change.
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+Add a text (Open Hardware Monitor) to the main system tray icon to simplify identification.
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+Removed the bitmap.GetHbitmap call for every redraw of the gadget. This should reduce dynamic memory allocation and freeing and removes some of the page faults increasing.
+ 2 files changed, 88 insertions(+), 63 deletions(-)
+
+Added initial support for AMD family 12h and 15h CPUs.
+ 3 files changed, 56 insertions(+), 46 deletions(-)
+
+Fixed issue 241.
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+Fixed issue 239.
+ 3 files changed, 18 insertions(+), 18 deletions(-)
+
+Added support for saving and restoring the sensor history for the last 24h. The sensor history is now saved in a reduced format (duplicate values are removed, gaps are marked with a NAN sensor value.
+ 16 files changed, 356 insertions(+), 46 deletions(-)
+
+Fixed a problem preventing the plot form getting closed correctly. This did prevent the application from terminating when asked to exit by the operating system (for example at shutdown).
+ 1 file changed, 9 insertions(+), 4 deletions(-)
+
+Added support for the Fintek F71889AD super I/O chip. Extended the identification list of mainboard manufacturers.
+ 6 files changed, 42 insertions(+), 2 deletions(-)
+
+Added an option to show the plot in a separate window or on the right of the tree-view.
+ 4 files changed, 231 insertions(+), 10 deletions(-)
+
+Fixed Issue 225.
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+Fixed Issue 224.
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+Fixed Issue 222.
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+Fixed Issue 223.
+ 2 files changed, 10 insertions(+), 11 deletions(-)
+
+Added a mainboard specific configuration for the Gigabyte H67A-UD3H-B3 mainboard and fixed a few issues in the about box.
+ 5 files changed, 36 insertions(+), 16 deletions(-)
+
+Fixed Issue 215.
+ 2 files changed, 18 insertions(+)
+
+Improved the selection dragging on the tree view. The selection moves now only when the dragging starts on the tree view. With the old implementation, double-clicking the gadget would change the selection, because the mouse is still pressed when the main window is shown.
+ 2 files changed, 17 insertions(+), 3 deletions(-)
+
+Added some GUI improvements: Better handling of the row selection, minimal row spacing of 18 pixel (to get nice dotted lines) and 3 decimal digits for voltages. Also changed the tree view font rendering to get better quality without ClearType.
+ 4 files changed, 32 insertions(+), 21 deletions(-)
+
+Fixed Issue 204.
+ 1 file changed, 12 insertions(+)
+
+Fixed Issue 220.
+ 1 file changed, 17 insertions(+), 2 deletions(-)
+
+Fixed Issue 219.
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+Fixed Issue 218.
+ 1 file changed, 26 insertions(+), 7 deletions(-)
+
+Fixed Issue 217.
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+Fixed Issue 216.
+ 1 file changed, 21 insertions(+), 3 deletions(-)
+
+Fixed the ATI GPU fan control. The settings now restore correctly to default settings (previously the "manual mode" was kept on some systems).
+ 1 file changed, 3 insertions(+)
+
+Fixed the bus and core clock reading on AMD family 10h model Ah CPUs. The new "Core Performance Boost" feature of these CPUs resulted in very low accuracy of the bus speed (and as a consequence also an inaccurate TSC multiplier). This fixed Issue 205.
+ 4 files changed, 95 insertions(+), 24 deletions(-)
+
+Added a mainboard specific configuration for the Gigabyte P67A-UD4-B3 mainboard.
+ 4 files changed, 41 insertions(+), 2 deletions(-)
+
+Added first experimental support for the IT8728F super I/O chip.
+ 6 files changed, 15 insertions(+), 8 deletions(-)
+
+Added a mainboard specific configuration for the ASUS P8P67-M Pro and fixed a few problems in the NCT677X implementation.
+ 4 files changed, 89 insertions(+), 29 deletions(-)
+
+Fixed Issue 199.
+ 14 files changed, 161 insertions(+), 207 deletions(-)
+
+Updated version info.
+ 4 files changed, 7 insertions(+), 7 deletions(-)
+
+A first correction for reading core and bus clocks on AMD family 14h CPUs.
+ 2 files changed, 54 insertions(+), 14 deletions(-)
+
+A small correction for AMD K8 (family 0Fh) core temperature reading, and fan reading on older revision of IT8712F chips. This should fix Issue 42 and Issue 194.
+ 4 files changed, 67 insertions(+), 25 deletions(-)
+
+Added initial support for AMD Fusion (family 14h) CPUs.
+ 4 files changed, 8 insertions(+), 4 deletions(-)
+
+Fixed Issue 111.
+ 3 files changed, 11 insertions(+), 4 deletions(-)
+
+Fixed a few details for the Linux GUI.
+ 2 files changed, 29 insertions(+), 27 deletions(-)
+
+Replaced the StreamReader based lm-sensors access with an implementation using the FileStream class in order to avoid buffering problems when seeking.
+ 3 files changed, 61 insertions(+), 34 deletions(-)
+
+Fixed the tree view row height on Linux.
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+Added support for AMD 10h core temperature sensors and Asus ATK0110 devices on Linux.
+ 6 files changed, 134 insertions(+), 66 deletions(-)
+
+Fixed Issue 156.
+ 7 files changed, 100 insertions(+), 27 deletions(-)
+
+Fixed Issue 158.
+ 1 file changed, 30 insertions(+), 4 deletions(-)
+
+Fixed Issue 178.
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+Fixed Issue 179.
+ 3 files changed, 37 insertions(+), 7 deletions(-)
+
+Fixed Issue 161.
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+Fixed Issue 160.
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+Fixed Issue 165.
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Fixed Issue 171.
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+Fixed Issue 172.
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+Fixed Issue 164.
+ 4 files changed, 33 insertions(+), 26 deletions(-)
+
+Added code to delete any kernel driver service that can't be opened before reinstalling it.
+ 2 files changed, 9 insertions(+), 5 deletions(-)
+
+Added some error reporting to the Ring0 driver loading code.
+ 3 files changed, 44 insertions(+), 12 deletions(-)
+
+Fixed Issue 162.
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+Fixed some dpi scaling bugs that occurred when changing "Control Panel\Appearance and Personalization\Display" to 125% text size or 150% text size.
+ 5 files changed, 44 insertions(+), 18 deletions(-)
+
+Added support for AMD family 11h CPUs.
+ 3 files changed, 16 insertions(+), 5 deletions(-)
+
+Fixed the Intel Sandy Bridge CPU core clock calculation.
+ 3 files changed, 19 insertions(+), 15 deletions(-)
+
+Added initial support for Intel Sandy Bridge CPUs.
+ 1 file changed, 29 insertions(+), 13 deletions(-)
+
+Improved the saving and restoring of default fan control settings for ATI GPUs.
+ 2 files changed, 26 insertions(+), 16 deletions(-)
+
+Added a minimal control interface to allow manual fan control and implemented the interface for ATI GPUs.
+ 11 files changed, 331 insertions(+), 7 deletions(-)
+
+Fixed the temperature reading and improved the report for the Nuvoton NCT6771F super I/O chip.
+ 2 files changed, 40 insertions(+), 35 deletions(-)
+
+Added first experimental support for the Nuvoton NCT6771F super I/O chip.
+ 5 files changed, 274 insertions(+), 17 deletions(-)
+
+Fixed Issue 137.
+ 4 files changed, 30 insertions(+), 1 deletion(-)
+
+Improved the moving and resizing of the gadget on multi-monitor systems. Fixed one problem where the underlying gadget window size would be reduced unrequested. Fine tuned the progress bar size in the gadget.
+ 3 files changed, 14 insertions(+), 7 deletions(-)
+
+Fixed Issue 138.
+ 1 file changed, 14 insertions(+), 1 deletion(-)
+
+Fixed a problem, where the MainForm location and size was lost when the application is started minimized and exited without ever showing the form. This caused MainForm_Load to be never called (location and size was not loaded), but the default size and location were still saved. The new implementation only saves the location and size when one of the two is changed.
+ 2 files changed, 11 insertions(+), 7 deletions(-)
+
+Added code to catch the "System.Exception: This schema for this assembly has not been registered with WMI." when the user has now administrator rights.
+ 1 file changed, 14 insertions(+), 5 deletions(-)
+
+Replaced the direct reference to the Mono.Posix assembly with reflection.
+ 2 files changed, 33 insertions(+), 10 deletions(-)
+
+Added CPUID support for Linux.
+ 10 files changed, 208 insertions(+), 133 deletions(-)
+
+Restricted the access to the kernel driver to system and built-in administrators.
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+Replaced the non-kernel code of WinRing0 with a managed implementation. The new implementation should fix Issue 32 and simplify further work on Issue 46.
+ 23 files changed, 1034 insertions(+), 284 deletions(-)
+
+Fixed the NullReference Exception
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+Added a Parent property to the WMI exposed Hardware objects
+ 1 file changed, 2 insertions(+)
+
+Updated attribute maps for the 4 SSD controllers we figured out so far. Also switched back to an array of DriveAttribute rather than a generic list.
+ 3 files changed, 174 insertions(+), 89 deletions(-)
+
+Removed the WMI Provider menu entry and restricted WMI to the Windows platform.
+ 3 files changed, 5 insertions(+), 35 deletions(-)
+
+Changed the SMART AttributeID type from an enum to a struct.
+ 3 files changed, 145 insertions(+), 86 deletions(-)
+
+Renamed folder from Wmi to WMI also in the project file.
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+Renamed folder Wmi to WMI.
+ 4 files changed, 0 insertions(+), 0 deletions(-)
+
+Added code to read the additional fans on the ASRock P55 Deluxe mainboard via special GPIO switching.
+ 7 files changed, 172 insertions(+), 19 deletions(-)
+
+Small bits of refactoring.
+ 6 files changed, 8 insertions(+), 9 deletions(-)
+
+AnkhSVN fails, TortoiseSVN to the rescue..
+ 3 files changed, 187 deletions(-)
+
+More refactoring.
+ 6 files changed, 206 insertions(+), 17 deletions(-)
+
+Added license to the WMI stuff and refactored a few things a little.
+ 6 files changed, 190 insertions(+), 29 deletions(-)
+
+Added a WMI provider, documentation to follow.
+ 7 files changed, 243 insertions(+), 23 deletions(-)
+
+Improved the invariant TSC frequency estimation code to ignore readings with a large error.
+ 1 file changed, 18 insertions(+), 17 deletions(-)
+
+Added a mainboard specific configuration for the ASRock P55 Deluxe.
+ 3 files changed, 39 insertions(+), 5 deletions(-)
+
+Added a mainboard specific configuration for the ASRock AOD790GX-128M
+ 3 files changed, 64 insertions(+), 19 deletions(-)
+
+Reading the timeStampCounterMultiplier right at the beginning when the time stamp counter is estimated instead of reading it at each update. Refactored the IntelCPU code a bit.
+ 2 files changed, 73 insertions(+), 33 deletions(-)
+
+Added initial SSD support for Intel, Indilinx, SandForce and Samsung drives. Experimental feature for now!
+ 3 files changed, 149 insertions(+), 50 deletions(-)
+
+Added a new sensor type "Level" for wear or charge level (or any other percentage based sensors that don't fit into Load or Control).
+ 8 files changed, 31 insertions(+), 8 deletions(-)
+
+Added more error checking to the T-Balancer enumeration code. This hopefully fixes an IndexOutOfRangeException in the TBalancerGroup constructor.
+ 1 file changed, 13 insertions(+), 2 deletions(-)
+
+Fixed Issue 129.
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+Changed the way window position is saved and handled. This should now work properly.
+ 2 files changed, 35 insertions(+), 26 deletions(-)
+
+Fixed Issue 123.
+ 1 file changed, 18 insertions(+), 12 deletions(-)
+
+Fixed Issue 125.
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+Fixed Issue 124.
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Cleaned the macros up a bit.
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+Fixed the context menu positioning as well, following the previous fix to multimonitor setups.
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+Fixed an issue where the gadget would not be movable on an extra monitor positioned to the left of the primary monitor.
+ 1 file changed, 27 insertions(+), 2 deletions(-)
+
+Removed unused assemblies.
+ 2 files changed, 2 insertions(+), 4 deletions(-)
+
+Replaced HttpUtility.UrlEncode with Uri.EscapeDataString and deleted the reference to the System.Web assembly. The System.Web assembly seems to be missing on some .NET 4.0 installations (and the overhead of using it is a bit large, just for the UrlEncode method).
+ 3 files changed, 10 insertions(+), 18 deletions(-)
+
+Reverted the SMART temperature attribute search strategy to the one used previously. Fixed a few minor details in the HDDGroup class.
+ 2 files changed, 48 insertions(+), 37 deletions(-)
+
+Added a S.M.A.R.T dump for all drives, regardless of temperature presence so that we can start debugging SSD's and such.
+ 1 file changed, 99 insertions(+), 45 deletions(-)
+
+Fixed the initialization of the TSC estimating code.
+ 3 files changed, 18 insertions(+), 13 deletions(-)
+
+Fixed some problems when compiling in Mono and running on Linux.
+ 6 files changed, 38 insertions(+), 37 deletions(-)
+
+Improved the implementation for the AMD 10h family CPU clock speeds.
+ 6 files changed, 185 insertions(+), 76 deletions(-)
+
+Fixed a problem where the ADL Main_Memory_Alloc callback delegate could be garbage collected while still in use.
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+Added support for more than one Heatmaster fan controller.
+ 2 files changed, 3 insertions(+), 4 deletions(-)
+
+Added an option to minimize on close.
+ 2 files changed, 36 insertions(+), 9 deletions(-)
+
+A first (experimental) implementation for the AMD 10h family CPU clock speeds.
+ 4 files changed, 68 insertions(+), 8 deletions(-)
+
+Rewritten the PCI access for AMD CPUs.
+ 5 files changed, 131 insertions(+), 30 deletions(-)
+
+Refactored some of the hardware monitoring code and fixed a few code inspection warnings.
+ 44 files changed, 440 insertions(+), 475 deletions(-)
+
+Fixed some silly mistakes
+ 1 file changed, 4 insertions(+), 7 deletions(-)
+
+Added thermal and voltage/frequency MSRs for K8 CPUs, fixed chars-per-line limit
+ 1 file changed, 12 insertions(+), 4 deletions(-)
+
+Added core and bus clock readings for AMD's K8 (0F) family of CPUs
+ 1 file changed, 40 insertions(+), 1 deletion(-)
+
+Refactored the CPU classes and added a GenericCPU class.
+ 6 files changed, 345 insertions(+), 337 deletions(-)
+
+Changed the trimming in the treeView to StringTrimming.EllipsisCharacter.
+ 1 file changed, 10 insertions(+), 6 deletions(-)
+
+Fixed Issue 112.
+ 2 files changed, 8 insertions(+)
+
+Corrected the size of the DriveCommandParameter structure to match the documentation of SENDCMDINPARAMS http://msdn.microsoft.com/en-us/library/ff565401%28VS.85%29.aspx
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+
+Fixed an InvalidOperationException in OpenHardwareMonitor.GUI.SensorGadget.OnPaint caused by sensors with null as value.
+ 1 file changed, 40 insertions(+), 35 deletions(-)
+
+Added a check to verify the FTDI chip ID before opening the T-Balancer port.
+ 3 files changed, 20 insertions(+), 5 deletions(-)
+
+Fixed an UnauthorizedAccessException when modifying the auto-startup registry entry.
+ 2 files changed, 22 insertions(+), 9 deletions(-)
+
+Fixed some hardware sorting issue in the gadget. Hardware with the same type and name would be added to the same section.
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+Added a configurable font size and window width to the gadget.
+ 5 files changed, 328 insertions(+), 134 deletions(-)
+
+Fixed some Code Analysis warnings.
+ 37 files changed, 151 insertions(+), 142 deletions(-)
+
+Improved the gadget formatting and added an option to remove the hardware names in the gadget.
+ 3 files changed, 82 insertions(+), 29 deletions(-)
+
+Fixed the GadgetWindow AlwaysOnTop option (could be lost by tracking "Show Desktop" events even when AlwaysOnTop = true).
+ 1 file changed, 11 insertions(+), 6 deletions(-)
+
+Any OpenHardwareMonitorShowDesktopReferenceWindow (even from another process) will be good enough to detect "Show Desktop". This fixes the "Show Desktop" detection in a second instance of the Open Hardware Monitor.
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Fixed a few closure variables. The local variables used in the closure can not be shared between closures if their values should be different.
+ 2 files changed, 25 insertions(+), 24 deletions(-)
+
+Added a mainboard specific configuration for the ECS A890GXM-A.
+ 5 files changed, 63 insertions(+), 16 deletions(-)
+
+Added a desktop gadget implementation.
+ 24 files changed, 1326 insertions(+), 60 deletions(-)
+
+Search all possible registry locations for the Heatmaster serial port.
+ 2 files changed, 15 insertions(+), 15 deletions(-)
+
+Fixed Issue 105 and Issue 106.
+ 3 files changed, 24 insertions(+), 3 deletions(-)
+
+Added another registry path for getting the Heatmaster serial port.
+ 3 files changed, 10 insertions(+), 7 deletions(-)
+
+Fixed a few problems with the Heatmaster.
+ 3 files changed, 109 insertions(+), 74 deletions(-)
+
+Added a first implementation for the Heatmaster fan controller.
+ 7 files changed, 470 insertions(+), 3 deletions(-)
+
+Fixed Issue 97.
+ 4 files changed, 33 insertions(+), 3 deletions(-)
+
+Restricted ITE detection to port 0x2E.
+ 1 file changed, 53 insertions(+), 40 deletions(-)
+
+Fixed Issue 104.
+ 3 files changed, 20 insertions(+), 16 deletions(-)
+
+Fixed some Code Analysis warnings.
+ 33 files changed, 599 insertions(+), 525 deletions(-)
+
+Changed the project files to Visual Studio 2010. Fixed some Code Analysis warnings.
+ 37 files changed, 401 insertions(+), 179 deletions(-)
+
+Refactored the hardware monitoring code into a library (Issue 101).
+ 59 files changed, 698 insertions(+), 548 deletions(-)
+
+Added a fan control sensor for ATI GPUs.
+ 1 file changed, 20 insertions(+), 12 deletions(-)
+
+Added ISA bus mutex support to the super IO detection.
+ 5 files changed, 45 insertions(+), 35 deletions(-)
+
+Added an ISA bus mutex.
+ 4 files changed, 66 insertions(+), 20 deletions(-)
+
+Adding missing class SensorVisitor.
+ 1 file changed, 65 insertions(+)
+
+Fixed BadImageFormatExceptions.
+ 2 files changed, 11 insertions(+), 6 deletions(-)
+
+Refactoring and fine tuning for Linux GUI.
+ 7 files changed, 48 insertions(+), 101 deletions(-)
+
+Replaced the SplitContainer with SplitContainerAdv. Now the panels are directly resized and the splitter can be drawn nicely.
+ 7 files changed, 234 insertions(+), 286 deletions(-)
+
+Delete the config file if it can not be parsed, and restart with a new one.
+ 1 file changed, 12 insertions(+)
+
+Replaced all menus with the native implementations MainMenu and ContextMenu. Fixed a bug with the sensor renaming context menu.
+ 8 files changed, 381 insertions(+), 360 deletions(-)
+
+Fixed Issue 91.
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+Fixed Issue 90.
+ 3 files changed, 19 insertions(+), 2 deletions(-)
+
+Added a mainboard specific configuration for the ASRock 880GMH/USB3
+ 4 files changed, 72 insertions(+), 22 deletions(-)
+
+An attempt at adding a mainboard specific configuration for the ASUS P6X58D-E.
+ 7 files changed, 85 insertions(+), 21 deletions(-)
+
+Fixed Issue 82.
+ 7 files changed, 107 insertions(+), 13 deletions(-)
+
+Fixed Issue 66.
+ 10 files changed, 551 insertions(+), 16 deletions(-)
+
+Split the sensors and parameter report tree.
+ 1 file changed, 50 insertions(+), 12 deletions(-)
+
+Added a mainboard specific configuration for the Gigabyte GA-P55-UD4.
+ 3 files changed, 18 insertions(+), 1 deletion(-)
+
+Added more revisions for the W83627THF, as there seems to exist chips with revision 0x82, 0x84, and 0x85 as well.
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+Corrected the mainboard specific configuration for the ASUS M4A79XTD EVO (Issue 79).
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+Added the ITE chip version to the report.
+ 2 files changed, 10 insertions(+), 4 deletions(-)
+
+A fist attempt at adding a mainboard specific configuration for the ASUS M4A79XTD EVO (Issue 79).
+ 5 files changed, 18 insertions(+), 3 deletions(-)
+
+Fixed Issue 72.
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+Fixed Issue 71.
+ 2 files changed, 42 insertions(+), 26 deletions(-)
+
+Fixed Issue 76.
+ 1 file changed, 15 insertions(+)
+
+Improved the support for Nvidia GPUs.
+ 3 files changed, 503 insertions(+), 29 deletions(-)
+
+Fixed Issue 73.
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+Added a mainboard specific configuration for the Gigabyte GA-X58A-UD3R.
+ 4 files changed, 21 insertions(+), 3 deletions(-)
+
+Added support for a second miniNG on the T-Balancer bigNG.
+ 1 file changed, 18 insertions(+), 6 deletions(-)
+
+Added (partial) SMBIOS support for Linux by reading from sysfs.
+ 4 files changed, 336 insertions(+), 264 deletions(-)
+
+Added experimental lm-sensors super I/O support for Linux.
+ 4 files changed, 217 insertions(+), 11 deletions(-)
+
+Fixed Issue 69.
+ 12 files changed, 27 insertions(+), 114 deletions(-)
+
+Fixed Issue 65.
+ 10 files changed, 173 insertions(+), 93 deletions(-)
+
+Fixed Issue 23.
+ 5 files changed, 103 insertions(+), 25 deletions(-)
+
+Fixed Issue 68.
+ 1 file changed, 1 insertion(+)
+
+Fixed Issue 63.
+ 11 files changed, 721 insertions(+), 466 deletions(-)
+
+Fixed Issue 64.
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+Added an event handler to save the configuration when the user logs off without closing the application first (http://blogs.msdn.com/b/oldnewthing/archive/2008/04/21/8413175.aspx), because FormClosed is not called in that case.
+ 5 files changed, 24 insertions(+), 13 deletions(-)
+
+Added a workaround for the "You must keep the stream open for the lifetime of the Image." problem of the Image.FromStream method. This also reduced the overall memory usage (private working set).
+ 1 file changed, 25 insertions(+), 8 deletions(-)
+
+Extended the ITE super I/O voltage reading by adding hidden voltage sensors for unknown channels. Added a few known DFI and Gigabyte mainboard voltage configurations.
+ 10 files changed, 207 insertions(+), 33 deletions(-)
+
+A few bug fixes to avoid crashes on Linux systems.
+ 3 files changed, 22 insertions(+), 6 deletions(-)
+
+Attempt to fix an exception:
+ 1 file changed, 10 insertions(+), 16 deletions(-)
+
+Fixed an UnauthorizedAccessException in the StartupManager. The exception occurred when the application was running without administrator rights. A task for the current user could be created manually, but RegisterTaskDefinition somehow always throws an UnauthorizedAccessException. The current fix restricts the TaskScheduler startup method to accounts with administrator rights.
+ 1 file changed, 27 insertions(+), 12 deletions(-)
+
+Fixed Issue 10.
+ 13 files changed, 163 insertions(+), 38 deletions(-)
+
+Fixed an EntryPointNotFoundException in the NVAPI wrapper:
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+Fixed Issue 60.
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+Added information about software environment to the report.
+ 1 file changed, 9 insertions(+)
+
+Added a sensor type Control (with unit percent) for (fan) PWM control sensors. Fixed Issue 2.
+ 8 files changed, 36 insertions(+), 12 deletions(-)
+
+Fixed some font issues.
+ 4 files changed, 13 insertions(+), 18 deletions(-)
+
+Fixed the following Exception:
+ 1 file changed, 15 insertions(+), 9 deletions(-)
+
+Fixed the following NullReferenceException: System.NullReferenceException:    in OpenHardwareMonitor.Hardware.Nvidia.NvidiaGroup..ctor()    in OpenHardwareMonitor.Hardware.Computer.Open()    in OpenHardwareMonitor.GUI.MainForm..ctor()    in OpenHardwareMonitor.Program.Main()
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+Fixed Issue 55.
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+Fixed Issue 57.
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+Fixed Issue 59.
+ 1 file changed, 15 insertions(+), 5 deletions(-)
+
+Added a user interface to configure certain sensors as hidden. This fixed Issue 53.
+ 10 files changed, 551 insertions(+), 349 deletions(-)
+
+Refactored the hardware code and added the visitor pattern for operations on the computer/hardware/sensor/parameter tree.
+ 28 files changed, 372 insertions(+), 89 deletions(-)
+
+Added an Identifier class for IHardware, ISensor and IParameter Identifier properties.
+ 19 files changed, 241 insertions(+), 52 deletions(-)
+
+Fixed Issue 52.
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+Fixed the "System.ComponentModel.Win32Exception: An error occurred in sending the command to the application" error in the about-box link code.
+ 2 files changed, 5 insertions(+), 3 deletions(-)
+
+Added a check if all required files are available at startup. Improved the crash reporting.
+ 3 files changed, 93 insertions(+), 22 deletions(-)
+
+Fixed an overflow problem with the log function in the CPUID constructor.
+ 1 file changed, 18 insertions(+), 4 deletions(-)
+
+Fixed exception handling in StartupManager (some systems throw a DirectoryNotFoundException instead of a FileNotFoundException).
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+Added support for F71889ED super I/O chips.
+ 6 files changed, 30 insertions(+), 13 deletions(-)
+
+Another small fix of the coreId calculation for multi-CPU systems.
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Fixed a few more crash causing bugs.
+ 3 files changed, 10 insertions(+), 5 deletions(-)
+
+Added a processorIndex to CPU classes for multi CPU support.
+ 4 files changed, 19 insertions(+), 13 deletions(-)
+
+Fixed the CPULoad implementation for multi CPU systems.
+ 1 file changed, 19 insertions(+), 12 deletions(-)
+
+Improved the stability of the crash reporting system.
+ 3 files changed, 16 insertions(+), 9 deletions(-)
+
+Fixed Issue 43.
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+Fixed a NullReferenceException in HDD.Update.
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+Fixed the coreId and threadId calculation in the APIC CPU enumeration code and removed some IndexOutOfRangeException problems.
+ 1 file changed, 18 insertions(+), 7 deletions(-)
+
+Created a new wrapper for the Task Scheduler to fix some problem where TaskScheduler.Connect would throw an ArgumentException.
+ 2 files changed, 527 insertions(+), 2 deletions(-)
+
+Added basic support for ITE IT8712F super I/O chips.
+ 3 files changed, 3 insertions(+)
+
+Added revision 0x41 for Winbond W83627HF chips (cf Issue 44).
+ 1 file changed, 1 insertion(+)
+
+Fixed Issue 39.
+ 1 file changed, 1 insertion(+)
+
+Implemented APIC based CPU enumeration (Issue 41).
+ 10 files changed, 448 insertions(+), 255 deletions(-)
+
+Fixed Issue 25.
+ 2 files changed, 52 insertions(+), 40 deletions(-)
+
+Fixed Issue 24.
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+Rewritten the T-Balancer code to use the FTDI D2XX drivers directly instead of the System.IO.Ports.SerialPort class. The SerialPort class has some ugly problems like http://connect.microsoft.com/VisualStudio/feedback/details/140018/serialport-crashes-after-disconnect-of-usb-com-port or http://social.msdn.microsoft.com/Forums/en-US/netfxbcl/thread/8a1825d2-c84b-4620-91e7-3934a4d47330 for which no real solution seems to exist. And Microsoft doesn't feel like it needs to be fixed for years now.
+ 6 files changed, 372 insertions(+), 136 deletions(-)
+
+Fixed Issue 26. Added a dialog to automatically send a crash report.
+ 16 files changed, 618 insertions(+), 119 deletions(-)
+
+Fixed Issue 9.
+ 4 files changed, 46 insertions(+), 12 deletions(-)
+
+Fixed Issue 20.
+ 3 files changed, 9 insertions(+), 18 deletions(-)
+
+Added a dialog for the report filename. Added additional checks to T-Balancer code for cases where the port gets closed. Moved the timer to the Computer class.
+ 8 files changed, 152 insertions(+), 67 deletions(-)
+
+Added an option to automatically startup after Windows logon using the Task Scheduler 2.0 for Windows Vista/7 or the Registry for Windows XP.
+ 6 files changed, 635 insertions(+), 35 deletions(-)
+
+Fixed Issue 21.
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+Fixed Issue 14 (ignore ATI GPU voltage and clock sensors if the value is 0).
+ 1 file changed, 16 insertions(+), 7 deletions(-)
+
+Changed the CPU clock calculation. If no invariant TSC is available, then the max CPU clock is estimated at startup under load, otherwise an average over one second is used.
+ 3 files changed, 110 insertions(+), 51 deletions(-)
+
+Added additional checks to the ITE super I/O reading code, to reduce cases where wrong values are read.
+ 1 file changed, 44 insertions(+), 16 deletions(-)
+
+Fixed Issue 12.
+ 2 files changed, 8 insertions(+), 9 deletions(-)
+
+Fixed Issue 11.
+ 2 files changed, 16 insertions(+), 10 deletions(-)
+
+Changed the T-Balancer fields for the actual PWM (percent) value of the channels from 156+ to 137+, because on some (older?) hardware the fields 156+ seem not to be updated. Fields 137+ have one bit less resolution, but it's what the Navigator uses as well (and used only if in PWM mode).
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Fixed a typo in the parameter form.
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Fixed TBalancer reading on hardware that uses 88 (instead of 255) as frame identifier.
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Changed the system tray font.
+ 3 files changed, 6 insertions(+), 2 deletions(-)
+
+Small fix for the Form Handle creating patch.
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+Set the system tray icon font to a fixed size. Fixed the exiting of the application when the form was never shown and Close() is called.
+ 3 files changed, 10 insertions(+), 4 deletions(-)
+
+Reading TjMax for each core on Intel Core i3/i5/i7 CPUs.
+ 1 file changed, 31 insertions(+), 18 deletions(-)
+
+Added support for Fintek F71858 chips. Corrected the number of fans for Fintek.
+ 4 files changed, 66 insertions(+), 22 deletions(-)
+
+Added support for Winbond W83687THF and improved report output for LPC detection.
+ 6 files changed, 100 insertions(+), 12 deletions(-)
+
+The T-Balancer flow-meter time window seems to be scaled with a factor 4. Added the correction factor to get correct results.
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+Fixed the version number in the AboutBox.
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+Added sub-hardware support and basic enumeration for mainboards.
+ 12 files changed, 369 insertions(+), 59 deletions(-)
+
+Added support for sensor parameters. Fixed Core and Thread count detection for Intel Core i7 CPUs with disabled HyperThreading.
+ 23 files changed, 996 insertions(+), 111 deletions(-)
+
+Changed TreeViewAdv grid color to a fixed value.
+ 2 files changed, 28 insertions(+), 28 deletions(-)
+
+NVAPI interop struct packing improved.
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+
+Fintek super I/O chips with base address 0x..5 are detected now as well. Set Pack = 1 for NVAPI struct interop (should fix GPU enumeration).
+ 4 files changed, 20 insertions(+), 11 deletions(-)
+
+Corrected version info.
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+Added both VCore detection modes for Winbond W82637THF (should fix issue 3).
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+
+Added support for T-Balancer sensorhub and miniNG. Added a Flow sensor-type.
+ 11 files changed, 215 insertions(+), 59 deletions(-)
+
+Improved Winbond temperature reading. Temperatures create by adding PECI Agent values (delta to TCC Activation Temperature) to a (possibly uncalibrated) TBase are not read. Direct reading temperatures from sensor report register if available. Added lower bound for temperatures on Winbond chips. Nvidia GPUs are now displayed even if they do not have any sensors.
+ 4 files changed, 104 insertions(+), 69 deletions(-)
+
+New option to start the application minimized.
+ 3 files changed, 50 insertions(+), 19 deletions(-)
+
+Added support for Winbond W83627THF super I/O chip.
+ 5 files changed, 17 insertions(+), 6 deletions(-)
+
+Added additional register banks to report output for Winbond chips.
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+Raised TjMax for Intel 65nm CPUs by 10°C
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+Added global exception handling for T-Balancer detection (to handle ArgumentException if portName does not exist).
+ 2 files changed, 5 insertions(+), 7 deletions(-)
+
+Fixed AMD family 0Fh temperature reading of first core.
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Better core and thread number identification. Fixed clock reading on Intel Atom CPUs. New reporting of MSR values for Intel CPUs.
+ 1 file changed, 108 insertions(+), 70 deletions(-)
+
+Added additional SMART temperature attributes.
+ 3 files changed, 19 insertions(+), 5 deletions(-)
+
+Restored CTSHolding check and added more report output for T-Balancer enumeration.
+ 3 files changed, 49 insertions(+), 41 deletions(-)
+
+Added core clock and bus speed support for Intel Core i5, i7 CPUs.
+ 3 files changed, 65 insertions(+), 36 deletions(-)
+
+Allow all protocols 2X for T-Balancer.
+ 3 files changed, 6 insertions(+), 9 deletions(-)
+
+Added core and bus clock support for Intel CPUs (Core 2).
+ 5 files changed, 116 insertions(+), 56 deletions(-)
+
+New graphical system tray display for load sensors.
+ 1 file changed, 54 insertions(+), 31 deletions(-)
+
+Tray sensor display default color is black and color can be changed now. Fixed CPU load reading for AMD CPUs and added additional misc device for AMD core temperature reading.
+ 8 files changed, 111 insertions(+), 62 deletions(-)
+
+Changed the T-Balancer detection and added more report details.
+ 2 files changed, 34 insertions(+), 31 deletions(-)
+
+First system tray sensor monitor support.
+ 8 files changed, 584 insertions(+), 42 deletions(-)
+
+A small bug fix for application crashes during the mainboard detection (System.Management.ManagementException: Not supported).
+ 2 files changed, 12 insertions(+), 12 deletions(-)
+
+Added support for NVIDIA fan rpm. Changed NVIDIA GPU enumeration.
+ 4 files changed, 52 insertions(+), 25 deletions(-)
+
+Removed debug code.
+ 1 file changed, 2 insertions(+), 16 deletions(-)
+
+Added upper bound for valid fan RPM on IT87.
+ 2 files changed, 18 insertions(+), 3 deletions(-)
+
+Added NVAPI report output.
+ 3 files changed, 13 insertions(+), 3 deletions(-)
+
+Added support for Winbond W83627EHF, W83667HG, W83667HG-B mainboard chips.
+ 12 files changed, 161 insertions(+), 205 deletions(-)
+
+Release version 0.1.15. Added protocol 0x2C for T-Balancer.
+ 3 files changed, 17 insertions(+), 10 deletions(-)
+
+Release version 0.1.14. Added more report details for T-Balancer bigNG.
+ 1 file changed, 37 insertions(+), 11 deletions(-)
+
+Added initial support for W83627HF. Some refactoring for IHardware classes.
+ 14 files changed, 354 insertions(+), 373 deletions(-)
+
+
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+Changed ATI GPU device enumeration.
+ 2 files changed, 23 insertions(+), 31 deletions(-)
+
+Refactoring: New class Computer manages all the hardware and creates events.
+ 9 files changed, 328 insertions(+), 167 deletions(-)
+
+Changed minimizing to system tray on Windows systems.
+ 6 files changed, 357 insertions(+), 257 deletions(-)
+
+Release version 0.1.13. Replaced PerformanceCounter based CPU load sensors with an implementation using NtQuerySystemInformation. Fixed a temperature reading problem for W83627DHG chips (sensors with invalid value 127°C).
+ 9 files changed, 233 insertions(+), 125 deletions(-)
+
+Release version 0.1.12. Added error handling for PerformanceCounters (CPU load sensor).
+ 4 files changed, 92 insertions(+), 46 deletions(-)
+
+Release version 0.1.11. Added support for load percentage sensor type. Added load sensors for CPUs and ATI GPUs.
+ 13 files changed, 220 insertions(+), 39 deletions(-)
+
+Fixed Intel CPU coreCount in case CPUID 0x0B is supported but returns only 0.
+ 1 file changed, 10 insertions(+), 6 deletions(-)
+
+Release version 0.1.10. Changed core count for Intel Core i5/i7  CPUs. Added CpuidEx function.
+ 6 files changed, 31 insertions(+), 17 deletions(-)
+
+ITE IT87XX family renamed.
+ 3 files changed, 12 insertions(+), 12 deletions(-)
+
+Release version 0.1.9. Fixed ATI GPU id check.
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+Release version 0.1.8. Added support for W83627DHG-P super i/o chips.
+ 4 files changed, 28 insertions(+), 7 deletions(-)
+
+Release version 0.1.7. Improved report writer.
+ 6 files changed, 28 insertions(+), 12 deletions(-)
+
+
+ 2 files changed, 416 deletions(-)
+
+Added support for Fintek F71862, F71869, F71889.
+ 5 files changed, 500 insertions(+), 39 deletions(-)
+
+Release version 0.1.6. Fixed F71882 temperature reading. Added error handling for ATI GPUs (ADL). Fixed sensor events.
+ 7 files changed, 71 insertions(+), 27 deletions(-)
+
+Release version 0.1.5. Added support for AMD family 0Fh CPUs. Fixed saving of wrong window size values for minimized forms (by not saving them).
+ 7 files changed, 230 insertions(+), 8 deletions(-)
+
+Added support for W83627DHG chips. Changed Core i7 temperature reading. Fixed IT87 temperature reading.
+ 4 files changed, 163 insertions(+), 8 deletions(-)
+
+Release version 0.1.4. Fixed EntryPointNotFoundException for ADL_Adapter_ID_Get by adding two fallback implementations.
+ 2 files changed, 27 insertions(+), 7 deletions(-)
+
+Release version 0.1.3.1. Added a a bit more info to ADL reports.
+ 2 files changed, 14 insertions(+), 5 deletions(-)
+
+Release 0.1.3.
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+Added additional checks to SMBIOS parsing. New class HexStringArray is for debugging with report data.
+ 5 files changed, 82 insertions(+), 19 deletions(-)
+
+Fixed ADL dll loading. The name of the dll is always atiadlxx, except when running as 32-bit app on 64-bit systems (atiadlxy in that case).
+ 2 files changed, 89 insertions(+), 83 deletions(-)
+
+Release version 0.1.2. First implementation for Fintek F71882FG chips. Fixed Intel Core i7 temperature reading. Changed Nvidia GPU enumeration.
+ 10 files changed, 337 insertions(+), 86 deletions(-)
+
+Fixed 5th fan channel for IT87 chips. Added ADL status code to report.
+ 4 files changed, 17 insertions(+), 8 deletions(-)
+
+Release version 0.1.1
+ 3 files changed, 14 insertions(+), 4 deletions(-)
+
+Implementation for Intel Core i7 temperature sensors.
+ 1 file changed, 23 insertions(+), 6 deletions(-)
+
+Changed ATI GPU enumeration.
+ 7 files changed, 44 insertions(+), 6 deletions(-)
+
+Fixed a NullReferenceException in the HDD SMART code.
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+Initial commit.
+ 71 files changed, 7144 insertions(+)
