@@ -26,21 +26,21 @@ namespace OpenHardwareMonitor.GUI {
     private Font smallFont;
 
     public SensorNotifyIcon(SystemTray sensorSystemTray, ISensor sensor,
-      bool balloonTip, PersistentSettings settings, UnitManager unitManager)
-    {
+      PersistentSettings settings, UnitManager unitManager) {
+
       this.unitManager = unitManager;
       this.sensor = sensor;
       this.notifyIcon = new NotifyIconAdv();
 
-      //Color defaultColor = Color.Black;
+      //todo: set defaultColor depending on the taskbar color
+      var defaultColor = Color.FromArgb(0xff, 0x00, 0xff, 0xff);
       //if (sensor.SensorType == SensorType.Load ||
       //    sensor.SensorType == SensorType.Control ||
       //    sensor.SensorType == SensorType.Level)
-      //{
       //  defaultColor = Color.FromArgb(0xff, 0x70, 0x8c, 0xf1);
-      //}
+
       Color = settings.GetValue(new Identifier(sensor.Identifier,
-        "traycolor").ToString(), Color.FromArgb(0xff, 0x00, 0xff, 0xff));
+        "traycolor").ToString(), defaultColor);
 
       this.pen = new Pen(Color.FromArgb(96, Color.Black));
 
@@ -218,17 +218,17 @@ namespace OpenHardwareMonitor.GUI {
       Marshal.Copy(Scan0, bytes, 0, numBytes);
       bitmap.UnlockBits(data);
 
-      //byte red, green, blue;
-      //for (int i = 0; i < bytes.Length; i += 4) {
-      //  blue = bytes[i];
-      //  green = bytes[i + 1];
-      //  red = bytes[i + 2];
+      byte red, green, blue;
+      for (int i = 0; i < bytes.Length; i += 4) {
+        blue = bytes[i];
+        green = bytes[i + 1];
+        red = bytes[i + 2];
 
-      //  bytes[i] = color.B;
-      //  bytes[i + 1] = color.G;
-      //  bytes[i + 2] = color.R;
-      //  bytes[i + 3] = (byte)(0.3 * red + 0.59 * green + 0.11 * blue);
-      //}
+        bytes[i] = color.B;
+        bytes[i + 1] = color.G;
+        bytes[i + 2] = color.R;
+        bytes[i + 3] = (byte)(0.3 * red + 0.59 * green + 0.11 * blue);
+      }
 
       return IconFactory.Create(bytes, bitmap.Width, bitmap.Height,
         PixelFormat.Format32bppArgb);

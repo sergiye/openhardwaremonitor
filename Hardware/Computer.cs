@@ -392,8 +392,8 @@ namespace OpenHardwareMonitor.Hardware {
 
       public void SetValue(string name, string value) { }
 
-      public string GetValue(string name, string value) {
-        return value;
+      public string GetValue(string name, string defaultValue) {
+        return defaultValue;
       }
 
       public void Remove(string name) { }

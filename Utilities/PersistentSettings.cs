@@ -9,7 +9,7 @@ using OpenHardwareMonitor.Hardware;
 namespace OpenHardwareMonitor {
   public class PersistentSettings : ISettings {
 
-    private IDictionary<string, string> settings = 
+    private IDictionary<string, string> settings =
       new Dictionary<string, string>();
 
     public void Load(string fileName) {
@@ -36,14 +36,14 @@ namespace OpenHardwareMonitor {
       XmlNodeList list = doc.GetElementsByTagName("appSettings");
       foreach (XmlNode node in list) {
         XmlNode parent = node.ParentNode;
-        if (parent != null && parent.Name == "configuration" && 
+        if (parent != null && parent.Name == "configuration" &&
           parent.ParentNode is XmlDocument) {
           foreach (XmlNode child in node.ChildNodes) {
             if (child.Name == "add") {
               XmlAttributeCollection attributes = child.Attributes;
               XmlAttribute keyAttribute = attributes["key"];
               XmlAttribute valueAttribute = attributes["value"];
-              if (keyAttribute != null && valueAttribute != null && 
+              if (keyAttribute != null && valueAttribute != null &&
                 keyAttribute.Value != null) {
                 settings.Add(keyAttribute.Value, valueAttribute.Value);
               }
@@ -86,7 +86,7 @@ namespace OpenHardwareMonitor {
         } catch { }
       }
 
-      using (var stream = new FileStream(fileName, 
+      using (var stream = new FileStream(fileName,
         FileMode.Create, FileAccess.Write))
       {
         stream.Write(file, 0, file.Length);
@@ -105,12 +105,8 @@ namespace OpenHardwareMonitor {
       settings[name] = value;
     }
 
-    public string GetValue(string name, string value) {
-      string result;
-      if (settings.TryGetValue(name, out result))
-        return result;
-      else
-        return value;
+    public string GetValue(string name, string defaultValue) {
+      return settings.TryGetValue(name, out var result) ? result : defaultValue;
     }
 
     public void Remove(string name) {
@@ -121,66 +117,42 @@ namespace OpenHardwareMonitor {
       settings[name] = value.ToString();
     }
 
-    public int GetValue(string name, int value) {
-      string str;
-      if (settings.TryGetValue(name, out str)) {
-        int parsedValue;
-        if (int.TryParse(str, out parsedValue))
-          return parsedValue;
-        else
-          return value;
-      } else {
-        return value;
-      }
+    public int GetValue(string name, int defaultValue) {
+      if (settings.TryGetValue(name, out var str) && int.TryParse(str, out var parsedValue))
+        return parsedValue;
+      return defaultValue;
     }
 
     public void SetValue(string name, float value) {
       settings[name] = value.ToString(CultureInfo.InvariantCulture);
     }
 
-    public float GetValue(string name, float value) {
-      string str;
-      if (settings.TryGetValue(name, out str)) {
-        float parsedValue;
-        if (float.TryParse(str, NumberStyles.Float, 
-          CultureInfo.InvariantCulture, out parsedValue))
-          return parsedValue;
-        else
-          return value;
-      } else {
-        return value;
-      }
+    public float GetValue(string name, float defaultValue) {
+      if (settings.TryGetValue(name, out var str) && float.TryParse(str, NumberStyles.Float,
+        CultureInfo.InvariantCulture, out var parsedValue))
+        return parsedValue;
+      return defaultValue;
     }
 
     public void SetValue(string name, bool value) {
       settings[name] = value ? "true" : "false";
     }
 
-    public bool GetValue(string name, bool value) {
-      string str;
-      if (settings.TryGetValue(name, out str)) {
+    public bool GetValue(string name, bool defaultValue) {
+      if (settings.TryGetValue(name, out var str))
         return str == "true";
-      } else {
-        return value;
-      }
+      return defaultValue;
     }
 
     public void SetValue(string name, Color color) {
       settings[name] = color.ToArgb().ToString("X8");
     }
 
-    public Color GetValue(string name, Color value) {
-      string str;
-      if (settings.TryGetValue(name, out str)) {
-        int parsedValue;
-        if (int.TryParse(str, NumberStyles.HexNumber,
-          CultureInfo.InvariantCulture, out parsedValue))
-          return Color.FromArgb(parsedValue);
-        else
-          return value;
-      } else {
-        return value;
-      }
+    public Color GetValue(string name, Color defaultValue) {
+      if (settings.TryGetValue(name, out var str) && int.TryParse(str, NumberStyles.HexNumber,
+        CultureInfo.InvariantCulture, out var parsedValue))
+        return Color.FromArgb(parsedValue);
+      return defaultValue;
     }
   }
 }

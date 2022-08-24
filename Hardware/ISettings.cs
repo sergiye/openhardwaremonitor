@@ -5,7 +5,7 @@
     
     void SetValue(string name, string value);
     
-    string GetValue(string name, string value);
+    string GetValue(string name, string defaultValue);
     
     void Remove(string name);
   }
