@@ -1,38 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Text;
 
 namespace OpenHardwareMonitor.Utilities {
-  public class IconFactory {
 
-    private struct BITMAPINFOHEADER {
-      public uint Size;
-      public int Width;
-      public int Height;
-      public ushort Planes;
-      public ushort BitCount;
-      public uint Compression;
-      public uint SizeImage;
-      public int XPelsPerMeter;
-      public int YPelsPerMeter;
-      public uint ClrUsed;
-      public uint ClrImportant;
+  public static class IconFactory {
 
-      public BITMAPINFOHEADER(int width, int height, int bitCount) {
-        this.Size = 40;
-        this.Width = width;
-        this.Height = height;
-        this.Planes = 1;
-        this.BitCount = (ushort)bitCount;
-        this.Compression = 0;
-        this.SizeImage = 0;
-        this.XPelsPerMeter = 0;
-        this.YPelsPerMeter = 0;
-        this.ClrUsed = 0;
-        this.ClrImportant = 0;
+    private struct BitmapInfoHeader {
+      public readonly uint Size;
+      public readonly int Width;
+      public readonly int Height;
+      public readonly ushort Planes;
+      public readonly ushort BitCount;
+      public readonly uint Compression;
+      public readonly uint SizeImage;
+      public readonly int XPelsPerMeter;
+      public readonly int YPelsPerMeter;
+      public readonly uint ClrUsed;
+      public readonly uint ClrImportant;
+
+      public BitmapInfoHeader(int width, int height, int bitCount) {
+        Size = 40;
+        Width = width;
+        Height = height;
+        Planes = 1;
+        BitCount = (ushort)bitCount;
+        Compression = 0;
+        SizeImage = 0;
+        XPelsPerMeter = 0;
+        YPelsPerMeter = 0;
+        ClrUsed = 0;
+        ClrImportant = 0;
       }
 
       public void Write(BinaryWriter bw) {
@@ -50,48 +49,48 @@ namespace OpenHardwareMonitor.Utilities {
       }
     }
 
-    private struct ICONIMAGE {
-      public BITMAPINFOHEADER Header;
-      public byte[] Colors;
-      public int MaskSize;
+    private struct IconImage {
+      public BitmapInfoHeader Header;
+      public readonly byte[] Colors;
+      public readonly int MaskSize;
 
-      public ICONIMAGE(int width, int height, byte[] colors) {
-        this.Header = new BITMAPINFOHEADER(width, height << 1, 
+      public IconImage(int width, int height, byte[] colors) {
+        Header = new BitmapInfoHeader(width, height << 1,
           (8 * colors.Length) / (width * height));
-        this.Colors = colors;
+        Colors = colors;
         MaskSize = (width * height) >> 3;
       }
 
       public void Write(BinaryWriter bw) {
         Header.Write(bw);
-        int stride = Header.Width << 2;
-        for (int i = (Header.Height >> 1) - 1; i >= 0; i--)
+        var stride = Header.Width << 2;
+        for (var i = (Header.Height >> 1) - 1; i >= 0; i--)
           bw.Write(Colors, i * stride, stride);
-        for (int i = 0; i < 2 * MaskSize; i++)
-          bw.Write((byte)0);        
+        for (var i = 0; i < 2 * MaskSize; i++)
+          bw.Write((byte)0);
       }
     }
 
-    private struct ICONDIRENTRY {
-      public byte Width;
-      public byte Height;
-      public byte ColorCount;
-      public byte Reserved;
-      public ushort Planes;
-      public ushort BitCount;
-      public uint BytesInRes;
+    private struct IconDirEntry {
+      public readonly byte Width;
+      public readonly byte Height;
+      public readonly byte ColorCount;
+      public readonly byte Reserved;
+      public readonly ushort Planes;
+      public readonly ushort BitCount;
+      public readonly uint BytesInRes;
       public uint ImageOffset;
 
-      public ICONDIRENTRY(ICONIMAGE image, int imageOffset) {
-        this.Width = (byte)image.Header.Width;
-        this.Height = (byte)(image.Header.Height >> 1);
-        this.ColorCount = 0;
-        this.Reserved = 0;
-        this.Planes = image.Header.Planes;
-        this.BitCount = image.Header.BitCount;
-        this.BytesInRes = (uint)(image.Header.Size +
+      public IconDirEntry(IconImage image, int imageOffset) {
+        Width = (byte)image.Header.Width;
+        Height = (byte)(image.Header.Height >> 1);
+        ColorCount = 0;
+        Reserved = 0;
+        Planes = image.Header.Planes;
+        BitCount = image.Header.BitCount;
+        BytesInRes = (uint)(image.Header.Size +
           image.Colors.Length + image.MaskSize + image.MaskSize);
-        this.ImageOffset = (uint)imageOffset;
+        ImageOffset = (uint)imageOffset;
       }
 
       public void Write(BinaryWriter bw) {
@@ -105,61 +104,51 @@ namespace OpenHardwareMonitor.Utilities {
         bw.Write(ImageOffset);
       }
 
-      public uint Size {
-        get { return 16; }
-      }
+      public uint Size => 16;
     }
 
-    private struct ICONDIR {
-      public ushort Reserved;
-      public ushort Type;
-      public ushort Count;
-      public ICONDIRENTRY[] Entries;
+    private readonly struct IconDir {
+      public readonly ushort Reserved;
+      public readonly ushort Type;
+      public readonly ushort Count;
+      public readonly IconDirEntry[] Entries;
 
-      public ICONDIR(ICONDIRENTRY[] entries) {
-        this.Reserved = 0;
-        this.Type = 1;
-        this.Count = (ushort)entries.Length;
-        this.Entries = entries;
+      public IconDir(IconDirEntry[] entries) {
+        Reserved = 0;
+        Type = 1;
+        Count = (ushort)entries.Length;
+        Entries = entries;
       }
 
       public void Write(BinaryWriter bw) {
         bw.Write(Reserved);
         bw.Write(Type);
         bw.Write(Count);
-        for (int i = 0; i < Entries.Length; i++)
+        for (var i = 0; i < Entries.Length; i++)
           Entries[i].Write(bw);
       }
 
-      public uint Size {
-        get { return (uint)(6 + Entries.Length * 
-          (Entries.Length > 0 ? Entries[0].Size : 0)); } 
-      }
+      public uint Size => (uint)(6 + Entries.Length * (Entries.Length > 0 ? Entries[0].Size : 0));
     }
 
-    private static BinaryWriter binaryWriter = 
+    private static readonly BinaryWriter binaryWriter =
       new BinaryWriter(new MemoryStream());
-	
-    public static Icon Create(byte[] colors, int width, int height, 
-      PixelFormat format) {
+
+    public static Icon Create(byte[] colors, int width, int height, PixelFormat format) {
       if (format != PixelFormat.Format32bppArgb)
         throw new NotImplementedException();
 
-      ICONIMAGE image = new ICONIMAGE(width, height, colors);
-      ICONDIR dir = new ICONDIR(
-        new ICONDIRENTRY[] { new ICONDIRENTRY(image, 0) } );
+      var image = new IconImage(width, height, colors);
+      var dir = new IconDir(new[] { new IconDirEntry(image, 0) } );
       dir.Entries[0].ImageOffset = dir.Size;
 
-      Icon icon;
       binaryWriter.BaseStream.Position = 0;
 			dir.Write(binaryWriter);
       image.Write(binaryWriter);
 
 			binaryWriter.BaseStream.Position = 0;
-      icon = new Icon(binaryWriter.BaseStream);
-
+      var icon = new Icon(binaryWriter.BaseStream);
       return icon;
     }
-
   }
 }

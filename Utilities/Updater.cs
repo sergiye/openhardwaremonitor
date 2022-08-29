@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace OpenHardwareMonitor.Utilities {
 
-  public partial class GitHubRelease {
+  public class GitHubRelease {
     public Uri assets_url { get; set; }
     public Uri html_url { get; set; }
     public string tag_name { get; set; }
@@ -20,7 +20,7 @@ namespace OpenHardwareMonitor.Utilities {
     public Asset[] assets { get; set; }
   }
 
-  public partial class Asset {
+  public class Asset {
     public Uri url { get; set; }
     public string name { get; set; }
     public object label { get; set; }
@@ -35,7 +35,7 @@ namespace OpenHardwareMonitor.Utilities {
 
   internal static class Updater {
 
-    private const string GithubLandingPage = "sergiye/openhardwaremonitor";
+    private const string GITHUB_LANDING_PAGE = "sergiye/openhardwaremonitor";
     private static readonly string selfFileName;
 
     internal static readonly string CurrentVersion;
@@ -74,7 +74,7 @@ namespace OpenHardwareMonitor.Utilities {
         //  newVersion = wc.DownloadString($"https://raw.githubusercontent.com/{GithubLandingPage}/master/version.txt").TrimEnd();
         //newVersionUrl = $"https://github.com/{GithubLandingPage}/releases/download/{newVersion}/{selfFileName}";
 
-        var jsonString = GetJsonData($"https://api.github.com/repos/{GithubLandingPage}/releases").TrimEnd();
+        var jsonString = GetJsonData($"https://api.github.com/repos/{GITHUB_LANDING_PAGE}/releases").TrimEnd();
         var releases = JsonConvert.DeserializeObject<GitHubRelease[]>(jsonString);
         if (releases == null || releases.Length == 0)
           throw new Exception("Error getting list of releases.");
@@ -82,7 +82,7 @@ namespace OpenHardwareMonitor.Utilities {
         newVersion = releases[0].tag_name;
         newVersionUrl = releases[0].assets[0].browser_download_url;
 
-        if (CurrentVersion.CompareTo(newVersion) >= 0) {
+        if (string.Compare(CurrentVersion, newVersion, StringComparison.Ordinal) >= 0) {
           if (!silent)
             MessageBox.Show($"You have the latest version ({CurrentVersion}).", "Update", MessageBoxButtons.OK,
               MessageBoxIcon.Information);
@@ -118,7 +118,7 @@ namespace OpenHardwareMonitor.Utilities {
           WorkingDirectory = tempPath
         };
         Process.Start(startInfo);
-        Environment.Exit(0);
+        Application.Exit(); // Environment.Exit(0);
       } catch (Exception ex) {
         if (!silent)
           MessageBox.Show($"Error downloading new version\n{ex.Message}", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning);

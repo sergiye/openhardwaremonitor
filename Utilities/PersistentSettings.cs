@@ -1,19 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Xml;
+using Newtonsoft.Json;
 using OpenHardwareMonitor.Hardware;
 
 namespace OpenHardwareMonitor {
+
   public class PersistentSettings : ISettings {
 
-    private IDictionary<string, string> settings =
-      new Dictionary<string, string>();
+    private IDictionary<string, string> settings = new Dictionary<string, string>();
 
     public void Load(string fileName) {
-      XmlDocument doc = new XmlDocument();
+      if (!File.Exists(fileName)) return;
+      try {
+        var json = File.ReadAllText(fileName);
+        settings = JsonConvert.DeserializeObject<IDictionary<string, string>>(json);
+      }
+      catch (Exception) {
+        LoadOld(fileName);
+      }
+    }
+
+    public void LoadOld(string fileName) {
+      var doc = new XmlDocument();
       try {
         doc.Load(fileName);
       } catch {
@@ -21,28 +34,27 @@ namespace OpenHardwareMonitor {
           File.Delete(fileName);
         } catch { }
 
-        string backupFileName = fileName + ".backup";
+        var backupFileName = fileName + ".backup";
         try {
           doc.Load(backupFileName);
         } catch {
           try {
             File.Delete(backupFileName);
           } catch { }
-
           return;
         }
       }
 
-      XmlNodeList list = doc.GetElementsByTagName("appSettings");
+      var list = doc.GetElementsByTagName("appSettings");
       foreach (XmlNode node in list) {
-        XmlNode parent = node.ParentNode;
+        var parent = node.ParentNode;
         if (parent != null && parent.Name == "configuration" &&
           parent.ParentNode is XmlDocument) {
           foreach (XmlNode child in node.ChildNodes) {
             if (child.Name == "add") {
-              XmlAttributeCollection attributes = child.Attributes;
-              XmlAttribute keyAttribute = attributes["key"];
-              XmlAttribute valueAttribute = attributes["value"];
+              var attributes = child.Attributes;
+              var keyAttribute = attributes["key"];
+              var valueAttribute = attributes["value"];
               if (keyAttribute != null && valueAttribute != null &&
                 keyAttribute.Value != null) {
                 settings.Add(keyAttribute.Value, valueAttribute.Value);
@@ -54,15 +66,20 @@ namespace OpenHardwareMonitor {
     }
 
     public void Save(string fileName) {
+      var json = JsonConvert.SerializeObject(settings, Newtonsoft.Json.Formatting.Indented);
+      File.WriteAllText(fileName, json);
+    }
 
-      XmlDocument doc = new XmlDocument();
+    public void SaveOld(string fileName) {
+
+      var doc = new XmlDocument();
       doc.AppendChild(doc.CreateXmlDeclaration("1.0", "utf-8", null));
-      XmlElement configuration = doc.CreateElement("configuration");
+      var configuration = doc.CreateElement("configuration");
       doc.AppendChild(configuration);
-      XmlElement appSettings = doc.CreateElement("appSettings");
+      var appSettings = doc.CreateElement("appSettings");
       configuration.AppendChild(appSettings);
-      foreach (KeyValuePair<string, string> keyValuePair in settings) {
-        XmlElement add = doc.CreateElement("add");
+      foreach (var keyValuePair in settings) {
+        var add = doc.CreateElement("add");
         add.SetAttribute("key", keyValuePair.Key);
         add.SetAttribute("value", keyValuePair.Value);
         appSettings.AppendChild(add);
@@ -76,7 +93,7 @@ namespace OpenHardwareMonitor {
         file = memory.ToArray();
       }
 
-      string backupFileName = fileName + ".backup";
+      var backupFileName = fileName + ".backup";
       if (File.Exists(fileName)) {
         try {
           File.Delete(backupFileName);

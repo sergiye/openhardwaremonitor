@@ -352,6 +352,7 @@
     <Compile Include="GUI\SensorNode.cs" />
     <Compile Include="Utilities\EmbeddedResources.cs" />
     <Compile Include="Utilities\IconFactory.cs" />
+    <Compile Include="Utilities\SystemTools.cs" />
     <Compile Include="Utilities\Updater.cs" />
     <Compile Include="WMI\Hardware.cs" />
     <Compile Include="WMI\IWmiObject.cs" />

@@ -7,9 +7,7 @@ namespace OpenHardwareMonitor.Utilities {
 
     public static Image GetImage(string name) {
       name = "OpenHardwareMonitor.Resources." + name;
-
-      string[] names = 
-        Assembly.GetExecutingAssembly().GetManifestResourceNames();
+      var names = Assembly.GetExecutingAssembly().GetManifestResourceNames();
       for (int i = 0; i < names.Length; i++) {
         if (names[i].Replace('\\', '.') == name) {
           using (Stream stream = Assembly.GetExecutingAssembly().
@@ -18,7 +16,7 @@ namespace OpenHardwareMonitor.Utilities {
             // "You must keep the stream open for the lifetime of the Image."
             Image image = Image.FromStream(stream);
 
-            // so we just create a copy of the image 
+            // so we just create a copy of the image
             Bitmap bitmap = new Bitmap(image);
 
             // and dispose it right here
@@ -27,27 +25,25 @@ namespace OpenHardwareMonitor.Utilities {
             return bitmap;
           }
         }
-      } 
+      }
 
-      return new Bitmap(1, 1);    
+      return new Bitmap(1, 1);
     }
 
     public static Icon GetIcon(string name) {
       name = "OpenHardwareMonitor.Resources." + name;
-
-      string[] names =
-        Assembly.GetExecutingAssembly().GetManifestResourceNames();
+      var names = Assembly.GetExecutingAssembly().GetManifestResourceNames();
       for (int i = 0; i < names.Length; i++) {
         if (names[i].Replace('\\', '.') == name) {
           using (Stream stream = Assembly.GetExecutingAssembly().
             GetManifestResourceStream(names[i])) {
             return new Icon(stream);
           }
-        }          
-      } 
+        }
+      }
 
       return null;
     }
-         
+
   }
 }

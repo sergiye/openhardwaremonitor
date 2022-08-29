@@ -13,7 +13,7 @@ namespace OpenHardwareMonitor {
     [STAThread]
     public static void Main() {
 
-      if (!IsNetFramework45Installed())
+      if (!IsNetFrameworkInstalled())
         Environment.Exit(0);
 
       if (!mutex.WaitOne(TimeSpan.Zero, true)) {
@@ -22,13 +22,9 @@ namespace OpenHardwareMonitor {
       }
 
       #if !DEBUG
-      Application.ThreadException +=
-        new ThreadExceptionEventHandler(Application_ThreadException);
-      Application.SetUnhandledExceptionMode(
-        UnhandledExceptionMode.CatchException);
-
-      AppDomain.CurrentDomain.UnhandledException +=
-        new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+      Application.ThreadException += new ThreadExceptionEventHandler(Application_ThreadException);
+      Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+      AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
       #endif
 
       Application.EnableVisualStyles();
@@ -40,13 +36,13 @@ namespace OpenHardwareMonitor {
       }
     }
 
-    private static bool IsNetFramework45Installed() {
+    private static bool IsNetFrameworkInstalled() {
       Type type;
       try {
         type = TryGetDefaultDllImportSearchPathsAttributeType();
       } catch (TypeLoadException) {
         MessageBox.Show(
-          "This application requires the .NET Framework 4.5 or a later version.\n" +
+          "This application requires the .NET Framework 4.8 or a later version.\n" +
           "Please install the latest .NET Framework. For more information, see\n\n" +
           "https://dotnet.microsoft.com/download/dotnet-framework",
           "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
