@@ -523,7 +523,7 @@
       $(PostBuildEventDependsOn);
       PostBuildMacros;
     </PostBuildEventDependsOn>
-    <PostBuildEvent>echo @(VersionNumber) &gt; ..\version.txt</PostBuildEvent>
+    <PostBuildEvent>rem echo @(VersionNumber) &gt; ..\version.txt</PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -85,18 +85,21 @@ namespace OpenHardwareMonitor.GUI {
       height = height < 16 ? 16 : height;
 
       // adjust the font size to the icon size
-      var family = new FontFamily("Segoe UI");// SystemFonts.MessageBoxFont.FontFamily;
+      FontFamily family;
       float baseSize;
-      switch (family.Name) {
-        case "Segoe UI": baseSize = 15; break;
-        case "Tahoma": baseSize = 11; break;
-        default: baseSize = 12; break;
+      if (IsFontInstalled("Calibri", 15)) {
+        family = new FontFamily("Calibri");
+        baseSize = 15;
+      } else if (IsFontInstalled("Segoe UI", 15)) {
+        family = new FontFamily("Segoe UI");
+        baseSize = 15;
+      } else {
+        family = new FontFamily("Tahome");// SystemFonts.MessageBoxFont.FontFamily;
+        baseSize = 14;
       }
 
-      font = new Font(family,
-        baseSize * width / 16.0f, GraphicsUnit.Pixel);
-      smallFont = new Font(family,
-        0.75f * baseSize * width / 16.0f, GraphicsUnit.Pixel);
+      font = new Font(family, baseSize * width / 16.0f, GraphicsUnit.Pixel);
+      smallFont = new Font(family, 0.85f * baseSize * width / 16.0f, GraphicsUnit.Pixel);
 
       bitmap = new Bitmap(width, height, PixelFormat.Format32bppArgb);
       graphics = Graphics.FromImage(bitmap);
@@ -181,6 +184,11 @@ namespace OpenHardwareMonitor.GUI {
       return "-";
     }
 
+    private bool IsFontInstalled(string fontName, float fontSize = 12) {
+      using (Font fontTester = new Font(fontName, fontSize, FontStyle.Regular, GraphicsUnit.Pixel)) {
+        return fontTester.Name == fontName;
+      }
+    }
     private Icon CreateTransparentIcon() {
       var text = GetString();
       var small = text.Length > 2;

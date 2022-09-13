@@ -43,7 +43,7 @@ namespace OpenHardwareMonitor.Utilities {
 
     static Updater() {
       var asm = Assembly.GetExecutingAssembly();
-      CurrentVersion = asm.GetName().Version.ToString(4); //Application.ProductVersion;
+      CurrentVersion = asm.GetName().Version.ToString(3); //Application.ProductVersion;
       CurrentFileLocation = asm.Location;
       selfFileName = Path.GetFileName(CurrentFileLocation);
     }
@@ -84,11 +84,11 @@ namespace OpenHardwareMonitor.Utilities {
 
         if (string.Compare(CurrentVersion, newVersion, StringComparison.Ordinal) >= 0) {
           if (!silent)
-            MessageBox.Show($"You have the latest version ({CurrentVersion}).", "Update", MessageBoxButtons.OK,
+            MessageBox.Show($"Your version is: {CurrentVersion}\nLatest released version is: {newVersion}\nNo need to update.", "Update", MessageBoxButtons.OK,
               MessageBoxIcon.Information);
           return;
         }
-        update = MessageBox.Show($"New version available: {newVersion}. Download this update?",
+        update = MessageBox.Show($"Your version is: {CurrentVersion}\nLatest released version is: {newVersion}\n. Download this update?",
           "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
       } catch (Exception ex) {
         if (!silent)
