@@ -21,7 +21,7 @@ namespace OpenHardwareMonitor.GUI {
     private Color darkColor;
     private Brush brush;
     private Brush darkBrush;
-    private readonly Pen pen;
+    private Pen pen;
     private readonly Font font;
     private readonly Font smallFont;
 
@@ -40,8 +40,6 @@ namespace OpenHardwareMonitor.GUI {
       //  defaultColor = Color.FromArgb(0xff, 0x70, 0x8c, 0xf1);
 
       Color = settings.GetValue(new Identifier(sensor.Identifier, "traycolor").ToString(), defaultColor);
-
-      pen = new Pen(Color.FromArgb(96, Color.Black));
 
       var contextMenu = new ContextMenu();
       var hideShowItem = new MenuItem("Hide/Show");
@@ -124,6 +122,10 @@ namespace OpenHardwareMonitor.GUI {
         brush = new SolidBrush(color);
         if (tmpBrush != null)
           tmpBrush.Dispose();
+        var tmpPen = pen;
+        pen = new Pen(Color.FromArgb(96, color), 1);
+        if (tmpPen != null)
+          tmpPen.Dispose();
         var tmpDarkBrush = darkBrush;
         darkBrush = new SolidBrush(darkColor);
         if (tmpDarkBrush != null)
@@ -248,8 +250,8 @@ namespace OpenHardwareMonitor.GUI {
       graphics.FillRectangle(darkBrush, 0.5f, -0.5f, bitmap.Width - 2, bitmap.Height);
       var value = sensor.Value.GetValueOrDefault();
       var y = 0.16f * (100 - value);
-      graphics.FillRectangle(brush, 0.5f, -0.5f + y, bitmap.Width - 2, bitmap.Height - y);
-      graphics.DrawRectangle(pen, 1, 0, bitmap.Width - 3, bitmap.Height - 1);
+      graphics.FillRectangle(brush, 2, 2 + y, bitmap.Width - 5, bitmap.Height - 4 - y);
+      graphics.DrawRectangle(pen, 1, 1, bitmap.Width - 3, bitmap.Height - 2);
 
       var data = bitmap.LockBits(
         new Rectangle(0, 0, bitmap.Width, bitmap.Height),
