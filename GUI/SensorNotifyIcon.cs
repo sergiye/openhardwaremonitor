@@ -42,8 +42,7 @@ namespace OpenHardwareMonitor.GUI {
       Color = settings.GetValue(new Identifier(sensor.Identifier, "traycolor").ToString(), defaultColor);
 
       var contextMenu = new ContextMenu();
-      var hideShowItem = new MenuItem("Hide/Show");
-      hideShowItem.DefaultItem = true;
+      var hideShowItem = new MenuItem("Hide/Show") {DefaultItem = true};
       hideShowItem.Click += (sender, args) => sensorSystemTray.SendHideShowCommand();
       contextMenu.MenuItems.Add(hideShowItem);
       contextMenu.MenuItems.Add(new MenuItem("-"));
@@ -52,8 +51,7 @@ namespace OpenHardwareMonitor.GUI {
       contextMenu.MenuItems.Add(removeItem);
       var colorItem = new MenuItem("Change Color...");
       colorItem.Click += (obj, args) => {
-        var dialog = new ColorDialog();
-        dialog.Color = Color;
+        var dialog = new ColorDialog {Color = Color};
         if (dialog.ShowDialog() == DialogResult.OK) {
           Color = dialog.Color;
           settings.SetValue(new Identifier(sensor.Identifier, "traycolor").ToString(), Color);
@@ -97,7 +95,7 @@ namespace OpenHardwareMonitor.GUI {
       }
 
       font = new Font(family, baseSize * width / 16.0f, GraphicsUnit.Pixel);
-      smallFont = new Font(family, 0.85f * baseSize * width / 16.0f, GraphicsUnit.Pixel);
+      smallFont = new Font(family, 0.75f * baseSize * width / 16.0f, GraphicsUnit.Pixel);
 
       bitmap = new Bitmap(width, height, PixelFormat.Format32bppArgb);
       graphics = Graphics.FromImage(bitmap);
@@ -191,6 +189,7 @@ namespace OpenHardwareMonitor.GUI {
         return fontTester.Name == fontName;
       }
     }
+
     private Icon CreateTransparentIcon() {
       var text = GetString();
       var small = text.Length > 2;
@@ -210,8 +209,16 @@ namespace OpenHardwareMonitor.GUI {
         graphics.Clear(defaultBackColor);
       }
 
-      TextRenderer.DrawText(graphics, text, small ? smallFont : font,
-        new Point(-4, small ? 1 : -2), color, defaultBackColor);
+      if (small) {
+        if (text[1] == '.' || text[1] == ',') {
+          TextRenderer.DrawText(graphics, text.Substring(0, 1), font, new Point(-4, -2), color, defaultBackColor);
+          TextRenderer.DrawText(graphics, text.Substring(1), smallFont, new Point(8, 4), color, defaultBackColor);
+        }
+        else
+          TextRenderer.DrawText(graphics, text, smallFont, new Point(-4, 1), color, defaultBackColor);
+      }
+      else
+        TextRenderer.DrawText(graphics, text, font, new Point(-4, -2), color, defaultBackColor);
 
       var data = bitmap.LockBits(
         new Rectangle(0, 0, bitmap.Width, bitmap.Height),
