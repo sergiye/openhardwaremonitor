@@ -138,14 +138,12 @@ namespace OpenHardwareMonitor.GUI {
       //checkUpdatesTimer.Tick += (o, e) => Updater.CheckForUpdates(true);
       //checkUpdatesTimer.Start();
 
-      showHiddenSensors = new UserOption("hiddenMenuItem", false,
-        hiddenMenuItem, settings);
+      showHiddenSensors = new UserOption("hiddenMenuItem", false, hiddenMenuItem, settings);
       showHiddenSensors.Changed += delegate (object sender, EventArgs e) {
         treeModel.ForceVisible = showHiddenSensors.Value;
       };
 
-      showValue = new UserOption("valueMenuItem", true, valueMenuItem,
-        settings);
+      showValue = new UserOption("valueMenuItem", true, valueMenuItem, settings);
       showValue.Changed += delegate (object sender, EventArgs e) {
         treeView.Columns[1].IsVisible = showValue.Value;
       };
@@ -156,25 +154,21 @@ namespace OpenHardwareMonitor.GUI {
       };
 
       showMax = new UserOption("maxMenuItem", true, maxMenuItem, settings);
-      showMax.Changed += delegate (object sender, EventArgs e) {
+      showMax.Changed += delegate {
         treeView.Columns[3].IsVisible = showMax.Value;
       };
 
-      var startMinimized = new UserOption("startMinMenuItem", false,
-        startMinMenuItem, settings);
+      var startMinimized = new UserOption("startMinMenuItem", false, startMinMenuItem, settings);
 
-      minimizeToTray = new UserOption("minTrayMenuItem", true,
-        minTrayMenuItem, settings);
-      minimizeToTray.Changed += delegate (object sender, EventArgs e) {
+      minimizeToTray = new UserOption("minTrayMenuItem", true, minTrayMenuItem, settings);
+      minimizeToTray.Changed += delegate {
         systemTray.IsMainIconEnabled = minimizeToTray.Value;
       };
 
-      minimizeOnClose = new UserOption("minCloseMenuItem", false,
-        minCloseMenuItem, settings);
+      minimizeOnClose = new UserOption("minCloseMenuItem", true, minCloseMenuItem, settings);
 
-      autoStart = new UserOption(null, startupManager.Startup,
-        startupMenuItem, settings);
-      autoStart.Changed += delegate (object sender, EventArgs e) {
+      autoStart = new UserOption(null, startupManager.Startup, startupMenuItem, settings);
+      autoStart.Changed += delegate {
         try {
           startupManager.Startup = autoStart.Value;
         } catch (InvalidOperationException) {
@@ -184,45 +178,39 @@ namespace OpenHardwareMonitor.GUI {
         }
       };
 
-      readMainboardSensors = new UserOption("mainboardMenuItem", true,
-        mainboardMenuItem, settings);
-      readMainboardSensors.Changed += delegate (object sender, EventArgs e) {
+      readMainboardSensors = new UserOption("mainboardMenuItem", true, mainboardMenuItem, settings);
+      readMainboardSensors.Changed += delegate {
         computer.MainboardEnabled = readMainboardSensors.Value;
       };
 
-      readCpuSensors = new UserOption("cpuMenuItem", true,
-        cpuMenuItem, settings);
-      readCpuSensors.Changed += delegate (object sender, EventArgs e) {
+      readCpuSensors = new UserOption("cpuMenuItem", true, cpuMenuItem, settings);
+      readCpuSensors.Changed += delegate {
         computer.CPUEnabled = readCpuSensors.Value;
       };
 
-      readRamSensors = new UserOption("ramMenuItem", true,
-        ramMenuItem, settings);
-      readRamSensors.Changed += delegate (object sender, EventArgs e) {
+      readRamSensors = new UserOption("ramMenuItem", true, ramMenuItem, settings);
+      readRamSensors.Changed += delegate {
         computer.RAMEnabled = readRamSensors.Value;
       };
 
-      readGpuSensors = new UserOption("gpuMenuItem", true,
-        gpuMenuItem, settings);
-      readGpuSensors.Changed += delegate (object sender, EventArgs e) {
+      readGpuSensors = new UserOption("gpuMenuItem", true, gpuMenuItem, settings);
+      readGpuSensors.Changed += delegate {
         computer.GPUEnabled = readGpuSensors.Value;
       };
 
       readFanControllersSensors = new UserOption("fanControllerMenuItem", true,
         fanControllerMenuItem, settings);
-      readFanControllersSensors.Changed += delegate (object sender, EventArgs e) {
+      readFanControllersSensors.Changed += delegate {
         computer.FanControllerEnabled = readFanControllersSensors.Value;
       };
 
-      readHddSensors = new UserOption("hddMenuItem", true, hddMenuItem,
-        settings);
-      readHddSensors.Changed += delegate (object sender, EventArgs e) {
+      readHddSensors = new UserOption("hddMenuItem", false, hddMenuItem, settings);
+      readHddSensors.Changed += delegate {
         computer.HDDEnabled = readHddSensors.Value;
       };
 
-      showGadget = new UserOption("gadgetMenuItem", false, gadgetMenuItem,
-        settings);
-      showGadget.Changed += delegate (object sender, EventArgs e) {
+      showGadget = new UserOption("gadgetMenuItem", false, gadgetMenuItem, settings);
+      showGadget.Changed += delegate {
         if (gadget != null)
           gadget.Visible = showGadget.Value;
       };
@@ -239,7 +227,7 @@ namespace OpenHardwareMonitor.GUI {
 
       runWebServer = new UserOption("runWebServerMenuItem", false,
         runWebServerMenuItem, settings);
-      runWebServer.Changed += delegate (object sender, EventArgs e) {
+      runWebServer.Changed += delegate {
         if (runWebServer.Value)
           server.StartHTTPListener();
         else
