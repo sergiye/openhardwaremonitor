@@ -88,7 +88,7 @@ namespace OpenHardwareMonitor.Utilities {
               MessageBoxIcon.Information);
           return;
         }
-        update = MessageBox.Show($"Your version is: {CurrentVersion}\nLatest released version is: {newVersion}\n. Download this update?",
+        update = MessageBox.Show($"Your version is: {CurrentVersion}\nLatest released version is: {newVersion}\nDownload this update?",
           "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
       } catch (Exception ex) {
         if (!silent)
