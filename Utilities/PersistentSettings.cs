@@ -13,14 +13,15 @@ namespace OpenHardwareMonitor {
 
     private IDictionary<string, string> settings = new Dictionary<string, string>();
 
-    public void Load(string fileName) {
-      if (!File.Exists(fileName)) return;
+    public void Load(string executablePath) {
+      var configPath = Path.ChangeExtension(executablePath, ".config");
+      if (!File.Exists(configPath)) return;
       try {
-        var json = File.ReadAllText(fileName);
+        var json = File.ReadAllText(configPath);
         settings = json.FromJson<IDictionary<string, string>>();
       }
       catch (Exception) {
-        LoadOld(fileName);
+        LoadOld(configPath);
       }
     }
 

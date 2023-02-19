@@ -59,8 +59,7 @@ namespace OpenHardwareMonitor.GUI {
       Icon = Icon.ExtractAssociatedIcon(Updater.CurrentFileLocation);
 
       settings = new PersistentSettings();
-      settings.Load(Path.ChangeExtension(
-        Application.ExecutablePath, ".config"));
+      settings.Load(Application.ExecutablePath);
 
       unitManager = new UnitManager(settings);
 

@@ -90,7 +90,7 @@ namespace OpenHardwareMonitor.GUI {
         family = new FontFamily("Segoe UI");
         baseSize = 15;
       } else {
-        family = new FontFamily("Tahome");// SystemFonts.MessageBoxFont.FontFamily;
+        family = SystemFonts.MessageBoxFont.FontFamily;
         baseSize = 14;
       }
 
@@ -209,16 +209,20 @@ namespace OpenHardwareMonitor.GUI {
         graphics.Clear(defaultBackColor);
       }
 
+      var textShift = bitmap.Width / 8 - 1; //todo: tested for 16 & 32 only
       if (small) {
         if (text[1] == '.' || text[1] == ',') {
-          TextRenderer.DrawText(graphics, text.Substring(0, 1), font, new Point(-4, -2), color, defaultBackColor);
-          TextRenderer.DrawText(graphics, text.Substring(1), smallFont, new Point(8, 4), color, defaultBackColor);
+          var bigPart = text.Substring(0, 1);
+          var smallPart = text.Substring(1);
+          TextRenderer.DrawText(graphics, bigPart, font, new Point(-4, -2), color, defaultBackColor);
+          TextRenderer.DrawText(graphics, smallPart, smallFont, new Point(4 * textShift, 1 * textShift), color, defaultBackColor);
+        } else {
+          TextRenderer.DrawText(graphics, text, smallFont, new Point(-2 * textShift, 2 * textShift), color, defaultBackColor);
         }
-        else
-          TextRenderer.DrawText(graphics, text, smallFont, new Point(-4, 1), color, defaultBackColor);
       }
-      else
-        TextRenderer.DrawText(graphics, text, font, new Point(-4, -2), color, defaultBackColor);
+      else {
+        TextRenderer.DrawText(graphics, text, font, new Point(-2 * textShift, -1 * textShift), color, defaultBackColor);
+      }
 
       var data = bitmap.LockBits(
         new Rectangle(0, 0, bitmap.Width, bitmap.Height),
