@@ -5,7 +5,6 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Xml;
-using Newtonsoft.Json;
 using OpenHardwareMonitor.Hardware;
 
 namespace OpenHardwareMonitor {
@@ -18,7 +17,7 @@ namespace OpenHardwareMonitor {
       if (!File.Exists(fileName)) return;
       try {
         var json = File.ReadAllText(fileName);
-        settings = JsonConvert.DeserializeObject<IDictionary<string, string>>(json);
+        settings = json.FromJson<IDictionary<string, string>>();
       }
       catch (Exception) {
         LoadOld(fileName);
@@ -66,8 +65,7 @@ namespace OpenHardwareMonitor {
     }
 
     public void Save(string fileName) {
-      var json = JsonConvert.SerializeObject(settings, Newtonsoft.Json.Formatting.Indented);
-      File.WriteAllText(fileName, json);
+      settings.ToJsonFile(fileName);
     }
 
     public void SaveOld(string fileName) {

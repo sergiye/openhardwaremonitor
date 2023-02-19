@@ -5,7 +5,6 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 
 namespace OpenHardwareMonitor.Utilities {
 
@@ -75,7 +74,7 @@ namespace OpenHardwareMonitor.Utilities {
         //newVersionUrl = $"https://github.com/{GithubLandingPage}/releases/download/{newVersion}/{selfFileName}";
 
         var jsonString = GetJsonData($"https://api.github.com/repos/{GITHUB_LANDING_PAGE}/releases").TrimEnd();
-        var releases = JsonConvert.DeserializeObject<GitHubRelease[]>(jsonString);
+        var releases = jsonString.FromJson<GitHubRelease[]>();
         if (releases == null || releases.Length == 0)
           throw new Exception("Error getting list of releases.");
 
