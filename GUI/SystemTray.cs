@@ -29,7 +29,7 @@ namespace OpenHardwareMonitor.GUI {
       hideShowItem.DefaultItem = true;
       hideShowItem.Click += (obj, args) => SendHideShowCommand();
       contextMenu.MenuItems.Add(hideShowItem);
-      contextMenu.MenuItems.Add(new MenuItem("-"));
+      contextMenu.MenuItems.Add("-");
       var exitItem = new MenuItem("Exit");
       exitItem.Click += (obj, args) => SendExitCommand();
       contextMenu.MenuItems.Add(exitItem);
