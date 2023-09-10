@@ -31,5 +31,5 @@ Copyright © 2022 Sergiy Egoshyn
 </a>
 
 **If you like the program, you can support the author and transfer money to**
-- PrivatBank card number: 5169 3600 1644 3834
+- Card number: 5169 3600 1644 3834
 - IBAN number: UA113052990000026208909644481
