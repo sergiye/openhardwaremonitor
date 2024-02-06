@@ -95,7 +95,7 @@ namespace OpenHardwareMonitor.GUI {
       }
 
       font = new Font(family, baseSize * width / 16.0f, GraphicsUnit.Pixel);
-      smallFont = new Font(family, 0.75f * baseSize * width / 16.0f, GraphicsUnit.Pixel);
+      smallFont = new Font(family, 0.7f * baseSize * width / 16.0f, GraphicsUnit.Pixel);
 
       bitmap = new Bitmap(width, height, PixelFormat.Format32bppArgb);
       graphics = Graphics.FromImage(bitmap);
@@ -209,19 +209,22 @@ namespace OpenHardwareMonitor.GUI {
         graphics.Clear(defaultBackColor);
       }
 
-      var textShift = bitmap.Width / 8 - 1; //todo: tested for 16 & 32 only
       if (small) {
         if (text[1] == '.' || text[1] == ',') {
           var bigPart = text.Substring(0, 1);
           var smallPart = text.Substring(1);
-          TextRenderer.DrawText(graphics, bigPart, font, new Point(-4, -2), color, defaultBackColor);
-          TextRenderer.DrawText(graphics, smallPart, smallFont, new Point(4 * textShift, 1 * textShift), color, defaultBackColor);
+          var bigSize = TextRenderer.MeasureText(bigPart, font);
+          var smallSize = TextRenderer.MeasureText(smallPart, smallFont);
+          TextRenderer.DrawText(graphics, bigPart, font, new Point(-4, (bitmap.Height - bigSize.Height) / 2), color, defaultBackColor);
+          TextRenderer.DrawText(graphics, smallPart, smallFont, new Point(4 * (bitmap.Width / 8 - 1), bitmap.Height - smallSize.Height), color, defaultBackColor);
         } else {
-          TextRenderer.DrawText(graphics, text, smallFont, new Point(-2 * textShift, 2 * textShift), color, defaultBackColor);
+          var size = TextRenderer.MeasureText(text, smallFont);
+          TextRenderer.DrawText(graphics, text, smallFont, new Point((bitmap.Width - size.Width) / 2, (bitmap.Height - size.Height) / 2), color, defaultBackColor);
         }
       }
       else {
-        TextRenderer.DrawText(graphics, text, font, new Point(-2 * textShift, -1 * textShift), color, defaultBackColor);
+        var size = TextRenderer.MeasureText(text, font);
+        TextRenderer.DrawText(graphics, text, font, new Point((bitmap.Width - size.Width) / 2, (bitmap.Height - size.Height) / 2), color, defaultBackColor);
       }
 
       var data = bitmap.LockBits(
