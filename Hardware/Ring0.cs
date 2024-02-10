@@ -23,13 +23,13 @@ namespace OpenHardwareMonitor.Hardware {
         IOControlCode.Access.Any),
       IOCTL_OLS_READ_MSR = new IOControlCode(OLS_TYPE, 0x821,
         IOControlCode.Access.Any),
-      IOCTL_OLS_WRITE_MSR = new IOControlCode(OLS_TYPE, 0x822, 
+      IOCTL_OLS_WRITE_MSR = new IOControlCode(OLS_TYPE, 0x822,
         IOControlCode.Access.Any),
       IOCTL_OLS_READ_IO_PORT_BYTE = new IOControlCode(OLS_TYPE, 0x833,
         IOControlCode.Access.Read),
-      IOCTL_OLS_WRITE_IO_PORT_BYTE = new IOControlCode(OLS_TYPE, 0x836, 
+      IOCTL_OLS_WRITE_IO_PORT_BYTE = new IOControlCode(OLS_TYPE, 0x836,
         IOControlCode.Access.Write),
-      IOCTL_OLS_READ_PCI_CONFIG = new IOControlCode(OLS_TYPE, 0x851, 
+      IOCTL_OLS_READ_PCI_CONFIG = new IOControlCode(OLS_TYPE, 0x851,
         IOControlCode.Access.Read),
       IOCTL_OLS_WRITE_PCI_CONFIG = new IOControlCode(OLS_TYPE, 0x852,
         IOControlCode.Access.Write),
@@ -40,38 +40,40 @@ namespace OpenHardwareMonitor.Hardware {
       return typeof(Ring0).Assembly;
     }
 
-    private static string GetTempFileName() {
-      
-      // try to create one in the application folder
-      string location = GetAssembly().Location;
-      if (!string.IsNullOrEmpty(location)) {        
-        try {
-          string fileName = Path.ChangeExtension(location, ".sys");
-          using (FileStream stream = File.Create(fileName)) {
-            return fileName;
-          }
-        } catch (Exception) { }
+    private static string GetTempFileName(bool useAppFolder = false) {
+
+      if (useAppFolder) {
+        // try to create one in the application folder
+        string location = GetAssembly().Location;
+        if (!string.IsNullOrEmpty(location)) {
+          try {
+            string fileName = Path.ChangeExtension(location, ".sys");
+            using (FileStream stream = File.Create(fileName)) {
+              return fileName;
+            }
+          } catch (Exception) { }
+        }
       }
 
       // if this failed, try to get a file in the temporary folder
       try {
-        return Path.GetTempFileName();        
-      } catch (IOException) { 
+        return Path.GetTempFileName();
+      } catch (IOException) {
           // some I/O exception
-      } 
-      catch (UnauthorizedAccessException) { 
+      }
+      catch (UnauthorizedAccessException) {
         // we do not have the right to create a file in the temp folder
       }
       catch (NotSupportedException) {
         // invalid path format of the TMP system environment variable
       }
-     
+
       return null;
     }
 
     private static bool ExtractDriver(string fileName) {
       string resourceName = "OpenHardwareMonitor.Hardware." +
-        (OperatingSystem.Is64BitOperatingSystem ? "WinRing0x64.sys" : 
+        (OperatingSystem.Is64BitOperatingSystem ? "WinRing0x64.sys" :
         "WinRing0.sys");
 
       string[] names = GetAssembly().GetManifestResourceNames();
@@ -79,7 +81,7 @@ namespace OpenHardwareMonitor.Hardware {
       for (int i = 0; i < names.Length; i++) {
         if (names[i].Replace('\\', '.') == resourceName) {
           using (Stream stream = GetAssembly().
-            GetManifestResourceStream(names[i])) 
+            GetManifestResourceStream(names[i]))
           {
               buffer = new byte[stream.Length];
               stream.Read(buffer, 0, buffer.Length);
@@ -95,16 +97,16 @@ namespace OpenHardwareMonitor.Hardware {
           target.Write(buffer, 0, buffer.Length);
           target.Flush();
         }
-      } catch (IOException) { 
+      } catch (IOException) {
         // for example there is not enough space on the disk
-        return false; 
+        return false;
       }
 
       // make sure the file is actually writen to the file system
       for (int i = 0; i < 20; i++) {
         try {
           if (File.Exists(fileName) &&
-            new FileInfo(fileName).Length == buffer.Length) 
+            new FileInfo(fileName).Length == buffer.Length)
           {
             return true;
           }
@@ -113,7 +115,7 @@ namespace OpenHardwareMonitor.Hardware {
           Thread.Sleep(10);
         }
       }
-      
+
       // file still has not the right size, something is wrong
       return false;
     }
@@ -121,14 +123,14 @@ namespace OpenHardwareMonitor.Hardware {
     public static void Open() {
       // no implementation for unix systems
       if (OperatingSystem.IsUnix)
-        return;  
-      
+        return;
+
       if (driver != null)
         return;
 
       // clear the current report
       report.Length = 0;
-     
+
       driver = new KernelDriver("WinRing0_1_2_0");
       driver.Open();
 
@@ -147,7 +149,7 @@ namespace OpenHardwareMonitor.Hardware {
             }
           } else {
             string errorFirstInstall = installError;
-   
+
             // install failed, try to delete and reinstall
             driver.Delete();
 
@@ -180,11 +182,11 @@ namespace OpenHardwareMonitor.Hardware {
           if (File.Exists(fileName))
             File.Delete(fileName);
           fileName = null;
-        } catch (IOException) { } 
+        } catch (IOException) { }
           catch (UnauthorizedAccessException) { }
       }
 
-      if (!driver.IsOpen) 
+      if (!driver.IsOpen)
         driver = null;
 
       string isaMutexName = "Global\\Access_ISABUS.HTP.Method";
@@ -239,7 +241,7 @@ namespace OpenHardwareMonitor.Hardware {
         try {
           File.Delete(fileName);
           fileName = null;
-        } catch (IOException) { } 
+        } catch (IOException) { }
           catch (UnauthorizedAccessException) { }
       }
     }
@@ -303,7 +305,7 @@ namespace OpenHardwareMonitor.Hardware {
     }
 
     public static bool RdmsrTx(uint index, out uint eax, out uint edx,
-      GroupAffinity affinity) 
+      GroupAffinity affinity)
     {
       var previousAffinity = ThreadAffinity.Set(affinity);
 
@@ -370,8 +372,8 @@ namespace OpenHardwareMonitor.Hardware {
       public uint RegAddress;
     }
 
-    public static bool ReadPciConfig(uint pciAddress, uint regAddress, 
-      out uint value) 
+    public static bool ReadPciConfig(uint pciAddress, uint regAddress,
+      out uint value)
     {
       if (driver == null || (regAddress & 3) != 0) {
         value = 0;
@@ -383,7 +385,7 @@ namespace OpenHardwareMonitor.Hardware {
       input.RegAddress = regAddress;
 
       value = 0;
-      return driver.DeviceIOControl(IOCTL_OLS_READ_PCI_CONFIG, input, 
+      return driver.DeviceIOControl(IOCTL_OLS_READ_PCI_CONFIG, input,
         ref value);
     }
 
@@ -394,8 +396,8 @@ namespace OpenHardwareMonitor.Hardware {
       public uint Value;
     }
 
-    public static bool WritePciConfig(uint pciAddress, uint regAddress, 
-      uint value) 
+    public static bool WritePciConfig(uint pciAddress, uint regAddress,
+      uint value)
     {
       if (driver == null || (regAddress & 3) != 0)
         return false;

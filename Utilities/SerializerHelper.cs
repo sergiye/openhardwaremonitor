@@ -18,12 +18,5 @@ namespace OpenHardwareMonitor {
     public static void ToJsonFile(this object value, string filePath) {
       File.WriteAllText(filePath, value.ToJson());
     }
-
-    public static T ReadJsonFile<T>(string fileName) where T : class {
-      T result = null;
-      if (File.Exists(fileName))
-        result = File.ReadAllText(fileName).FromJson<T>();
-      return result;
-    }
   }
 }

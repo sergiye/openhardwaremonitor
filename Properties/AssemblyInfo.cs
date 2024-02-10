@@ -14,4 +14,4 @@ using System.Runtime.InteropServices;
 
 [assembly: DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
 
-[assembly: AssemblyVersion("0.9.*")]
+[assembly: AssemblyVersion("1.0.*")]

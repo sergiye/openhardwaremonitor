@@ -48,6 +48,7 @@ namespace OpenHardwareMonitor.GUI {
     private readonly UserOption logSensors;
     private readonly UserRadioGroup loggingInterval;
     private readonly Logger logger;
+    private readonly string configFilePath;
 
     private bool selectionDragging = false;
     //private readonly Timer checkUpdatesTimer;
@@ -59,7 +60,9 @@ namespace OpenHardwareMonitor.GUI {
       Icon = Icon.ExtractAssociatedIcon(Updater.CurrentFileLocation);
 
       settings = new PersistentSettings();
-      settings.Load(Application.ExecutablePath);
+
+      configFilePath = Path.ChangeExtension(Application.ExecutablePath, ".config");
+      settings.Load(configFilePath);
 
       unitManager = new UnitManager(settings);
 
@@ -383,16 +386,14 @@ namespace OpenHardwareMonitor.GUI {
         settings.SetValue("listenerPort", server.ListenerPort);
       }
 
-      string fileName = Path.ChangeExtension(
-          Application.ExecutablePath, ".config");
       try {
-        settings.Save(fileName);
+        settings.Save(configFilePath);
       } catch (UnauthorizedAccessException) {
-        MessageBox.Show("Access to the path '" + fileName + "' is denied. " +
+        MessageBox.Show("Access to the path '" + configFilePath + "' is denied. " +
           "The current settings could not be saved.",
           "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
       } catch (IOException) {
-        MessageBox.Show("The path '" + fileName + "' is not writeable. " +
+        MessageBox.Show("The path '" + configFilePath + "' is not writeable. " +
           "The current settings could not be saved.",
           "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
       }

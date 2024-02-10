@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.Text;
-using System.Xml;
+using Microsoft.Win32;
 using OpenHardwareMonitor.Hardware;
 
 namespace OpenHardwareMonitor {
@@ -13,104 +12,53 @@ namespace OpenHardwareMonitor {
 
     private IDictionary<string, string> settings = new Dictionary<string, string>();
 
-    public void Load(string executablePath) {
-      var configPath = Path.ChangeExtension(executablePath, ".config");
-      if (!File.Exists(configPath)) return;
-      try {
-        var json = File.ReadAllText(configPath);
-        settings = json.FromJson<IDictionary<string, string>>();
-      }
-      catch (Exception) {
-        LoadOld(configPath);
-      }
-    }
+    public void Load(string fileName) {
 
-    public void LoadOld(string fileName) {
-      var doc = new XmlDocument();
-      try {
-        doc.Load(fileName);
-      } catch {
+      //old versions configs compatibility
+      if (File.Exists(fileName)) {
         try {
-          File.Delete(fileName);
-        } catch { }
-
-        var backupFileName = fileName + ".backup";
-        try {
-          doc.Load(backupFileName);
-        } catch {
-          try {
-            File.Delete(backupFileName);
-          } catch { }
+          var json = File.ReadAllText(fileName);
+          settings = json.FromJson<IDictionary<string, string>>();
           return;
+        }
+        catch (Exception) {
         }
       }
 
-      var list = doc.GetElementsByTagName("appSettings");
-      foreach (XmlNode node in list) {
-        var parent = node.ParentNode;
-        if (parent != null && parent.Name == "configuration" &&
-          parent.ParentNode is XmlDocument) {
-          foreach (XmlNode child in node.ChildNodes) {
-            if (child.Name == "add") {
-              var attributes = child.Attributes;
-              var keyAttribute = attributes["key"];
-              var valueAttribute = attributes["value"];
-              if (keyAttribute != null && valueAttribute != null &&
-                keyAttribute.Value != null) {
-                settings.Add(keyAttribute.Value, valueAttribute.Value);
-              }
-            }
-          }
+      //read from registry
+      using (var reg = Registry.CurrentUser.OpenSubKey("Software\\sergiye\\openHardwareMonitor")) {
+        if (reg == null) return;
+        foreach (var key in reg.GetValueNames()) {
+          var value = reg.GetValue(key, null) as string;
+          settings.Add(key, value);
         }
       }
     }
 
     public void Save(string fileName) {
-      settings.ToJsonFile(fileName);
-    }
-
-    public void SaveOld(string fileName) {
-
-      var doc = new XmlDocument();
-      doc.AppendChild(doc.CreateXmlDeclaration("1.0", "utf-8", null));
-      var configuration = doc.CreateElement("configuration");
-      doc.AppendChild(configuration);
-      var appSettings = doc.CreateElement("appSettings");
-      configuration.AppendChild(appSettings);
-      foreach (var keyValuePair in settings) {
-        var add = doc.CreateElement("add");
-        add.SetAttribute("key", keyValuePair.Key);
-        add.SetAttribute("value", keyValuePair.Value);
-        appSettings.AppendChild(add);
-      }
-
-      byte[] file;
-      using (var memory = new MemoryStream()) {
-        using (var writer = new StreamWriter(memory, Encoding.UTF8)) {
-          doc.Save(writer);
-        }
-        file = memory.ToArray();
-      }
-
-      var backupFileName = fileName + ".backup";
-      if (File.Exists(fileName)) {
-        try {
-          File.Delete(backupFileName);
-        } catch { }
-        try {
-          File.Move(fileName, backupFileName);
-        } catch { }
-      }
-
-      using (var stream = new FileStream(fileName,
-        FileMode.Create, FileAccess.Write))
-      {
-        stream.Write(file, 0, file.Length);
-      }
 
       try {
-        File.Delete(backupFileName);
-      } catch { }
+        //remove prev settings
+        Registry.CurrentUser.DeleteSubKeyTree("Software\\sergiye\\openHardwareMonitor", false);
+        //save to registry
+        using (var reg = Registry.CurrentUser.CreateSubKey("Software\\sergiye\\openHardwareMonitor")) {
+          if (reg == null) return;
+          foreach (var p in settings) {
+            reg.SetValue(p.Key, p.Value);
+          }
+        }
+
+        if (File.Exists(fileName)) {
+          try {
+            File.Delete(fileName);
+          } catch (Exception) {
+            //ignore
+          }
+        }
+      } catch (Exception) {
+        //save old-style config
+        settings.ToJsonFile(fileName);
+      }
     }
 
     public bool Contains(string name) {
