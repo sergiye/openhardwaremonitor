@@ -48,7 +48,6 @@ namespace OpenHardwareMonitor.GUI {
     private readonly UserOption logSensors;
     private readonly UserRadioGroup loggingInterval;
     private readonly Logger logger;
-    private readonly string configFilePath;
 
     private bool selectionDragging = false;
     //private readonly Timer checkUpdatesTimer;
@@ -61,8 +60,7 @@ namespace OpenHardwareMonitor.GUI {
 
       settings = new PersistentSettings();
 
-      configFilePath = Path.ChangeExtension(Application.ExecutablePath, ".config");
-      settings.Load(configFilePath);
+      settings.Load();
 
       unitManager = new UnitManager(settings);
 
@@ -283,7 +281,6 @@ namespace OpenHardwareMonitor.GUI {
       // Make sure the settings are saved when the user logs off
       Microsoft.Win32.SystemEvents.SessionEnded += delegate {
         computer.Close();
-        SaveConfiguration();
         if (runWebServer.Value)
           server.Quit();
       };
@@ -311,8 +308,7 @@ namespace OpenHardwareMonitor.GUI {
     }
 
     private void SubHardwareAdded(IHardware hardware, Node node) {
-      HardwareNode hardwareNode =
-        new HardwareNode(hardware, settings, unitManager);
+      var hardwareNode = new HardwareNode(hardware, settings, unitManager);
 
       InsertSorted(node.Nodes, hardwareNode);
 
@@ -378,27 +374,6 @@ namespace OpenHardwareMonitor.GUI {
         delayCount++;
     }
 
-    private void SaveConfiguration() {
-      if (settings == null)
-        return;
-
-      if (server != null) {
-        settings.SetValue("listenerPort", server.ListenerPort);
-      }
-
-      try {
-        settings.Save(configFilePath);
-      } catch (UnauthorizedAccessException) {
-        MessageBox.Show("Access to the path '" + configFilePath + "' is denied. " +
-          "The current settings could not be saved.",
-          "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-      } catch (IOException) {
-        MessageBox.Show("The path '" + configFilePath + "' is not writeable. " +
-          "The current settings could not be saved.",
-          "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-      }
-    }
-
     private void RestoreBoundsFromSettings() {
       Rectangle newBounds = new Rectangle {
         X = settings.GetValue("mainForm.Location.X", Location.X),
@@ -434,7 +409,6 @@ namespace OpenHardwareMonitor.GUI {
       systemTray.IsMainIconEnabled = false;
       timer.Enabled = false;
       computer.Close();
-      SaveConfiguration();
       if (runWebServer.Value)
         server.Quit();
       systemTray.Dispose();
@@ -693,7 +667,9 @@ namespace OpenHardwareMonitor.GUI {
     }
 
     private void serverPortMenuItem_Click(object sender, EventArgs e) {
-      new PortForm(this).ShowDialog();
+      if (new PortForm(this.server).ShowDialog() == DialogResult.OK) {
+        settings.SetValue("listenerPort", server.ListenerPort);
+      }
     }
 
     public HttpServer Server {

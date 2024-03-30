@@ -43,6 +43,7 @@
       this.portOKButton.TabIndex = 0;
       this.portOKButton.Text = "OK";
       this.portOKButton.UseVisualStyleBackColor = true;
+      this.portOKButton.DialogResult = System.Windows.Forms.DialogResult.OK;
       this.portOKButton.Click += new System.EventHandler(this.portOKButton_Click);
       // 
       // portCancelButton
@@ -54,7 +55,6 @@
       this.portCancelButton.TabIndex = 1;
       this.portCancelButton.Text = "Cancel";
       this.portCancelButton.UseVisualStyleBackColor = true;
-      this.portCancelButton.Click += new System.EventHandler(this.portCancelButton_Click);
       // 
       // label1
       // 
@@ -141,6 +141,7 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.AcceptButton = this.portOKButton;
       this.CancelButton = this.portCancelButton;
       this.ClientSize = new System.Drawing.Size(466, 170);
       this.Controls.Add(this.label5);

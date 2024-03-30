@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Windows.Forms;
 using Microsoft.Win32;
 using OpenHardwareMonitor.Hardware;
 
@@ -10,14 +11,20 @@ namespace OpenHardwareMonitor {
 
   public class PersistentSettings : ISettings {
 
+    private readonly string configFilePath;
+
+    public PersistentSettings() {
+      configFilePath = Path.ChangeExtension(Application.ExecutablePath, ".config");
+    }
+
     private IDictionary<string, string> settings = new Dictionary<string, string>();
 
-    public void Load(string fileName) {
+    public void Load() {
 
       //old versions configs compatibility
-      if (File.Exists(fileName)) {
+      if (File.Exists(configFilePath)) {
         try {
-          var json = File.ReadAllText(fileName);
+          var json = File.ReadAllText(configFilePath);
           settings = json.FromJson<IDictionary<string, string>>();
           return;
         }
@@ -35,7 +42,7 @@ namespace OpenHardwareMonitor {
       }
     }
 
-    public void Save(string fileName) {
+    public void Save() {
 
       try {
         //remove prev settings
@@ -48,16 +55,30 @@ namespace OpenHardwareMonitor {
           }
         }
 
-        if (File.Exists(fileName)) {
+        if (File.Exists(configFilePath)) {
           try {
-            File.Delete(fileName);
+            File.Delete(configFilePath);
           } catch (Exception) {
             //ignore
           }
         }
       } catch (Exception) {
         //save old-style config
-        settings.ToJsonFile(fileName);
+        SaveToFile();
+      }
+    }
+
+    public void SaveToFile() {
+      try {
+        settings.ToJsonFile(configFilePath);
+      } catch (UnauthorizedAccessException) {
+        MessageBox.Show("Access to the path '" + configFilePath + "' is denied. " +
+          "The current settings could not be saved.",
+          "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      } catch (IOException) {
+        MessageBox.Show("The path '" + configFilePath + "' is not writeable. " +
+          "The current settings could not be saved.",
+          "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
     }
 
@@ -67,6 +88,7 @@ namespace OpenHardwareMonitor {
 
     public void SetValue(string name, string value) {
       settings[name] = value;
+      Save();
     }
 
     public string GetValue(string name, string defaultValue) {
@@ -75,10 +97,12 @@ namespace OpenHardwareMonitor {
 
     public void Remove(string name) {
       settings.Remove(name);
+      Save();
     }
 
     public void SetValue(string name, int value) {
       settings[name] = value.ToString();
+      Save();
     }
 
     public int GetValue(string name, int defaultValue) {
@@ -89,6 +113,7 @@ namespace OpenHardwareMonitor {
 
     public void SetValue(string name, float value) {
       settings[name] = value.ToString(CultureInfo.InvariantCulture);
+      Save();
     }
 
     public float GetValue(string name, float defaultValue) {
@@ -100,6 +125,7 @@ namespace OpenHardwareMonitor {
 
     public void SetValue(string name, bool value) {
       settings[name] = value ? "true" : "false";
+      Save();
     }
 
     public bool GetValue(string name, bool defaultValue) {
@@ -110,6 +136,7 @@ namespace OpenHardwareMonitor {
 
     public void SetValue(string name, Color color) {
       settings[name] = color.ToArgb().ToString("X8");
+      Save();
     }
 
     public Color GetValue(string name, Color defaultValue) {
