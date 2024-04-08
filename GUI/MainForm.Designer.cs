@@ -91,12 +91,13 @@ namespace OpenHardwareMonitor.GUI {
       this.runWebServerMenuItem = new System.Windows.Forms.MenuItem();
       this.serverPortMenuItem = new System.Windows.Forms.MenuItem();
       this.helpMenuItem = new System.Windows.Forms.MenuItem();
+      this.menuItemCheckUpdates = new System.Windows.Forms.MenuItem();
       this.aboutMenuItem = new System.Windows.Forms.MenuItem();
       this.treeContextMenu = new System.Windows.Forms.ContextMenu();
       this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
       this.timer = new System.Windows.Forms.Timer(this.components);
       this.treeView = new OpenHardwareMonitor.Controls.Tree.TreeViewAdv();
-      this.menuItemCheckUpdates = new System.Windows.Forms.MenuItem();
+      this.ExportSettingsMenu = new System.Windows.Forms.MenuItem();
       this.SuspendLayout();
       // 
       // sensor
@@ -187,6 +188,7 @@ namespace OpenHardwareMonitor.GUI {
       this.fileMenuItem.Index = 0;
       this.fileMenuItem.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.saveReportMenuItem,
+            this.ExportSettingsMenu,
             this.MenuItem2,
             this.resetMenuItem,
             this.menuItem5,
@@ -202,18 +204,18 @@ namespace OpenHardwareMonitor.GUI {
       // 
       // MenuItem2
       // 
-      this.MenuItem2.Index = 1;
+      this.MenuItem2.Index = 2;
       this.MenuItem2.Text = "-";
       // 
       // resetMenuItem
       // 
-      this.resetMenuItem.Index = 2;
+      this.resetMenuItem.Index = 3;
       this.resetMenuItem.Text = "Reset";
       this.resetMenuItem.Click += new System.EventHandler(this.resetClick);
       // 
       // menuItem5
       // 
-      this.menuItem5.Index = 3;
+      this.menuItem5.Index = 4;
       this.menuItem5.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.mainboardMenuItem,
             this.cpuMenuItem,
@@ -255,12 +257,12 @@ namespace OpenHardwareMonitor.GUI {
       // 
       // menuItem6
       // 
-      this.menuItem6.Index = 4;
+      this.menuItem6.Index = 5;
       this.menuItem6.Text = "-";
       // 
       // exitMenuItem
       // 
-      this.exitMenuItem.Index = 5;
+      this.exitMenuItem.Index = 6;
       this.exitMenuItem.Text = "Exit";
       this.exitMenuItem.Click += new System.EventHandler(this.exitClick);
       // 
@@ -529,6 +531,12 @@ namespace OpenHardwareMonitor.GUI {
             this.aboutMenuItem});
       this.helpMenuItem.Text = "Help";
       // 
+      // menuItemCheckUpdates
+      // 
+      this.menuItemCheckUpdates.Index = 0;
+      this.menuItemCheckUpdates.Text = "Check for updates";
+      this.menuItemCheckUpdates.Click += new System.EventHandler(this.menuItemCheckUpdates_Click);
+      // 
       // aboutMenuItem
       // 
       this.aboutMenuItem.Index = 1;
@@ -563,6 +571,7 @@ namespace OpenHardwareMonitor.GUI {
       this.treeView.GridLineStyle = OpenHardwareMonitor.Controls.Tree.GridLineStyle.Horizontal;
       this.treeView.LineColor = System.Drawing.SystemColors.ControlDark;
       this.treeView.Location = new System.Drawing.Point(0, 0);
+      this.treeView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.treeView.Model = null;
       this.treeView.Name = "treeView";
       this.treeView.NodeControls.Add(this.nodeImage);
@@ -572,7 +581,7 @@ namespace OpenHardwareMonitor.GUI {
       this.treeView.NodeControls.Add(this.nodeTextBoxMin);
       this.treeView.NodeControls.Add(this.nodeTextBoxMax);
       this.treeView.SelectedNode = null;
-      this.treeView.Size = new System.Drawing.Size(418, 554);
+      this.treeView.Size = new System.Drawing.Size(627, 852);
       this.treeView.TabIndex = 0;
       this.treeView.Text = "treeView";
       this.treeView.UseColumns = true;
@@ -582,18 +591,19 @@ namespace OpenHardwareMonitor.GUI {
       this.treeView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseMove);
       this.treeView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseUp);
       // 
-      // menuItemCheckUpdates
+      // ExportSettingsMenu
       // 
-      this.menuItemCheckUpdates.Index = 0;
-      this.menuItemCheckUpdates.Text = "Check for updates";
-      this.menuItemCheckUpdates.Click += new System.EventHandler(this.menuItemCheckUpdates_Click);
+      this.ExportSettingsMenu.Index = 1;
+      this.ExportSettingsMenu.Text = "Expost Settings";
+      this.ExportSettingsMenu.Click += new System.EventHandler(this.ExportSettingsMenu_Click);
       // 
       // MainForm
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(418, 554);
+      this.ClientSize = new System.Drawing.Size(627, 852);
       this.Controls.Add(this.treeView);
+      this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.Menu = this.mainMenu;
       this.Name = "MainForm";
       this.Text = "Open Hardware Monitor";
@@ -676,6 +686,7 @@ namespace OpenHardwareMonitor.GUI {
     private System.Windows.Forms.MenuItem log2hMenuItem;
     private System.Windows.Forms.MenuItem log6hMenuItem;
         private System.Windows.Forms.MenuItem menuItemCheckUpdates;
-    }
+    private System.Windows.Forms.MenuItem ExportSettingsMenu;
+  }
 }
 

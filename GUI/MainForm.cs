@@ -676,5 +676,18 @@ namespace OpenHardwareMonitor.GUI {
       get { return server; }
     }
 
+    private void ExportSettingsMenu_Click(object sender, EventArgs e) {
+      var dlg = new SaveFileDialog {
+        DefaultExt = ".config",
+        FileName = "OpenHardwareMonitor.config",
+        Filter = "Config files|*.config",
+        RestoreDirectory = true,
+        Title = "Export Settings As"
+      };
+      if (dlg.ShowDialog() != DialogResult.OK)
+        return;
+      settings.SaveToFile(dlg.FileName);
+      MessageBox.Show("Settings export completed successfully!", "Export Settings", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
   }
 }

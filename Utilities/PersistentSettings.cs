@@ -44,6 +44,11 @@ namespace OpenHardwareMonitor {
 
     public void Save() {
 
+      if (GetValue("portable", false)) {
+        SaveToFile(configFilePath);
+        return;
+      }
+
       try {
         //remove prev settings
         Registry.CurrentUser.DeleteSubKeyTree("Software\\sergiye\\openHardwareMonitor", false);
@@ -64,11 +69,11 @@ namespace OpenHardwareMonitor {
         }
       } catch (Exception) {
         //save old-style config
-        SaveToFile();
+        SaveToFile(configFilePath);
       }
     }
 
-    public void SaveToFile() {
+    public void SaveToFile(string configFilePath) {
       try {
         settings.ToJsonFile(configFilePath);
       } catch (UnauthorizedAccessException) {
