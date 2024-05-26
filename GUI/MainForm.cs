@@ -681,12 +681,17 @@ namespace OpenHardwareMonitor.GUI {
         DefaultExt = ".config",
         FileName = "OpenHardwareMonitor.config",
         Filter = "Config files|*.config",
-        RestoreDirectory = true,
-        Title = "Export Settings As"
+        RestoreDirectory = false,
+        Title = "Export Settings As",
+        InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath),
       };
       if (dlg.ShowDialog() != DialogResult.OK)
         return;
+      var oldPortableValue = settings.GetValue("portable", false);
+      settings.SetValue("portable", true);
       settings.SaveToFile(dlg.FileName);
+      if (!oldPortableValue)
+        settings.SetValue("portable", oldPortableValue);
       MessageBox.Show("Settings export completed successfully!", "Export Settings", MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
   }

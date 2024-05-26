@@ -25,8 +25,11 @@ namespace OpenHardwareMonitor {
       if (File.Exists(configFilePath)) {
         try {
           var json = File.ReadAllText(configFilePath);
-          settings = json.FromJson<IDictionary<string, string>>();
-          return;
+          var data = json.FromJson<IDictionary<string, string>>();
+          if (data != null) {
+            settings = data;
+            return;
+          }
         }
         catch (Exception) {
         }
