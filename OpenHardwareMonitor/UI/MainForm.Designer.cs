@@ -121,7 +121,6 @@ namespace OpenHardwareMonitor.UI
       this.authWebServerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.helpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.menuItemCheckUpdates = new System.Windows.Forms.ToolStripMenuItem();
-      this.menuItemAutoUpdates = new System.Windows.Forms.ToolStripMenuItem();
       this.aboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.treeContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
@@ -831,7 +830,6 @@ namespace OpenHardwareMonitor.UI
       // 
       this.helpMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemCheckUpdates,
-            this.menuItemAutoUpdates,
             this.aboutMenuItem});
       this.helpMenuItem.Name = "helpMenuItem";
       this.helpMenuItem.Size = new System.Drawing.Size(44, 22);
@@ -843,13 +841,6 @@ namespace OpenHardwareMonitor.UI
       this.menuItemCheckUpdates.Size = new System.Drawing.Size(170, 22);
       this.menuItemCheckUpdates.Text = "Check for updates";
       this.menuItemCheckUpdates.Click += new System.EventHandler(this.menuItemCheckUpdates_Click);
-      // 
-      // menuItemCheckUpdates
-      // 
-      this.menuItemAutoUpdates.Name = "menuItemCheckUpdates";
-      this.menuItemAutoUpdates.Size = new System.Drawing.Size(170, 22);
-      this.menuItemAutoUpdates.Text = "Auto update";
-      this.menuItemAutoUpdates.Click += new System.EventHandler(this.menuItemAutoUpdate_Click);
       // 
       // aboutMenuItem
       // 
@@ -952,7 +943,6 @@ namespace OpenHardwareMonitor.UI
         private System.Windows.Forms.ToolStripMenuItem viewMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuItemCheckUpdates;
-        private System.Windows.Forms.ToolStripMenuItem menuItemAutoUpdates;
         private System.Windows.Forms.ToolStripMenuItem aboutMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveReportMenuItem;
         private System.Windows.Forms.ToolStripMenuItem portableModeMenuItem;
