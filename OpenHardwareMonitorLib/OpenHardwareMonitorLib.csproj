@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net472</TargetFrameworks>
+    <AssemblyName>OpenHardwareMonitorLib</AssemblyName>
+    <RootNamespace>OpenHardwareMonitor</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PackageId>$(AssemblyName)</PackageId>
+    <Description>Monitor the temperature sensors, fan speeds, voltages, load and clock speeds of your computer.</Description>
+    <LangVersion>latest</LangVersion>
+    <PackageIcon>packageicon.png</PackageIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <OutputPath>..\bin\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <OutputPath>..\bin\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\inpout32.gz" />
+    <EmbeddedResource Include="Resources\inpoutx64.gz" />
+    <EmbeddedResource Include="Resources\WinRing0.gz" />
+    <EmbeddedResource Include="Resources\WinRing0x64.gz" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' != 'net472'">
+    <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+    <PackageReference Include="System.IO.Ports" Version="8.0.0" />
+    <PackageReference Include="System.IO.FileSystem.AccessControl" Version="5.0.0" />
+    <PackageReference Include="Mono.Posix.NETStandard" Version="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="HidSharp" Version="2.1.0" />
+    <PackageReference Include="System.Management" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\packageicon.png" PackagePath="">
+      <Pack>True</Pack>
+    </None>
+  </ItemGroup>
+</Project>
