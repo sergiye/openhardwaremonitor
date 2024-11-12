@@ -226,6 +226,11 @@ internal sealed class IntelCpu : GenericCpu
                             tjMax = GetTjMaxFromMsr();
                             break;
 
+                        case 0xBD: // Intel Core Ultra 5/7 200 Series LunarLake
+                            _microArchitecture = MicroArchitecture.LunarLake;
+                            tjMax = GetTjMaxFromMsr();
+                            break;
+
                         default:
                             _microArchitecture = MicroArchitecture.Unknown;
                             tjMax = Floats(100);
@@ -283,6 +288,7 @@ internal sealed class IntelCpu : GenericCpu
             case MicroArchitecture.IvyBridge:
             case MicroArchitecture.JasperLake:
             case MicroArchitecture.KabyLake:
+            case MicroArchitecture.LunarLake:
             case MicroArchitecture.Nehalem:
             case MicroArchitecture.MeteorLake:
             case MicroArchitecture.RaptorLake:
@@ -398,6 +404,7 @@ internal sealed class IntelCpu : GenericCpu
             MicroArchitecture.IvyBridge or
             MicroArchitecture.JasperLake or
             MicroArchitecture.KabyLake or
+            MicroArchitecture.LunarLake or
             MicroArchitecture.MeteorLake or
             MicroArchitecture.RaptorLake or
             MicroArchitecture.RocketLake or
@@ -601,6 +608,7 @@ internal sealed class IntelCpu : GenericCpu
                         case MicroArchitecture.IvyBridge:
                         case MicroArchitecture.JasperLake:
                         case MicroArchitecture.KabyLake:
+                        case MicroArchitecture.LunarLake:
                         case MicroArchitecture.MeteorLake:
                         case MicroArchitecture.RaptorLake:
                         case MicroArchitecture.RocketLake:
@@ -689,6 +697,7 @@ internal sealed class IntelCpu : GenericCpu
         IvyBridge,
         JasperLake,
         KabyLake,
+        LunarLake,
         Nehalem,
         NetBurst,
         MeteorLake,
