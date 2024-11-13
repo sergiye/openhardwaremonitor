@@ -196,12 +196,12 @@ public class SensorNotifyIcon : IDisposable
             case SensorType.Control:
             case SensorType.Frequency:
             case SensorType.Level:
-            case SensorType.Power:
             case SensorType.Load:
-            case SensorType.Energy:
             case SensorType.Noise:
             case SensorType.Humidity:
                 return $"{Sensor.Value:F0}";
+            case SensorType.Energy:
+            case SensorType.Power:
             case SensorType.Data:
                 return Sensor.Value.Value < 10
             ? $"{Sensor.Value:0.00}".Substring(0, 3)
