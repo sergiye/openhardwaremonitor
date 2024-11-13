@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
@@ -8,7 +9,6 @@ using System.Windows.Forms;
 
 namespace OpenHardwareMonitor.Utilities
 {
-
     public class GitHubRelease
     {
         public Uri assets_url { get; set; }
@@ -50,6 +50,9 @@ namespace OpenHardwareMonitor.Utilities
             CurrentVersion = asm.GetName().Version.ToString(3); //Application.ProductVersion;
             CurrentFileLocation = asm.Location;
             selfFileName = Path.GetFileName(CurrentFileLocation);
+            ServicePointManager.Expect100Continue = false;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
         }
 
         private static string GetJsonData(string uri, int timeout = 10, string method = "GET")
@@ -88,8 +91,9 @@ namespace OpenHardwareMonitor.Utilities
                 if (releases == null || releases.Length == 0)
                     throw new Exception("Error getting list of releases.");
 
-                newVersion = releases[0].tag_name;
-                newVersionUrl = releases[0].assets[0].browser_download_url;
+                var lastRelease = releases.FirstOrDefault(r => !r.prerelease) ?? releases[0];
+                newVersion = lastRelease.tag_name;
+                newVersionUrl = lastRelease.assets[0].browser_download_url;
 
                 if (string.Compare(CurrentVersion, newVersion, StringComparison.Ordinal) >= 0)
                 {
