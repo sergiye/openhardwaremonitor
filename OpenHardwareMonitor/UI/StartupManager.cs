@@ -1,180 +1,234 @@
-﻿// This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
-// If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
-// Copyright (C) OpenHardwareMonitor and Contributors.
-// Partial Copyright (C) Michael Möller <mmoeller@openhardwaremonitor.org> and Contributors.
-// All Rights Reserved.
-
-using System;
+﻿using System;
 using System.IO;
-using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.Principal;
 using System.Windows.Forms;
 using Microsoft.Win32;
-using Microsoft.Win32.TaskScheduler;
-using Action = Microsoft.Win32.TaskScheduler.Action;
 
-namespace OpenHardwareMonitor.UI;
-
-public class StartupManager
+namespace OpenHardwareMonitor.UI
 {
-    private const string RegistryPath = @"Software\Microsoft\Windows\CurrentVersion\Run";
-    private bool _startup;
-
-    public StartupManager()
+    public class StartupManager
     {
-        if (Environment.OSVersion.Platform >= PlatformID.Unix)
-        {
-            IsAvailable = false;
-            return;
-        }
 
-        if (IsAdministrator() && TaskService.Instance.Connected)
-        {
-            IsAvailable = true;
+        private readonly TaskSchedulerClass _scheduler;
+        private bool _startup;
+        private const string REGISTRY_RUN = @"Software\Microsoft\Windows\CurrentVersion\Run";
 
-            Task task = GetTask();
-            if (task != null)
-            {
-                foreach (Action action in task.Definition.Actions)
-                {
-                    if (action.ActionType == TaskActionType.Execute && action is ExecAction execAction)
-                    {
-                        if (execAction.Path.Equals(Application.ExecutablePath, StringComparison.OrdinalIgnoreCase))
-                            _startup = true;
-                    }
-                }
-            }
-        }
-        else
+        private bool IsAdministrator()
         {
             try
             {
-                using (RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(RegistryPath))
-                {
-                    string value = (string)registryKey?.GetValue(nameof(OpenHardwareMonitor));
-
-                    if (value != null)
-                        _startup = value == Application.ExecutablePath;
-                }
-
-                IsAvailable = true;
+                WindowsIdentity identity = WindowsIdentity.GetCurrent();
+                WindowsPrincipal principal = new(identity);
+                return principal.IsInRole(WindowsBuiltInRole.Administrator);
             }
-            catch (SecurityException)
+            catch
             {
-                IsAvailable = false;
+                return false;
             }
         }
-    }
 
-    public bool IsAvailable { get; }
-
-    public bool Startup
-    {
-        get { return _startup; }
-        set
+        public StartupManager()
         {
-            if (_startup != value)
+            if (Software.OperatingSystem.IsUnix)
             {
-                if (IsAvailable)
-                {
-                    if (TaskService.Instance.Connected)
-                    {
-                        if (value)
-                            CreateTask();
-                        else
-                            DeleteTask();
+                _scheduler = null;
+                IsAvailable = false;
+                return;
+            }
 
-                        _startup = value;
-                    }
-                    else
+            if (IsAdministrator())
+            {
+                try
+                {
+                    _scheduler = new TaskSchedulerClass();
+                    _scheduler.Connect(null, null, null, null);
+                }
+                catch
+                {
+                    _scheduler = null;
+                }
+
+                if (_scheduler != null)
+                {
+                    try
                     {
                         try
                         {
-                            if (value)
-                                CreateRegistryKey();
-                            else
-                                DeleteRegistryKey();
+                            // check if the taskscheduler is running
+                            IRunningTaskCollection collection = _scheduler.GetRunningTasks(0);
+                        }
+                        catch (ArgumentException) { }
 
-                            _startup = value;
-                        }
-                        catch (UnauthorizedAccessException)
-                        {
-                            throw new InvalidOperationException();
-                        }
+                        ITaskFolder folder = _scheduler.GetFolder("\\Open Hardware Monitor");
+                        IRegisteredTask task = folder.GetTask("Startup");
+                        _startup = (task != null) &&
+                          (task.Definition.Triggers.Count > 0) &&
+                          (task.Definition.Triggers[1].Type ==
+                            TASK_TRIGGER_TYPE2.TASK_TRIGGER_LOGON) &&
+                          (task.Definition.Actions.Count > 0) &&
+                          (task.Definition.Actions[1].Type ==
+                            TASK_ACTION_TYPE.TASK_ACTION_EXEC) &&
+                          (task.Definition.Actions[1] as IExecAction != null) &&
+                          ((task.Definition.Actions[1] as IExecAction).Path ==
+                            Application.ExecutablePath);
+
+                    }
+                    catch (IOException)
+                    {
+                        _startup = false;
+                    }
+                    catch (UnauthorizedAccessException)
+                    {
+                        _scheduler = null;
+                    }
+                    catch (COMException)
+                    {
+                        _scheduler = null;
+                    }
+                    catch (NotImplementedException)
+                    {
+                        _scheduler = null;
                     }
                 }
-                else
+            }
+            else
+            {
+                _scheduler = null;
+            }
+
+            if (_scheduler == null)
+            {
+                try
                 {
-                    throw new InvalidOperationException();
+                    using (RegistryKey key =
+                      Registry.CurrentUser.OpenSubKey(REGISTRY_RUN))
+                    {
+                        _startup = false;
+                        if (key != null)
+                        {
+                            string value = (string)key.GetValue("OpenHardwareMonitor");
+                            if (value != null)
+                                _startup = value == Application.ExecutablePath;
+                        }
+                    }
+                    IsAvailable = true;
+                }
+                catch (SecurityException)
+                {
+                    IsAvailable = false;
+                }
+            }
+            else
+            {
+                IsAvailable = true;
+            }
+        }
+
+        private void CreateSchedulerTask()
+        {
+            ITaskDefinition definition = _scheduler.NewTask(0);
+            definition.RegistrationInfo.Description =
+              "This task starts the Open Hardware Monitor on Windows startup.";
+            definition.Principal.RunLevel =
+              TASK_RUNLEVEL.TASK_RUNLEVEL_HIGHEST;
+            definition.Settings.DisallowStartIfOnBatteries = false;
+            definition.Settings.StopIfGoingOnBatteries = false;
+            definition.Settings.ExecutionTimeLimit = "PT0S";
+            _ = (ILogonTrigger)definition.Triggers.Create(TASK_TRIGGER_TYPE2.TASK_TRIGGER_LOGON);
+            IExecAction action = (IExecAction)definition.Actions.Create(TASK_ACTION_TYPE.TASK_ACTION_EXEC);
+            action.Path = Application.ExecutablePath;
+            action.WorkingDirectory =
+              Path.GetDirectoryName(Application.ExecutablePath);
+
+            ITaskFolder root = _scheduler.GetFolder("\\");
+            ITaskFolder folder;
+            try
+            {
+                folder = root.GetFolder("Open Hardware Monitor");
+            }
+            catch (IOException)
+            {
+                folder = root.CreateFolder("Open Hardware Monitor", "");
+            }
+            folder.RegisterTaskDefinition("Startup", definition,
+              (int)TASK_CREATION.TASK_CREATE_OR_UPDATE, null, null,
+              TASK_LOGON_TYPE.TASK_LOGON_INTERACTIVE_TOKEN, "");
+        }
+
+        private void DeleteSchedulerTask()
+        {
+            ITaskFolder root = _scheduler.GetFolder("\\");
+            try
+            {
+                ITaskFolder folder = root.GetFolder("Open Hardware Monitor");
+                folder.DeleteTask("Startup", 0);
+            }
+            catch (IOException) { }
+            try
+            {
+                root.DeleteFolder("Open Hardware Monitor", 0);
+            }
+            catch (IOException) { }
+        }
+
+        private void CreateRegistryRun()
+        {
+            RegistryKey key = Registry.CurrentUser.CreateSubKey(REGISTRY_RUN);
+            key.SetValue("OpenHardwareMonitor", Application.ExecutablePath);
+        }
+
+        private void DeleteRegistryRun()
+        {
+            RegistryKey key = Registry.CurrentUser.CreateSubKey(REGISTRY_RUN);
+            key.DeleteValue("OpenHardwareMonitor");
+        }
+
+        public bool IsAvailable { get; }
+
+        public bool Startup
+        {
+            get
+            {
+                return _startup;
+            }
+            set
+            {
+                if (_startup != value)
+                {
+                    if (IsAvailable)
+                    {
+                        if (_scheduler != null)
+                        {
+                            if (value)
+                                CreateSchedulerTask();
+                            else
+                                DeleteSchedulerTask();
+                            _startup = value;
+                        }
+                        else
+                        {
+                            try
+                            {
+                                if (value)
+                                    CreateRegistryRun();
+                                else
+                                    DeleteRegistryRun();
+                                _startup = value;
+                            }
+                            catch (UnauthorizedAccessException)
+                            {
+                                throw new InvalidOperationException();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException();
+                    }
                 }
             }
         }
-    }
-
-    private static bool IsAdministrator()
-    {
-        try
-        {
-            WindowsIdentity identity = WindowsIdentity.GetCurrent();
-            WindowsPrincipal principal = new WindowsPrincipal(identity);
-
-            return principal.IsInRole(WindowsBuiltInRole.Administrator);
-        }
-        catch
-        {
-            return false;
-        }
-    }
-
-    private static Task GetTask()
-    {
-        try
-        {
-            return TaskService.Instance.AllTasks.FirstOrDefault(x => x.Name.Equals(nameof(OpenHardwareMonitor), StringComparison.OrdinalIgnoreCase));
-        }
-        catch
-        {
-            return null;
-        }
-    }
-
-    private void CreateTask()
-    {
-        TaskDefinition taskDefinition = TaskService.Instance.NewTask();
-        taskDefinition.RegistrationInfo.Description = "Starts OpenHardwareMonitor on Windows startup.";
-
-        taskDefinition.Triggers.Add(new LogonTrigger());
-
-        taskDefinition.Settings.StartWhenAvailable = true;
-        taskDefinition.Settings.DisallowStartIfOnBatteries = false;
-        taskDefinition.Settings.StopIfGoingOnBatteries = false;
-        taskDefinition.Settings.ExecutionTimeLimit = TimeSpan.Zero;
-        taskDefinition.Settings.AllowHardTerminate = false;
-
-        taskDefinition.Principal.RunLevel = TaskRunLevel.Highest;
-        taskDefinition.Principal.LogonType = TaskLogonType.InteractiveToken;
-
-        taskDefinition.Actions.Add(new ExecAction(Application.ExecutablePath, "", Path.GetDirectoryName(Application.ExecutablePath)));
-
-        TaskService.Instance.RootFolder.RegisterTaskDefinition(nameof(OpenHardwareMonitor), taskDefinition);
-    }
-
-    private static void DeleteTask()
-    {
-        Task task = GetTask();
-        task?.Folder.DeleteTask(task.Name, false);
-    }
-
-    private static void CreateRegistryKey()
-    {
-        RegistryKey registryKey = Registry.CurrentUser.CreateSubKey(RegistryPath);
-        registryKey?.SetValue(nameof(OpenHardwareMonitor), Application.ExecutablePath);
-    }
-
-    private static void DeleteRegistryKey()
-    {
-        RegistryKey registryKey = Registry.CurrentUser.CreateSubKey(RegistryPath);
-        registryKey?.DeleteValue(nameof(OpenHardwareMonitor));
     }
 }
