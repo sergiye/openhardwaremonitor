@@ -51,6 +51,7 @@ public sealed partial class MainForm : Form
     private readonly UnitManager _unitManager;
     private readonly UpdateVisitor _updateVisitor = new();
     private readonly WmiProvider _wmiProvider;
+    //private readonly Timer checkUpdatesTimer;
 
     private int _delayCount;
     private bool _selectionDragging;
@@ -61,6 +62,15 @@ public sealed partial class MainForm : Form
 
         _settings = new PersistentSettings();
         _settings.Load();
+
+        this.MinimumSize = new Size(400, 200);
+        Text = $"Open Hardware Monitor {(Environment.Is64BitProcess ? "x64" : "x32")} - {Updater.CurrentVersion}";
+        //Icon = Icon.ExtractAssociatedIcon(Updater.CurrentFileLocation);
+        //start check updates timer (silent for errors)
+        //checkUpdatesTimer = new Timer { Interval = 30000 };
+        //checkUpdatesTimer.Tick += (o, e) => Updater.CheckForUpdates(true);
+        //checkUpdatesTimer.Start();
+        portableModeMenuItem.Checked = _settings.IsPortable;
 
         _unitManager = new UnitManager(_settings);
 
@@ -143,7 +153,7 @@ public sealed partial class MainForm : Form
 
         _computer.HardwareAdded += HardwareAdded;
         _computer.HardwareRemoved += HardwareRemoved;
-        _computer.Open();
+        _computer.Open(_settings.IsPortable);
 
         backgroundUpdater.DoWork += BackgroundUpdater_DoWork;
         timer.Enabled = true;
@@ -193,19 +203,19 @@ public sealed partial class MainForm : Form
         _readRamSensors = new UserOption("ramMenuItem", true, ramMenuItem, _settings);
         _readRamSensors.Changed += delegate { _computer.IsMemoryEnabled = _readRamSensors.Value; };
 
-        _readGpuSensors = new UserOption("gpuMenuItem", true, gpuMenuItem, _settings);
+        _readGpuSensors = new UserOption("gpuMenuItem", false, gpuMenuItem, _settings);
         _readGpuSensors.Changed += delegate { _computer.IsGpuEnabled = _readGpuSensors.Value; };
 
-        _readFanControllersSensors = new UserOption("fanControllerMenuItem", true, fanControllerMenuItem, _settings);
+        _readFanControllersSensors = new UserOption("fanControllerMenuItem", false, fanControllerMenuItem, _settings);
         _readFanControllersSensors.Changed += delegate { _computer.IsControllerEnabled = _readFanControllersSensors.Value; };
 
-        _readHddSensors = new UserOption("hddMenuItem", true, hddMenuItem, _settings);
+        _readHddSensors = new UserOption("hddMenuItem", false, hddMenuItem, _settings);
         _readHddSensors.Changed += delegate { _computer.IsStorageEnabled = _readHddSensors.Value; };
 
-        _readNicSensors = new UserOption("nicMenuItem", true, nicMenuItem, _settings);
+        _readNicSensors = new UserOption("nicMenuItem", false, nicMenuItem, _settings);
         _readNicSensors.Changed += delegate { _computer.IsNetworkEnabled = _readNicSensors.Value; };
 
-        _readPsuSensors = new UserOption("psuMenuItem", true, psuMenuItem, _settings);
+        _readPsuSensors = new UserOption("psuMenuItem", false, psuMenuItem, _settings);
         _readPsuSensors.Changed += delegate { _computer.IsPsuEnabled = _readPsuSensors.Value; };
 
         _readBatterySensors = new UserOption("batteryMenuItem", true, batteryMenuItem, _settings);
@@ -643,7 +653,7 @@ public sealed partial class MainForm : Form
         {
             X = _settings.GetValue("mainForm.Location.X", Location.X),
             Y = _settings.GetValue("mainForm.Location.Y", Location.Y),
-            Width = _settings.GetValue("mainForm.Width", 470),
+            Width = _settings.GetValue("mainForm.Width", 700),
             Height = _settings.GetValue("mainForm.Height", 640)
         };
 
@@ -662,6 +672,7 @@ public sealed partial class MainForm : Form
         Bounds = newBounds;
 
         RestoreCollapsedNodeState(treeView);
+        treeView.Width += 1; //just to apply column auto-resize
 
         FormClosed += MainForm_FormClosed;
     }
@@ -701,6 +712,11 @@ public sealed partial class MainForm : Form
     private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
     {
         CloseApplication();
+    }
+
+    private void menuItemCheckUpdates_Click(object sender, EventArgs e)
+    {
+        Updater.CheckForUpdates(false);
     }
 
     private void AboutMenuItem_Click(object sender, EventArgs e)
@@ -1036,5 +1052,28 @@ public sealed partial class MainForm : Form
         dailyFileRotationMenuItem.Checked = true;
         perSessionFileRotationMenuItem.Checked = false;
         _logger.FileRotationMethod = LoggerFileRotation.Daily;
+    }
+
+    private void PortableModeMenu_Click(object sender, EventArgs e)
+    {
+        //var dlg = new SaveFileDialog
+        //{
+        //    DefaultExt = ".config",
+        //    FileName = "OpenHardwareMonitor.config",
+        //    Filter = "Config files|*.config",
+        //    RestoreDirectory = false,
+        //    Title = "Export Settings As",
+        //    InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath),
+        //};
+        //if (dlg.ShowDialog() != DialogResult.OK)
+        //    return;
+        //var oldPortableValue = _settings.IsPortable;
+        _settings.IsPortable = !_settings.IsPortable;
+        portableModeMenuItem.Checked = _settings.IsPortable;
+        _settings.Save();
+        Updater.RestartApp();
+        //if (!oldPortableValue)
+        //    _settings.IsPortable = oldPortableValue;
+        //MessageBox.Show("Settings export completed successfully!", "Export Settings", MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
 }

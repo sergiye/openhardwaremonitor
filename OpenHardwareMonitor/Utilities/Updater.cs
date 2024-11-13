@@ -116,30 +116,35 @@ namespace OpenHardwareMonitor.Utilities
 
                 using (var wc = new WebClient())
                     wc.DownloadFile(newVersionUrl, updateFilePath);
-
-                var cmdFilePath = Path.GetTempPath() + $"{selfFileName}_updater.cmd";
-                using (var batFile = new StreamWriter(File.Create(cmdFilePath)))
-                {
-                    batFile.WriteLine("@ECHO OFF");
-                    batFile.WriteLine("TIMEOUT /t 3 /nobreak > NUL");
-                    batFile.WriteLine("TASKKILL /IM \"{0}\" > NUL", selfFileName);
-                    batFile.WriteLine("MOVE \"{0}\" \"{1}\"", updateFilePath, CurrentFileLocation);
-                    batFile.WriteLine("DEL \"%~f0\" & START \"\" /B \"{0}\"", CurrentFileLocation);
-                }
-                var startInfo = new ProcessStartInfo(cmdFilePath)
-                {
-                    CreateNoWindow = true,
-                    UseShellExecute = false,
-                    WorkingDirectory = tempPath
-                };
-                Process.Start(startInfo);
-                Application.Exit(); // Environment.Exit(0);
+                RestartApp(3, updateFilePath);
             }
             catch (Exception ex)
             {
                 if (!silent)
                     MessageBox.Show($"Error downloading new version\n{ex.Message}", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        internal static void RestartApp(int timeout = 0, string replaceWithFile = null)
+        {
+            var cmdFilePath = Path.GetTempPath() + $"{selfFileName}_updater.cmd";
+            using (var batFile = new StreamWriter(File.Create(cmdFilePath)))
+            {
+                batFile.WriteLine("@ECHO OFF");
+                batFile.WriteLine($"TIMEOUT /t {timeout} /nobreak > NUL");
+                batFile.WriteLine("TASKKILL /IM \"{0}\" > NUL", selfFileName);
+                if (!string.IsNullOrEmpty(replaceWithFile))
+                    batFile.WriteLine("MOVE \"{0}\" \"{1}\"", replaceWithFile, CurrentFileLocation);
+                batFile.WriteLine("DEL \"%~f0\" & START \"\" /B \"{0}\"", CurrentFileLocation);
+            }
+            var startInfo = new ProcessStartInfo(cmdFilePath)
+            {
+                CreateNoWindow = true,
+                UseShellExecute = false,
+                WorkingDirectory = Path.GetTempPath()
+            };
+            Process.Start(startInfo);
+            Application.Exit(); // Environment.Exit(0);
         }
     }
 }

@@ -481,14 +481,14 @@ public class Computer : IComputer
     /// If hasn't been opened before, opens <see cref="SMBios" />, <see cref="Ring0" />, <see cref="OpCode" /> and triggers the private <see cref="AddGroups" /> method depending on which categories are
     /// enabled.
     /// </summary>
-    public void Open()
+    public void Open(bool portable)
     {
         if (_open)
             return;
 
         _smbios = new SMBios();
 
-        Ring0.Open();
+        Ring0.Open(portable);
         Mutexes.Open();
         OpCode.Open();
 

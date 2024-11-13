@@ -48,6 +48,7 @@ namespace OpenHardwareMonitor.UI
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.fileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveReportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.portableModeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.resetMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemFileHardware = new System.Windows.Forms.ToolStripMenuItem();
@@ -130,6 +131,7 @@ namespace OpenHardwareMonitor.UI
             this.serverPortMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.authWebServerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemCheckUpdates = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.treeContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
@@ -232,6 +234,7 @@ namespace OpenHardwareMonitor.UI
             //
             this.fileMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveReportMenuItem,
+            this.portableModeMenuItem,
             this.MenuItem2,
             this.resetMenuItem,
             this.menuItemFileHardware,
@@ -247,6 +250,13 @@ namespace OpenHardwareMonitor.UI
             this.saveReportMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveReportMenuItem.Text = "Save Report...";
             this.saveReportMenuItem.Click += new System.EventHandler(this.SaveReportMenuItem_Click);
+            //
+            // portableModeMenuItem
+            //
+            this.portableModeMenuItem.Name = "exportSettingsMenuItem";
+            this.portableModeMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.portableModeMenuItem.Text = "Portable mode";
+            this.portableModeMenuItem.Click += new System.EventHandler(this.PortableModeMenu_Click);
             //
             // MenuItem2
             //
@@ -866,10 +876,18 @@ namespace OpenHardwareMonitor.UI
             // helpMenuItem
             //
             this.helpMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+                this.menuItemCheckUpdates,
             this.aboutMenuItem});
             this.helpMenuItem.Name = "helpMenuItem";
             this.helpMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpMenuItem.Text = "Help";
+            //
+            // menuItemCheckUpdates
+            //
+            this.menuItemCheckUpdates.Name = "menuItemCheckUpdates";
+            this.menuItemCheckUpdates.Size = new System.Drawing.Size(107, 22);
+            this.menuItemCheckUpdates.Text = "Check for updates";
+            this.menuItemCheckUpdates.Click += new System.EventHandler(this.menuItemCheckUpdates_Click);
             //
             // aboutMenuItem
             //
@@ -975,8 +993,10 @@ namespace OpenHardwareMonitor.UI
         private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBoxMax;
         private System.Windows.Forms.ToolStripMenuItem viewMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuItemCheckUpdates;
         private System.Windows.Forms.ToolStripMenuItem aboutMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveReportMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem portableModeMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hddMenuItem;
         private System.Windows.Forms.ToolStripMenuItem minTrayMenuItem;

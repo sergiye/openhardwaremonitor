@@ -8,6 +8,8 @@
     <Description>Monitor the temperature sensors, fan speeds, voltages, load and clock speeds of your computer.</Description>
     <LangVersion>latest</LangVersion>
     <PackageIcon>packageicon.png</PackageIcon>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Deterministic>false</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <OutputPath>..\bin\</OutputPath>

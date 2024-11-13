@@ -5,10 +5,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -17,9 +15,7 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
-using System.Web;
 using OpenHardwareMonitor.Hardware;
-using Newtonsoft.Json.Linq;
 using OpenHardwareMonitor.UI;
 
 namespace OpenHardwareMonitor.Utilities;
@@ -143,145 +139,6 @@ public class HttpServer
         }
     }
 
-    public static IDictionary<string, string> ToDictionary(NameValueCollection col)
-    {
-        IDictionary<string, string> dict = new Dictionary<string, string>();
-        foreach (string k in col.AllKeys)
-        {
-            dict.Add(k, col[k]);
-        }
-
-        return dict;
-    }
-
-    public SensorNode FindSensor(Node node, string id)
-    {
-        if (node is SensorNode sNode)
-        {
-            if (sNode.Sensor.Identifier.ToString() == id)
-                return sNode;
-        }
-
-        foreach (Node child in node.Nodes)
-        {
-            SensorNode s = FindSensor(child, id);
-            if (s != null)
-            {
-                return s;
-            }
-        }
-
-        return null;
-    }
-
-    public void SetSensorControlValue(SensorNode sNode, string value)
-    {
-        if (sNode.Sensor.Control == null)
-        {
-            throw new ArgumentException("Specified sensor '" + sNode.Sensor.Identifier + "' can not be set");
-        }
-
-        if (value == "null")
-        {
-            sNode.Sensor.Control.SetDefault();
-        }
-        else
-        {
-            sNode.Sensor.Control.SetSoftware(float.Parse(value, CultureInfo.InvariantCulture));
-        }
-    }
-
-    //Handles "/Sensor" requests.
-    //Parameters are taken from the query part of the URL.
-    //Get:
-    //http://localhost:8085/Sensor?action=Get&id=/some/node/path/0
-    //The output is either:
-    //{"result":"fail","message":"Some error message"}
-    //or:
-    //{"result":"ok","value":42.0, "format":"{0:F2} RPM"}
-    //
-    //Set:
-    //http://localhost:8085/Sensor?action=Set&id=/some/node/path/0&value=42.0
-    //http://localhost:8085/Sensor?action=Set&id=/some/node/path/0&value=null
-    //The output is either:
-    //{"result":"fail","message":"Some error message"}
-    //or:
-    //{"result":"ok"}
-    private void HandleSensorRequest(HttpListenerRequest request, JObject result)
-    {
-        IDictionary<string, string> dict = ToDictionary(HttpUtility.ParseQueryString(request.Url.Query));
-
-        if (dict.ContainsKey("action"))
-        {
-            if (dict.ContainsKey("id"))
-            {
-                SensorNode sNode = FindSensor(_root, dict["id"]);
-
-                if (sNode == null)
-                {
-                    throw new ArgumentException("Unknown id " + dict["id"] + " specified");
-                }
-
-                switch (dict["action"])
-                {
-                    case "Set" when dict.ContainsKey("value"):
-                        SetSensorControlValue(sNode, dict["value"]);
-                        break;
-                    case "Set":
-                        throw new ArgumentNullException("No value provided");
-                    case "Get":
-                        result["value"] = sNode.Sensor.Value;
-                        result["format"] = sNode.Format;
-                        break;
-                    default:
-                        throw new ArgumentException("Unknown action type " + dict["action"]);
-                }
-            }
-            else
-            {
-                throw new ArgumentNullException("No id provided");
-            }
-        }
-        else
-        {
-            throw new ArgumentNullException("No action provided");
-        }
-    }
-
-    //Handles http POST requests in a REST like manner.
-    //Currently the only supported base URL is http://localhost:8085/Sensor.
-    private string HandlePostRequest(HttpListenerRequest request)
-    {
-        JObject result = new JObject { ["result"] = "ok" };
-
-        try
-        {
-            if (request.Url.Segments.Length == 2)
-            {
-                if (request.Url.Segments[1] == "Sensor")
-                {
-                    HandleSensorRequest(request, result);
-                }
-                else
-                {
-                    throw new ArgumentException("Invalid URL ('" + request.Url.Segments[1] + "'), possible values: ['Sensor']");
-                }
-            }
-            else
-                throw new ArgumentException("Empty URL, possible values: ['Sensor']");
-        }
-        catch (Exception e)
-        {
-            result["result"] = "fail";
-            result["message"] = e.ToString();
-        }
-#if DEBUG
-        return result.ToString(Newtonsoft.Json.Formatting.Indented);
-#else
-            return result.ToString(Newtonsoft.Json.Formatting.None);
-#endif
-    }
-
     private void ListenerCallback(IAsyncResult result)
     {
         HttpListener listener = (HttpListener)result.AsyncState;
@@ -325,22 +182,6 @@ public class HttpServer
         {
             switch (request.HttpMethod)
             {
-                case "POST":
-                    {
-                        string postResult = HandlePostRequest(request);
-
-                        Stream output = context.Response.OutputStream;
-                        byte[] utfBytes = Encoding.UTF8.GetBytes(postResult);
-
-                        context.Response.AddHeader("Cache-Control", "no-cache");
-                        context.Response.ContentLength64 = utfBytes.Length;
-                        context.Response.ContentType = "application/json";
-
-                        output.Write(utfBytes, 0, utfBytes.Length);
-                        output.Close();
-
-                        break;
-                    }
                 case "GET":
                     {
                         string requestedFile = request.RawUrl.Substring(1);
@@ -491,24 +332,22 @@ public class HttpServer
 
     private void SendJson(HttpListenerResponse response, HttpListenerRequest request = null)
     {
-        JObject json = new JObject();
-
         int nodeIndex = 0;
+        var json = new
+        {
+            id = nodeIndex++,
+            Text = "Sensor",
+            Min = "Min",
+            Value = "Value",
+            Max = "Max",
+            ImageURL = string.Empty,
+            Children = new[]
+            {
+                GenerateJsonForNode(_root, ref nodeIndex)
+            }
+        };
 
-        json["id"] = nodeIndex++;
-        json["Text"] = "Sensor";
-        json["Min"] = "Min";
-        json["Value"] = "Value";
-        json["Max"] = "Max";
-        json["ImageURL"] = string.Empty;
-
-        JArray children = new JArray { GenerateJsonForNode(_root, ref nodeIndex) };
-        json["Children"] = children;
-#if DEBUG
-        string responseContent = json.ToString(Newtonsoft.Json.Formatting.Indented);
-#else
-            string responseContent = json.ToString(Newtonsoft.Json.Formatting.None);
-#endif
+        string responseContent = json.ToJson();
         byte[] buffer = Encoding.UTF8.GetBytes(responseContent);
 
         bool acceptGzip;
@@ -551,48 +390,54 @@ public class HttpServer
         response.Close();
     }
 
-    private JObject GenerateJsonForNode(Node n, ref int nodeIndex)
+    private object GenerateJsonForNode(Node n, ref int nodeIndex)
     {
-        JObject jsonNode = new JObject
-        {
-            ["id"] = nodeIndex++,
-            ["Text"] = n.Text,
-            ["Min"] = string.Empty,
-            ["Value"] = string.Empty,
-            ["Max"] = string.Empty
-        };
+        string imageUrl;
 
-        if (n is SensorNode sensorNode)
-        {
-            jsonNode["SensorId"] = sensorNode.Sensor.Identifier.ToString();
-            jsonNode["Type"] = sensorNode.Sensor.SensorType.ToString();
-            jsonNode["Min"] = sensorNode.Min;
-            jsonNode["Value"] = sensorNode.Value;
-            jsonNode["Max"] = sensorNode.Max;
-            jsonNode["ImageURL"] = "images/transparent.png";
-        }
-        else if (n is HardwareNode hardwareNode)
-        {
-            jsonNode["ImageURL"] = "images_icon/" + GetHardwareImageFile(hardwareNode);
-        }
-        else if (n is TypeNode typeNode)
-        {
-            jsonNode["ImageURL"] = "images_icon/" + GetTypeImageFile(typeNode);
-        }
-        else
-        {
-            jsonNode["ImageURL"] = "images_icon/computer.png";
-        }
-
-        JArray children = new JArray();
+        var children = new List<object>();
         foreach (Node child in n.Nodes)
         {
             children.Add(GenerateJsonForNode(child, ref nodeIndex));
         }
 
-        jsonNode["Children"] = children;
+        if (n is SensorNode sensorNode)
+        {
+            return new
+            {
+                id = nodeIndex++,
+                Text = n.Text,
+                SensorId = sensorNode.Sensor.Identifier.ToString(),
+                Type = sensorNode.Sensor.SensorType.ToString(),
+                Min = sensorNode.Min,
+                Value = sensorNode.Value,
+                Max = sensorNode.Max,
+                ImageURL = "images/transparent.png",
+                Children = children.ToArray(),
+            };
+        }
+        else if (n is HardwareNode hardwareNode)
+        {
+            imageUrl = "images_icon/" + GetHardwareImageFile(hardwareNode);
+        }
+        else if (n is TypeNode typeNode)
+        {
+            imageUrl = "images_icon/" + GetTypeImageFile(typeNode);
+        }
+        else
+        {
+            imageUrl = "images_icon/computer.png";
+        }
 
-        return jsonNode;
+        return new
+        {
+            id = nodeIndex++,
+            Text = n.Text,
+            Min = string.Empty,
+            Value = string.Empty,
+            Max = string.Empty,
+            Children = children.ToArray(),
+            ImageURL = imageUrl,
+        };
     }
 
     private static string GetContentType(string extension)

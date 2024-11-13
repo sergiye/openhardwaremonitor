@@ -59,7 +59,10 @@ public class PersistentSettings : ISettings
 
     public void Save()
     {
-        if (GetValue("portable", false))
+        //remove prev registry settings
+        Registry.CurrentUser.DeleteSubKeyTree("Software\\sergiye\\openHardwareMonitor", false);
+
+        if (IsPortable)
         {
             SaveToFile(configFilePath);
             return;
@@ -67,8 +70,6 @@ public class PersistentSettings : ISettings
 
         try
         {
-            //remove prev settings
-            Registry.CurrentUser.DeleteSubKeyTree("Software\\sergiye\\openHardwareMonitor", false);
             //save to registry
             using (var reg = Registry.CurrentUser.CreateSubKey("Software\\sergiye\\openHardwareMonitor"))
             {
@@ -114,6 +115,18 @@ public class PersistentSettings : ISettings
             MessageBox.Show("The path '" + configFilePath + "' is not writeable. " +
               "The current settings could not be saved.",
               "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    public bool IsPortable
+    {
+        get
+        {
+            return GetValue("portable", true);
+        }
+        set
+        {
+            SetValue("portable", value);
         }
     }
 

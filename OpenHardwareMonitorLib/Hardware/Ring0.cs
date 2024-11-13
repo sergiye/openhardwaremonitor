@@ -23,7 +23,7 @@ internal static class Ring0
 
     public static bool IsOpen => _driver != null;
 
-    public static void Open()
+    public static void Open(bool portable)
     {
         // no implementation for unix systems
         if (Software.OperatingSystem.IsUnix)
@@ -41,7 +41,7 @@ internal static class Ring0
         if (!_driver.IsOpen)
         {
             // driver is not loaded, try to install and open
-            _filePath = GetFilePath();
+            _filePath = GetFilePath(portable);
             if (_filePath != null && Extract(_filePath))
             {
                 if (_driver.Install(_filePath, out string installError))
@@ -206,34 +206,37 @@ internal static class Ring0
         }
     }
 
-    private static string GetFilePath()
+    private static string GetFilePath(bool portable)
     {
         string filePath = null;
 
-        try
+        if (portable)
         {
-            ProcessModule processModule = Process.GetCurrentProcess().MainModule;
-            if (!string.IsNullOrEmpty(processModule?.FileName))
+            try
             {
-                filePath = Path.ChangeExtension(processModule.FileName, ".sys");
-                if (CanCreate(filePath))
-                    return filePath;
+                ProcessModule processModule = Process.GetCurrentProcess().MainModule;
+                if (!string.IsNullOrEmpty(processModule?.FileName))
+                {
+                    filePath = Path.ChangeExtension(processModule.FileName, ".sys");
+                    if (CanCreate(filePath))
+                        return filePath;
+                }
             }
-        }
-        catch
-        {
-            // Continue with the other options.
-        }
+            catch
+            {
+                // Continue with the other options.
+            }
 
-        string previousFilePath = filePath;
-        filePath = GetPathFromAssembly(Assembly.GetExecutingAssembly());
-        if (previousFilePath != filePath && !string.IsNullOrEmpty(filePath) && CanCreate(filePath))
-            return filePath;
+            string previousFilePath = filePath;
+            filePath = GetPathFromAssembly(Assembly.GetExecutingAssembly());
+            if (previousFilePath != filePath && !string.IsNullOrEmpty(filePath) && CanCreate(filePath))
+                return filePath;
 
-        previousFilePath = filePath;
-        filePath = GetPathFromAssembly(typeof(Ring0).Assembly);
-        if (previousFilePath != filePath && !string.IsNullOrEmpty(filePath) && CanCreate(filePath))
-            return filePath;
+            previousFilePath = filePath;
+            filePath = GetPathFromAssembly(typeof(Ring0).Assembly);
+            if (previousFilePath != filePath && !string.IsNullOrEmpty(filePath) && CanCreate(filePath))
+                return filePath;
+        }
 
         try
         {
