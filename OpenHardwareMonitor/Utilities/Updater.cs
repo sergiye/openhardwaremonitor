@@ -93,7 +93,14 @@ namespace OpenHardwareMonitor.Utilities
 
                 var lastRelease = releases.FirstOrDefault(r => !r.prerelease) ?? releases[0];
                 newVersion = lastRelease.tag_name;
-                newVersionUrl = lastRelease.assets[0].browser_download_url;
+                var asset = lastRelease.assets.FirstOrDefault(a => a.name == selfFileName);
+                newVersionUrl = asset?.browser_download_url;
+                if (string.IsNullOrEmpty(newVersionUrl))
+                {
+                    if (!silent)
+                        MessageBox.Show($"Your version is: {CurrentVersion}\nLatest released version is: {newVersion}\nNo assets found to update.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
 
                 if (string.Compare(CurrentVersion, newVersion, StringComparison.Ordinal) >= 0)
                 {

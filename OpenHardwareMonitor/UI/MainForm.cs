@@ -51,7 +51,7 @@ public sealed partial class MainForm : Form
     private readonly UnitManager _unitManager;
     private readonly UpdateVisitor _updateVisitor = new();
     private readonly WmiProvider _wmiProvider;
-    //private readonly Timer checkUpdatesTimer;
+    private readonly Timer checkUpdatesTimer;
 
     private int _delayCount;
     private bool _selectionDragging;
@@ -60,16 +60,23 @@ public sealed partial class MainForm : Form
     {
         InitializeComponent();
 
+        this.sensor.WidthChanged += delegate { TreeView_ColumnWidthChanged(this.sensor); };
+        this.value.WidthChanged += delegate { TreeView_ColumnWidthChanged(this.value); };
+        this.min.WidthChanged += delegate { TreeView_ColumnWidthChanged(this.min); };
+        this.max.WidthChanged += delegate { TreeView_ColumnWidthChanged(this.max); };
+
         _settings = new PersistentSettings();
         _settings.Load();
 
         this.MinimumSize = new Size(400, 200);
         Text = $"Open Hardware Monitor {(Environment.Is64BitProcess ? "x64" : "x32")} - {Updater.CurrentVersion}";
-        //Icon = Icon.ExtractAssociatedIcon(Updater.CurrentFileLocation);
+        Icon = Icon.ExtractAssociatedIcon(Updater.CurrentFileLocation);
+#if DEBUG
         //start check updates timer (silent for errors)
-        //checkUpdatesTimer = new Timer { Interval = 30000 };
-        //checkUpdatesTimer.Tick += (o, e) => Updater.CheckForUpdates(true);
-        //checkUpdatesTimer.Start();
+        checkUpdatesTimer = new Timer { Interval = 60 * 60 * 1000 };
+        checkUpdatesTimer.Tick += (o, e) => Updater.CheckForUpdates(true);
+        checkUpdatesTimer.Start();
+#endif
         portableModeMenuItem.Checked = _settings.IsPortable;
 
         _unitManager = new UnitManager(_settings);

@@ -3,8 +3,6 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net472</TargetFramework>
     <AssemblyName>OpenHardwareMonitor</AssemblyName>
-    <AssemblyTitle>Open Hardware Monitor</AssemblyTitle>
-    <Copyright>OpenHardwareMonitor</Copyright>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
     <ApplicationManifest>Resources\app.manifest</ApplicationManifest>
