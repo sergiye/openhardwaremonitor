@@ -14,9 +14,16 @@ This application is based on the "original" [openhardwaremonitor](https://github
 You can see information about devices such as:
  - Motherboards
  - Intel and AMD processors
+ - RAM
  - NVIDIA and AMD graphics cards
  - HDD, SSD and NVMe hard drives
  - Network cards
+ - Power suppliers
+ - Laptop batteries
+
+Supports `Portable` mode for storing temporary driver file and settings configuration next to the executable file.
+Supports `Light`/`Dark` themes with auto switching mode.
+Supports (manual only) checking for updated versions.
 
 # Download
 
