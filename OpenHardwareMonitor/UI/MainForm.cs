@@ -46,7 +46,7 @@ public sealed partial class MainForm : Form
     private readonly UnitManager _unitManager;
     private readonly UpdateVisitor _updateVisitor = new();
     private readonly WmiProvider _wmiProvider;
-    private readonly Timer checkUpdatesTimer;
+    private readonly Timer _checkUpdatesTimer;
 
     private int _delayCount;
     private bool _selectionDragging;
@@ -68,9 +68,9 @@ public sealed partial class MainForm : Form
         Icon = Icon.ExtractAssociatedIcon(Updater.CurrentFileLocation);
 #if DEBUG
         //start check updates timer (silent for errors)
-        checkUpdatesTimer = new Timer { Interval = 60 * 60 * 1000 };
-        checkUpdatesTimer.Tick += (o, e) => Updater.CheckForUpdates(true);
-        checkUpdatesTimer.Start();
+        _checkUpdatesTimer = new Timer { Interval = 60 * 60 * 1000 };
+        _checkUpdatesTimer.Tick += (_, _) => Updater.CheckForUpdates(true);
+        _checkUpdatesTimer.Start();
 #endif
         portableModeMenuItem.Checked = _settings.IsPortable;
 
@@ -949,7 +949,7 @@ public sealed partial class MainForm : Form
             sensorClick.ResetMax();
         }));
     }
-    
+
     private void MainForm_MoveOrResize(object sender, EventArgs e)
     {
         if (WindowState != FormWindowState.Minimized)
@@ -969,6 +969,7 @@ public sealed partial class MainForm : Form
         _computer.Reset();
         // restore the MainIcon setting
         _systemTray.IsMainIconEnabled = _minimizeToTray.Value;
+        RestoreCollapsedNodeState(treeView);
     }
 
     private void TreeView_MouseMove(object sender, MouseEventArgs e)
