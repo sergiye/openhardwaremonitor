@@ -33,12 +33,12 @@
     <PackageReference Include="Mono.Posix.NETStandard" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="HidSharp" Version="2.1.0" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\packageicon.png" PackagePath="">
       <Pack>True</Pack>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HidSharp\HidSharp.NETStandard.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Management" />
