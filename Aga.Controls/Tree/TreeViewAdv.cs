@@ -796,17 +796,18 @@ namespace Aga.Controls.Tree
 			eargs.Node = node;
 			eargs.Value = value;
 			eargs.IgnoreChildren = ignoreChildren;
+			eargs.ChangedByUser = byUser;
 
 			if (AsyncExpanding && LoadOnDemand && !_threadPool.IsMyThread(Thread.CurrentThread))
 			{
-				WaitCallback wc = delegate(object argument) { SetIsExpanded((ExpandArgs)argument, byUser); };
+				WaitCallback wc = delegate(object argument) { SetIsExpanded((ExpandArgs)argument); };
 				_threadPool.QueueUserWorkItem(wc, eargs);
 			}
 			else
-				SetIsExpanded(eargs, byUser);
+				SetIsExpanded(eargs);
 		}
 
-		private void SetIsExpanded(ExpandArgs eargs, bool byUser)
+		private void SetIsExpanded(ExpandArgs eargs)
 		{
 			bool update = !eargs.IgnoreChildren && !AsyncExpanding;
 			if (update)
@@ -814,7 +815,7 @@ namespace Aga.Controls.Tree
 			try
 			{
 				if (IsMyNode(eargs.Node) && eargs.Node.IsExpanded != eargs.Value)
-					SetIsExpanded(eargs.Node, eargs.Value, byUser);
+					SetIsExpanded(eargs.Node, eargs.Value, eargs.ChangedByUser);
 
 				if (!eargs.IgnoreChildren)
 					SetIsExpandedRecursive(eargs.Node, eargs.Value);

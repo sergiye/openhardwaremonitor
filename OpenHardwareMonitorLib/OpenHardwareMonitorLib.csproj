@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net472</TargetFrameworks>
+    <TargetFramework>net472</TargetFramework>
     <AssemblyName>OpenHardwareMonitorLib</AssemblyName>
     <RootNamespace>OpenHardwareMonitor</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -38,7 +38,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HidSharp\HidSharp.NETStandard.csproj" />
+    <ProjectReference Include="..\HidSharp\HidSharp.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Management" />

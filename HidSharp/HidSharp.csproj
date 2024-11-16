@@ -1,17 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <OutputType>Library</OutputType>
+    <TargetFramework>net472</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <OutputPath>..\bin\</OutputPath>
-    <Company>Illusory Studios LLC</Company>
-    <Copyright>Copyright © 2010-2019 James F. Bellinger &lt;http://www.zer7.com/software/hidsharp&gt;</Copyright>
-    <Description>C# HID wrappers</Description>
-    <Product>HidSharp</Product>
-    <AssemblyTitle>HidSharp</AssemblyTitle>
-    <AssemblyVersion>2.1.0.0</AssemblyVersion>
-    <FileVersion>2.1.0.0</FileVersion>
-    <InformationalVersion>2.1.0</InformationalVersion>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <AssemblyName>HidSharp</AssemblyName>
+    <RootNamespace>HidSharp</RootNamespace>
+    <OutputPath>..\bin</OutputPath>
   </PropertyGroup>
+
 </Project>

@@ -46,7 +46,9 @@ public sealed partial class MainForm : Form
     private readonly UnitManager _unitManager;
     private readonly UpdateVisitor _updateVisitor = new();
     private readonly WmiProvider _wmiProvider;
+#if DEBUG
     private readonly Timer _checkUpdatesTimer;
+#endif
 
     private int _delayCount;
     private bool _selectionDragging;

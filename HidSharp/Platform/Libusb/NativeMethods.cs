@@ -88,11 +88,6 @@ namespace HidSharp.Platform.Libusb
 			Interrupt	
 		}
 		
-		public struct Version
-		{
-			public ushort Major, Minor, Micro, Nano;
-		}
-		
 		public enum Error
 		{
 			None = 0,
