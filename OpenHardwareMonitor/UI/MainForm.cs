@@ -507,24 +507,12 @@ public sealed partial class MainForm : Form
         string themeSetting = _settings.GetValue("theme", "auto");
         bool themeSelected = false;
 
-        void ClearThemeMenu()
-        {
-            foreach (ToolStripItem x in themeMenuItem.DropDownItems)
-            {
-                if (x is ToolStripMenuItem tmi)
-                {
-                    tmi.Checked = false;
-                }
-            }
-        }
-
         if (Theme.SupportsAutoThemeSwitching())
         {
-            _autoThemeMenuItem = new ToolStripMenuItem();
+            _autoThemeMenuItem = new ToolStripRadioButtonMenuItem();
             _autoThemeMenuItem.Text = "Auto";
             _autoThemeMenuItem.Click += (o, e) =>
             {
-                ClearThemeMenu();
                 _autoThemeMenuItem.Checked = true;
                 Theme.SetAutoTheme();
                 _settings.SetValue("theme", "auto");
@@ -534,11 +522,10 @@ public sealed partial class MainForm : Form
 
         foreach (Theme theme in Theme.All)
         {
-            ToolStripMenuItem item = new ToolStripMenuItem();
+            var item = new ToolStripRadioButtonMenuItem();
             item.Text = theme.DisplayName;
             item.Click += (o, e) =>
             {
-                ClearThemeMenu();
                 item.Checked = true;
                 Theme.Current = theme;
                 _settings.SetValue("theme", theme.Id);
