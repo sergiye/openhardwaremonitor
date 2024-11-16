@@ -8,8 +8,8 @@ namespace Aga.Controls.Tree
 	public class AutoRowHeightLayout: IRowLayout
 	{
 		private DrawContext _measureContext;
-		private TreeViewAdv _treeView;
-		private List<Rectangle> _rowCache;
+		private readonly TreeViewAdv _treeView;
+		private readonly List<Rectangle> _rowCache;
 
 		public AutoRowHeightLayout(TreeViewAdv treeView, int rowHeight)
 		{
@@ -20,13 +20,7 @@ namespace Aga.Controls.Tree
 			_measureContext.Graphics = Graphics.FromImage(new Bitmap(1, 1));
 		}
 
-		private int _rowHeight;
-		public int PreferredRowHeight
-		{
-			get { return _rowHeight; }
-			set { _rowHeight = value; }
-		}
-
+		public int PreferredRowHeight { get; set; }
 
 		public int PageRowCount
 		{
@@ -117,6 +111,8 @@ namespace Aga.Controls.Tree
 		public int GetRowAt(Point point)
 		{
 			int py = point.Y - _treeView.ColumnHeaderHeight;
+			if (py < 0)  // Header column
+				return -1; 
 			int y = 0;
 			for (int i = _treeView.FirstVisibleRow; i < _treeView.RowCount; i++)
 			{

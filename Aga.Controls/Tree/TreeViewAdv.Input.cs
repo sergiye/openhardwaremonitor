@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using Aga.Controls.Tree.NodeControls;
@@ -453,6 +451,8 @@ namespace Aga.Controls.Tree
 		private void DragAutoScroll()
 		{
 			_dragAutoScrollFlag = false;
+			if (_vScrollBar.Minimum == _vScrollBar.Maximum)
+				return;
 			Point pt = PointToClient(MousePosition);
 			if (pt.Y < 20 && _vScrollBar.Value > 0)
 				_vScrollBar.Value--;

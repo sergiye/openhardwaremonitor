@@ -29,6 +29,10 @@ namespace Aga.Controls.Tree
 						if (nc.ParentColumn == column)
 							w += nc.GetActualSize(node, _measureContext).Width;
 					}
+					if (column.Index == 0)
+					{
+						w += node.Level * _indent + LeftMargin;
+					}
 					res = Math.Max(res, w);
 				}
 			}
