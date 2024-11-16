@@ -112,15 +112,18 @@ public class PersistentSettings : ISettings
         }
     }
 
+    private bool isPortable = true;
     public bool IsPortable
     {
         get
         {
-            return GetValue("portable", true);
+            return isPortable;
         }
         set
         {
-            SetValue("portable", value);
+            if (isPortable == value) return;
+            isPortable = value;
+            Save();
         }
     }
 
@@ -131,6 +134,7 @@ public class PersistentSettings : ISettings
 
     public void SetValue(string name, string value)
     {
+        if (_settings.TryGetValue(name, out var prevValue) && prevValue == value) return;
         _settings[name] = value;
         Save();
     }
@@ -152,6 +156,7 @@ public class PersistentSettings : ISettings
 
     public void SetValue(string name, int value)
     {
+        if (_settings.TryGetValue(name, out var prevValue) && int.TryParse(prevValue, out var oldValue) && oldValue == value) return;
         _settings[name] = value.ToString();
         Save();
     }
@@ -172,6 +177,7 @@ public class PersistentSettings : ISettings
 
     public void SetValue(string name, float value)
     {
+        if (_settings.TryGetValue(name, out var prevValue) && float.TryParse(prevValue, out var oldValue) && oldValue == value) return;
         _settings[name] = value.ToString(CultureInfo.InvariantCulture);
         Save();
     }
@@ -201,6 +207,7 @@ public class PersistentSettings : ISettings
 
     public void SetValue(string name, bool value)
     {
+        if (_settings.TryGetValue(name, out var prevValue) && bool.TryParse(prevValue, out var oldValue) && oldValue == value) return;
         _settings[name] = value ? "true" : "false";
         Save();
     }
@@ -217,6 +224,7 @@ public class PersistentSettings : ISettings
 
     public void SetValue(string name, Color color)
     {
+        if (_settings.TryGetValue(name, out var prevValue) && int.TryParse(prevValue, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int parsedValue) && Color.FromArgb(parsedValue) == color) return;
         _settings[name] = color.ToArgb().ToString("X8");
         Save();
     }

@@ -85,6 +85,7 @@ internal class Sensor : ISensor
         get { return _name; }
         set
         {
+            if (_name == value) return;
             _name = !string.IsNullOrEmpty(value) ? value : _defaultName;
 
             _settings.SetValue(new Identifier(Identifier, "name").ToString(), _name);

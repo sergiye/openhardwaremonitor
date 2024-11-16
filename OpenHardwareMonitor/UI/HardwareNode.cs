@@ -69,6 +69,7 @@ public class HardwareNode : Node, IExpandPersistNode
         get => _expanded;
         set
         {
+            if (_expanded == value) return;
             _expanded = value;
             _settings.SetValue(_expandedIdentifier, _expanded);
         }
