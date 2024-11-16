@@ -617,7 +617,7 @@ public sealed partial class MainForm : Form
         if (!backgroundUpdater.IsBusy)
             backgroundUpdater.RunWorkerAsync();
 
-        RestoreCollapsedNodeState(treeView);
+        //RestoreCollapsedNodeState(treeView);
     }
 
     private void SaveConfiguration()
