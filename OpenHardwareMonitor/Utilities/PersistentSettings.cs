@@ -31,6 +31,7 @@ public class PersistentSettings : ISettings
                 if (data != null)
                 {
                     _settings = data;
+                    isPortable = true;
                     return;
                 }
             }
@@ -112,7 +113,7 @@ public class PersistentSettings : ISettings
         }
     }
 
-    private bool isPortable = true;
+    private bool isPortable;
     public bool IsPortable
     {
         get
