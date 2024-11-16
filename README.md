@@ -20,6 +20,6 @@ repository was forked from https://github.com/openhardwaremonitor/openhardwaremo
 
 ## License
 
-GPL-3.0 License
+MPL 2.0 License https://www.mozilla.org/en-US/MPL/2.0/
 
 Copyright © 2022 Sergiy Egoshyn
