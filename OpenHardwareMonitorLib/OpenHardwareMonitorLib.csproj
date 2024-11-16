@@ -34,11 +34,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HidSharp" Version="2.1.0" />
-    <PackageReference Include="System.Management" Version="9.0.0" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\packageicon.png" PackagePath="">
       <Pack>True</Pack>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Management" />
   </ItemGroup>
 </Project>
