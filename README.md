@@ -3,11 +3,20 @@
 ![GitHub all releases](https://img.shields.io/github/downloads/sergiye/openhardwaremonitor/total?style=plastic)
 ![GitHub last commit](https://img.shields.io/github/last-commit/sergiye/openhardwaremonitor?style=plastic)
 
-Open hardware monitor - system sensors monitoring application for Windows/Linux
+Open hardware monitor - is free software that can monitor the temperature sensors, fan speeds, voltages, load and clock speeds of your computer.
+
+This application is based on the "original" [openhardwaremonitor](https://github.com/openhardwaremonitor/openhardwaremonitor) project.
 
 ## Features
 
-repository was forked from https://github.com/openhardwaremonitor/openhardwaremonitor
+### What can it do?
+
+You can see information about devices such as:
+ - Motherboards
+ - Intel and AMD processors
+ - NVIDIA and AMD graphics cards
+ - HDD, SSD and NVMe hard drives
+ - Network cards
 
 # Download
 
@@ -16,10 +25,15 @@ repository was forked from https://github.com/openhardwaremonitor/openhardwaremo
 - `git clone https://github.com/sergiye/openhardwaremonitor.git`
 - build
 
-**or download build from <a href="https://github.com/sergiye/openhardwaremonitor/releases">releases</a>.**
+**or download build from [releases](https://github.com/sergiye/openhardwaremonitor/releases).**
+
+
+## How can I help improve it?
+The OpenHardwareMonitor team welcomes feedback and contributions!<br/>
+You can check if it works properly on your motherboard. For many manufacturers, the way of reading data differs a bit, so if you notice any inaccuracies, please send us a pull request. If you have any suggestions or improvements, don't hesitate to create an issue.
 
 ## License
 
-MPL 2.0 License https://www.mozilla.org/en-US/MPL/2.0/
+OpenHardwareMonitor is free and open source software licensed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). You can use it for personal and commercial purposes.
 
 Copyright © 2022 Sergiy Egoshyn
