@@ -1139,8 +1139,6 @@ namespace Aga.Controls.Tree
 				UpdateSelection();
 				SmartFullUpdate();
 			}
-			//else 
-			//	throw new ArgumentException("Path not found");
 		}
 
 		private void RestoreExpandedNodes(TreeNodeAdv node, Dictionary<object, object> list)
@@ -1177,8 +1175,10 @@ namespace Aga.Controls.Tree
 						int index = list[n];
 						if (index >= 0 && index <= parent.Nodes.Count)
 							parent.Nodes.RemoveAt(index);
+#if DEBUG
 						else
 							throw new ArgumentOutOfRangeException("Index out of range");
+#endif
 					}
 				}
 				else
@@ -1237,8 +1237,10 @@ namespace Aga.Controls.Tree
 						TreeNodeAdv node = parent.Nodes[index];
 						node.Height = node.RightBounds = null;
 					}
+#if DEBUG
 					else
 						throw new ArgumentOutOfRangeException("Index out of range");
+#endif
 				}
 			}
 			else
