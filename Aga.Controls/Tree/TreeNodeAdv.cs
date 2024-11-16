@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
@@ -83,10 +82,10 @@ namespace Aga.Controls.Tree
 		}
 
 		public event EventHandler<TreeViewAdvEventArgs> Collapsed;
-		internal void OnCollapsed()
+		internal void OnCollapsed(bool byUser)
 		{
 			if (Collapsed != null)
-				Collapsed(this, new TreeViewAdvEventArgs(this));
+				Collapsed(this, new TreeViewAdvEventArgs(this, byUser));
 		}
 
 		public event EventHandler<TreeViewAdvEventArgs> Expanding;
@@ -97,10 +96,10 @@ namespace Aga.Controls.Tree
 		}
 
 		public event EventHandler<TreeViewAdvEventArgs> Expanded;
-		internal void OnExpanded()
+		internal void OnExpanded(bool byUser)
 		{
 			if (Expanded != null)
-				Expanded(this, new TreeViewAdvEventArgs(this));
+				Expanded(this, new TreeViewAdvEventArgs(this, byUser));
 		}
 
 		#endregion
@@ -194,13 +193,6 @@ namespace Aga.Controls.Tree
 		public bool IsExpanded
 		{
 			get { return _isExpanded; }
-			set
-			{
-				if (value)
-					Expand();
-				else
-					Collapse();
-			}
 		}
 
 		internal void AssignIsExpanded(bool value)
@@ -367,34 +359,34 @@ namespace Aga.Controls.Tree
 				return base.ToString();
 		}
 
-		public void Collapse()
+		public void Collapse(bool raisedByUser)
 		{
 			if (_isExpanded)
-				Collapse(true);
+				Collapse(true, raisedByUser);
 		}
 
 		public void CollapseAll()
 		{
-			Collapse(false);
+			Collapse(false, false);
 		}
 
-		public void Collapse(bool ignoreChildren)
+		public void Collapse(bool ignoreChildren, bool raisedByUser)
 		{
 			SetIsExpanded(false, ignoreChildren);
 		}
 
-		public void Expand()
+		public void Expand(bool raisedByUser)
 		{
 			if (!_isExpanded)
-				Expand(true);
+				Expand(true, raisedByUser);
 		}
 
 		public void ExpandAll()
 		{
-			Expand(false);
+			Expand(false, false);
 		}
 
-		public void Expand(bool ignoreChildren)
+		public void Expand(bool ignoreChildren, bool raisedByUser)
 		{
 			SetIsExpanded(true, ignoreChildren);
 		}

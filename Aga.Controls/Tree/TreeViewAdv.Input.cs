@@ -194,7 +194,12 @@ namespace Aga.Controls.Tree
 				if (!args.Handled)
 				{
 					if (args.Node != null && args.Button == MouseButtons.Left)
-						args.Node.IsExpanded = !args.Node.IsExpanded;
+                    {
+                        if (args.Node.IsExpanded)
+                            args.Node.Collapse(true);
+                        else
+                            args.Node.Expand(true);
+                    }
 				}
 			}
 

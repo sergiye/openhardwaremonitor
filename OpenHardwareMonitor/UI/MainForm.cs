@@ -617,7 +617,7 @@ public sealed partial class MainForm : Form
         if (!backgroundUpdater.IsBusy)
             backgroundUpdater.RunWorkerAsync();
 
-        //RestoreCollapsedNodeState(treeView);
+        RestoreCollapsedNodeState(treeView);
     }
 
     private void SaveConfiguration()
@@ -675,7 +675,7 @@ public sealed partial class MainForm : Form
 
         foreach (TreeNodeAdv node in collapsedHwNodes)
         {
-            node.IsExpanded = false;
+            node.Collapse(false);
         }
     }
 
@@ -713,23 +713,20 @@ public sealed partial class MainForm : Form
         _ = new AboutBox().ShowDialog();
     }
 
+    private void TreeView_CollapsedOrExpanded(object sender, TreeViewAdvEventArgs info)
+    {
+        if (info.RaisedByUser && info.Node.Tag is IExpandPersistNode expandPersistNode)
+            expandPersistNode.Expanded = info.Node.IsExpanded;
+    }
+
     private void TreeView_Click(object sender, EventArgs e)
     {
         if (!(e is MouseEventArgs m) || (m.Button != MouseButtons.Left && m.Button != MouseButtons.Right))
             return;
 
         NodeControlInfo info = treeView.GetNodeControlInfoAt(new Point(m.X, m.Y));
-        if (m.Button == MouseButtons.Left && info.Node != null)
-        {
-            if (info.Node.Tag is IExpandPersistNode expandPersistNode)
-            {
-                expandPersistNode.Expanded = info.Node.IsExpanded;
-            }
-            return;
-        }
-
         treeView.SelectedNode = info.Node;
-        if (info.Node != null)
+        if (m.Button == MouseButtons.Right && info.Node != null)
         {
             if (info.Node.Tag is SensorNode node && node.Sensor != null)
             {

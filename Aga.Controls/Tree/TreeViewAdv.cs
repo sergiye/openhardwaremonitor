@@ -129,10 +129,10 @@ namespace Aga.Controls.Tree
 
 		[Category("Behavior")]
 		public event EventHandler<TreeViewAdvEventArgs> Collapsed;
-		private void OnCollapsed(TreeNodeAdv node)
+		private void OnCollapsed(TreeNodeAdv node, bool byUser)
 		{
 			if (Collapsed != null)
-				Collapsed(this, new TreeViewAdvEventArgs(node));
+				Collapsed(this, new TreeViewAdvEventArgs(node, byUser));
 		}
 
 		[Category("Behavior")]
@@ -145,10 +145,10 @@ namespace Aga.Controls.Tree
 
 		[Category("Behavior")]
 		public event EventHandler<TreeViewAdvEventArgs> Expanded;
-		private void OnExpanded(TreeNodeAdv node)
+		private void OnExpanded(TreeNodeAdv node, bool byUser)
 		{
 			if (Expanded != null)
-				Expanded(this, new TreeViewAdvEventArgs(node));
+				Expanded(this, new TreeViewAdvEventArgs(node, byUser));
 		}
 
 		[Category("Behavior")]
@@ -436,7 +436,7 @@ namespace Aga.Controls.Tree
 			TreeNodeAdv parent = node.Parent;
 			while (parent != _root)
 			{
-				parent.IsExpanded = true;
+				parent.Expand(false);
 				parent = parent.Parent;
 			}
 			ScrollTo(node);
@@ -717,7 +717,7 @@ namespace Aga.Controls.Tree
 			Selection.Clear();
 			SelectionStart = null;
 			_root = new TreeNodeAdv(this, null);
-			_root.IsExpanded = true;
+			_root.Expand(false);
 			if (_root.Nodes.Count > 0)
 				CurrentNode = _root.Nodes[0];
 			else
@@ -778,6 +778,7 @@ namespace Aga.Controls.Tree
 			public TreeNodeAdv Node;
 			public bool Value;
 			public bool IgnoreChildren;
+			public bool ChangedByUser;
 		}
 
 		public void AbortBackgroundExpandingThreads()
@@ -789,7 +790,7 @@ namespace Aga.Controls.Tree
 			Invalidate();
 		}
 
-		internal void SetIsExpanded(TreeNodeAdv node, bool value, bool ignoreChildren)
+		internal void SetIsExpanded(TreeNodeAdv node, bool value, bool ignoreChildren, bool byUser)
 		{
 			ExpandArgs eargs = new ExpandArgs();
 			eargs.Node = node;
@@ -798,14 +799,14 @@ namespace Aga.Controls.Tree
 
 			if (AsyncExpanding && LoadOnDemand && !_threadPool.IsMyThread(Thread.CurrentThread))
 			{
-				WaitCallback wc = delegate(object argument) { SetIsExpanded((ExpandArgs)argument); };
+				WaitCallback wc = delegate(object argument) { SetIsExpanded((ExpandArgs)argument, byUser); };
 				_threadPool.QueueUserWorkItem(wc, eargs);
 			}
 			else
-				SetIsExpanded(eargs);
+				SetIsExpanded(eargs, byUser);
 		}
 
-		private void SetIsExpanded(ExpandArgs eargs)
+		private void SetIsExpanded(ExpandArgs eargs, bool byUser)
 		{
 			bool update = !eargs.IgnoreChildren && !AsyncExpanding;
 			if (update)
@@ -813,7 +814,7 @@ namespace Aga.Controls.Tree
 			try
 			{
 				if (IsMyNode(eargs.Node) && eargs.Node.IsExpanded != eargs.Value)
-					SetIsExpanded(eargs.Node, eargs.Value);
+					SetIsExpanded(eargs.Node, eargs.Value, byUser);
 
 				if (!eargs.IgnoreChildren)
 					SetIsExpandedRecursive(eargs.Node, eargs.Value);
@@ -825,7 +826,7 @@ namespace Aga.Controls.Tree
 			}
 		}
 
-		internal void SetIsExpanded(TreeNodeAdv node, bool value)
+		internal void SetIsExpanded(TreeNodeAdv node, bool value, bool byUser)
 		{
 			if (Root == node && !value)
 				return; //Can't collapse root node
@@ -857,13 +858,13 @@ namespace Aga.Controls.Tree
 
 			if (value)
 			{
-				OnExpanded(node);
-				node.OnExpanded();
+				OnExpanded(node, byUser);
+				node.OnExpanded(byUser);
 			}
 			else
 			{
-				OnCollapsed(node);
-				node.OnCollapsed();
+				OnCollapsed(node, byUser);
+				node.OnCollapsed(byUser);
 			}
 		}
 
@@ -887,7 +888,10 @@ namespace Aga.Controls.Tree
 			for (int i = 0; i < root.Nodes.Count; i++)
 			{
 				TreeNodeAdv node = root.Nodes[i];
-				node.IsExpanded = value;
+                if (value)
+                    node.Expand(false);
+                else
+                    node.Collapse(false);
 				SetIsExpandedRecursive(node, value);
 			}
 		}
@@ -1143,7 +1147,7 @@ namespace Aga.Controls.Tree
 		{
 			if (node.Tag != null && list.ContainsKey(node.Tag))
 			{
-				node.IsExpanded = true;
+				node.Expand(false);
 				foreach (var child in node.Children)
 					RestoreExpandedNodes(child, list);
 			}

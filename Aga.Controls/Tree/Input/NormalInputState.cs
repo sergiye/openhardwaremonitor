@@ -24,14 +24,18 @@ namespace Aga.Controls.Tree
 				{
 					case Keys.Right:
 						if (!Tree.CurrentNode.IsExpanded)
-							Tree.CurrentNode.IsExpanded = true;
+                        {
+							Tree.CurrentNode.Expand(true);
+                        }
 						else if (Tree.CurrentNode.Nodes.Count > 0)
 							Tree.SelectedNode = Tree.CurrentNode.Nodes[0];
 						args.Handled = true;
 						break;
 					case Keys.Left:
 						if (Tree.CurrentNode.IsExpanded)
-							Tree.CurrentNode.IsExpanded = false;
+                        {
+                            Tree.CurrentNode.Collapse(true);
+                        }
 						else if (Tree.CurrentNode.Parent != Tree.Root)
 							Tree.SelectedNode = Tree.CurrentNode.Parent;
 						args.Handled = true;
@@ -63,12 +67,12 @@ namespace Aga.Controls.Tree
 						args.Handled = true;
 						break;
 					case Keys.Subtract:
-						Tree.CurrentNode.Collapse();
+						Tree.CurrentNode.Collapse(true);
 						args.Handled = true;
 						args.SuppressKeyPress = true;
 						break;
 					case Keys.Add:
-						Tree.CurrentNode.Expand();
+						Tree.CurrentNode.Expand(true);
 						args.Handled = true;
 						args.SuppressKeyPress = true;
 						break;

@@ -895,6 +895,8 @@ namespace OpenHardwareMonitor.UI
       this.treeView.TabIndex = 0;
       this.treeView.Text = "treeView";
       this.treeView.UseColumns = true;
+      this.treeView.Collapsed += new System.EventHandler<Aga.Controls.Tree.TreeViewAdvEventArgs>(this.TreeView_CollapsedOrExpanded);
+      this.treeView.Expanded += new System.EventHandler<Aga.Controls.Tree.TreeViewAdvEventArgs>(this.TreeView_CollapsedOrExpanded);
       this.treeView.NodeMouseDoubleClick += new System.EventHandler<Aga.Controls.Tree.TreeNodeAdvMouseEventArgs>(this.TreeView_NodeMouseDoubleClick);
       this.treeView.SizeChanged += new System.EventHandler(this.TreeView_SizeChanged);
       this.treeView.Click += new System.EventHandler(this.TreeView_Click);

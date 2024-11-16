@@ -91,8 +91,13 @@ namespace Aga.Controls.Tree.NodeControls
 			{
 				args.Handled = true;
 				if (args.Node.CanExpand)
-					args.Node.IsExpanded = !args.Node.IsExpanded;
-			}
+                {
+                    if (args.Node.IsExpanded)
+                        args.Node.Collapse(true);
+                    else
+                        args.Node.Expand(true);
+                }
+            }
 		}
 
 		public override void MouseDoubleClick(TreeNodeAdvMouseEventArgs args)
