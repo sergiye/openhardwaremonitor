@@ -128,6 +128,7 @@ namespace OpenHardwareMonitor.UI
             // AboutBox
             //
             this.AcceptButton = this.okButton;
+            this.CancelButton = this.okButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
