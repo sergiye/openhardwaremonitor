@@ -493,7 +493,7 @@ public sealed partial class MainForm : Form
 
     private void PowerModeChanged(object sender, Microsoft.Win32.PowerModeChangedEventArgs eventArgs)
     {
-        if (eventArgs.Mode == Microsoft.Win32.PowerModes.Resume)
+        //if (eventArgs.Mode == Microsoft.Win32.PowerModes.Resume)
         {
             _computer.Reset();
         }
@@ -968,7 +968,6 @@ public sealed partial class MainForm : Form
         _computer.Reset();
         // restore the MainIcon setting
         _systemTray.IsMainIconEnabled = _minimizeToTray.Value;
-        RestoreCollapsedNodeState(treeView);
     }
 
     private void TreeView_MouseMove(object sender, MouseEventArgs e)
