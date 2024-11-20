@@ -221,7 +221,7 @@ namespace Aga.Controls.Tree
 		{
 			get
 			{
-				if (_parent != null)
+				if (_parent?.Nodes != null)
 				{
 					int index = Index;
 					if (index > 0)
@@ -235,7 +235,7 @@ namespace Aga.Controls.Tree
 		{
 			get
 			{
-				if (_parent != null)
+				if (_parent?.Nodes != null)
 				{
 					int index = Index;
 					if (index < _parent.Nodes.Count - 1)
