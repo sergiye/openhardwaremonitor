@@ -817,7 +817,7 @@ namespace OpenHardwareMonitor.UI
       this.serverPortMenuItem.Name = "serverPortMenuItem";
       this.serverPortMenuItem.Size = new System.Drawing.Size(153, 22);
       this.serverPortMenuItem.Text = "Port";
-      this.serverPortMenuItem.Click += new System.EventHandler(this.ServerPortMenuItem_Click);
+      this.serverPortMenuItem.Click += new System.EventHandler(this.ServerInterfacePortMenuItem_Click);
       // 
       // authWebServerMenuItem
       // 

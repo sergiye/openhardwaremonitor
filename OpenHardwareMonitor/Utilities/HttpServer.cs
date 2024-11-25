@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -21,9 +21,10 @@ public class HttpServer
     private readonly Node _root;
     private Thread _listenerThread;
 
-    public HttpServer(Node node, int port, bool authEnabled = false, string userName = "", string password = "")
+    public HttpServer(Node node, string ip, int port, bool authEnabled = false, string userName = "", string password = "")
     {
         _root = node;
+        ListenerIp = ip;
         ListenerPort = port;
         AuthEnabled = authEnabled;
         UserName = userName;
@@ -44,12 +45,13 @@ public class HttpServer
         if (PlatformNotSupported)
             return;
 
-
         StopHttpListener();
         _listener.Abort();
     }
 
     public bool AuthEnabled { get; set; }
+
+    public string ListenerIp { get; set; }
 
     public int ListenerPort { get; set; }
 
@@ -73,14 +75,31 @@ public class HttpServer
         if (PlatformNotSupported)
             return false;
 
-
         try
         {
             if (_listener.IsListening)
                 return true;
 
+            // validate that the selected IP exists (it could have been previously selected before switching networks)
+            IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
+            bool ipFound = false;
+            foreach (IPAddress ip in host.AddressList)
+            {
+                if (ListenerIp == ip.ToString())
+                {
+                    ipFound = true;
+                    break;
+                }
+            }
 
-            string prefix = "http://+:" + ListenerPort + "/";
+            if (!ipFound)
+            {
+                // default to behavior of previous version if we don't know what interface to use.
+                ListenerIp = "+";
+            }
+
+            string prefix = "http://" + ListenerIp + ":" + ListenerPort + "/";
+
             _listener.Prefixes.Clear();
             _listener.Prefixes.Add(prefix);
             _listener.Realm = "Open Hardware Monitor";
@@ -105,7 +124,6 @@ public class HttpServer
     {
         if (PlatformNotSupported)
             return false;
-
 
         try
         {
@@ -139,7 +157,6 @@ public class HttpServer
         HttpListener listener = (HttpListener)result.AsyncState;
         if (listener == null || !listener.IsListening)
             return;
-
 
         // Call EndGetContext to complete the asynchronous operation.
         HttpListenerContext context;
@@ -247,38 +264,36 @@ public class HttpServer
         name = "OpenHardwareMonitor.Resources." +
                name.Replace("custom-theme", "custom_theme");
 
-        string[] names =
-            Assembly.GetExecutingAssembly().GetManifestResourceNames();
+        string[] names = Assembly.GetExecutingAssembly().GetManifestResourceNames();
 
         for (int i = 0; i < names.Length; i++)
         {
             if (names[i].Replace('\\', '.') == name)
             {
-                using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(names[i]))
+                using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(names[i]);
+
+                response.ContentType = GetContentType("." + ext);
+                response.ContentLength64 = stream.Length;
+                byte[] buffer = new byte[512 * 1024];
+                try
                 {
-                    response.ContentType = GetContentType("." + ext);
-                    response.ContentLength64 = stream.Length;
-                    byte[] buffer = new byte[512 * 1024];
-                    try
+                    Stream output = response.OutputStream;
+                    int len;
+                    while ((len = stream.Read(buffer, 0, buffer.Length)) > 0)
                     {
-                        Stream output = response.OutputStream;
-                        int len;
-                        while ((len = stream.Read(buffer, 0, buffer.Length)) > 0)
-                        {
-                            output.Write(buffer, 0, len);
-                        }
-
-                        output.Flush();
-                        output.Close();
-                        response.Close();
+                        output.Write(buffer, 0, len);
                     }
-                    catch (HttpListenerException)
-                    { }
-                    catch (InvalidOperationException)
-                    { }
 
-                    return;
+                    output.Flush();
+                    output.Close();
+                    response.Close();
                 }
+                catch (HttpListenerException)
+                { }
+                catch (InvalidOperationException)
+                { }
+
+                return;
             }
         }
 
@@ -296,28 +311,27 @@ public class HttpServer
         {
             if (names[i].Replace('\\', '.') == name)
             {
-                using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(names[i]))
+                using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(names[i]);
+
+                Image image = Image.FromStream(stream);
+                response.ContentType = "image/png";
+                try
                 {
-                    Image image = Image.FromStream(stream);
-                    response.ContentType = "image/png";
-                    try
+                    Stream output = response.OutputStream;
+                    using (MemoryStream ms = new())
                     {
-                        Stream output = response.OutputStream;
-                        using (MemoryStream ms = new MemoryStream())
-                        {
-                            image.Save(ms, ImageFormat.Png);
-                            ms.WriteTo(output);
-                        }
-
-                        output.Close();
+                        image.Save(ms, ImageFormat.Png);
+                        ms.WriteTo(output);
                     }
-                    catch (HttpListenerException)
-                    { }
 
-                    image.Dispose();
-                    response.Close();
-                    return;
+                    output.Close();
                 }
+                catch (HttpListenerException)
+                { }
+
+                image.Dispose();
+                response.Close();
+                return;
             }
         }
 
@@ -365,13 +379,11 @@ public class HttpServer
         {
             if (acceptGzip)
             {
-                using (var ms = new MemoryStream())
-                {
-                    using (var zip = new GZipStream(ms, CompressionMode.Compress, true))
-                        zip.Write(buffer, 0, buffer.Length);
+                using var ms = new MemoryStream();
+                using (var zip = new GZipStream(ms, CompressionMode.Compress, true))
+                    zip.Write(buffer, 0, buffer.Length);
 
-                    buffer = ms.ToArray();
-                }
+                buffer = ms.ToArray();
             }
 
             response.ContentLength64 = buffer.Length;
@@ -529,19 +541,16 @@ public class HttpServer
 
     private string ComputeSHA256(string text)
     {
-        using (SHA256 hash = SHA256.Create())
-        {
-            return string.Concat(hash
-                                .ComputeHash(Encoding.UTF8.GetBytes(text))
-                                .Select(item => item.ToString("x2")));
-        }
+        using SHA256 hash = SHA256.Create();
+        return string.Concat(hash
+                            .ComputeHash(Encoding.UTF8.GetBytes(text))
+                            .Select(item => item.ToString("x2")));
     }
 
     public void Quit()
     {
         if (PlatformNotSupported)
             return;
-
 
         StopHttpListener();
         _listener.Abort();
