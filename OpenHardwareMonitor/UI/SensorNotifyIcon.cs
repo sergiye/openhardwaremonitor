@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using OpenHardwareMonitor.Hardware;
@@ -184,9 +185,10 @@ public class SensorNotifyIcon : IDisposable
             case SensorType.Current:
             case SensorType.SmallData:
             case SensorType.Factor:
-            case SensorType.Throughput:
             case SensorType.Conductivity:
                 return $"{Sensor.Value:F1}";
+            case SensorType.Throughput:
+                return GetThroughputValue(Sensor.Value ?? 0);
             case SensorType.Control:
             case SensorType.Frequency:
             case SensorType.Level:
@@ -203,6 +205,24 @@ public class SensorNotifyIcon : IDisposable
             default:
                 return "-";
         }
+    }
+
+    private static string GetThroughputValue(float byteCount, byte preferredSufNum = 1, bool addSuffix = false)
+    {
+        string[] suf = { " B", " KB", " MB", " GB" };
+        if (byteCount == 0)
+            return addSuffix ? "0" + suf[0] : "0";
+        long bytes = Math.Abs((long)byteCount);
+        int place = Convert.ToInt32(Math.Floor(Math.Log(bytes, 1024)));
+        if (place < preferredSufNum)
+            place = preferredSufNum;
+        double num = Math.Round(bytes / Math.Pow(1024, place), 1);
+        if (num >= 10)
+            num = Math.Round(num, 0);
+        var result = (Math.Sign(byteCount) * num).ToString();
+        if (addSuffix)
+            return result + suf[place];
+        return new string(result.Take(3).ToArray());
     }
 
     private bool IsFontInstalled(string fontName, float fontSize = 12)
@@ -364,6 +384,10 @@ public class SensorNotifyIcon : IDisposable
         {
             format = "\n{0}: {1:F1} °F";
             formattedValue = string.Format(format, Sensor.Name, UnitManager.CelsiusToFahrenheit(Sensor.Value));
+        }
+        else if (Sensor.SensorType == SensorType.Throughput && !"Connection Speed".Equals(Sensor.Name))
+        {
+            formattedValue = $"\n{Sensor.Name}: {GetThroughputValue(Sensor.Value ?? 0, 0, true)}/s";
         }
 
         string hardwareName = Sensor.Hardware.Name;
