@@ -163,6 +163,7 @@ internal class BatteryGroup : IGroup
                 BatteryChemistry.NickelCadmium => "Nickel-Cadmium",
                 BatteryChemistry.NickelMetalHydride => "Nickel-Metal Hydride",
                 BatteryChemistry.LithiumIon => "Lithium Ion",
+                BatteryChemistry.LithiumPolymer => "Lithium Polymer",
                 BatteryChemistry.NickelZinc => "Nickel-Zinc",
                 BatteryChemistry.AlkalineManganese => "Rechargeable Alkaline-Manganese",
                 _ => "Unknown"

@@ -7,6 +7,7 @@ internal enum BatteryChemistry
     NickelCadmium,
     NickelMetalHydride,
     LithiumIon,
+    LithiumPolymer,
     NickelZinc,
-    AlkalineManganese
+    AlkalineManganese,
 }

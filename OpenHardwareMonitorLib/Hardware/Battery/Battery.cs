@@ -47,6 +47,10 @@ internal sealed class Battery : Hardware
         {
             Chemistry = BatteryChemistry.LithiumIon;
         }
+        else if (batteryInfo.Chemistry.SequenceEqual(new[] { 'L', 'i', 'P', '\0' }))
+        {
+            Chemistry = BatteryChemistry.LithiumPolymer;
+        }
         else if (batteryInfo.Chemistry.SequenceEqual(new[] { 'N', 'i', 'C', 'd' }))
         {
             Chemistry = BatteryChemistry.NickelCadmium;
@@ -72,12 +76,19 @@ internal sealed class Battery : Hardware
         _fullChargedCapacity = new Sensor("Fully-Charged Capacity", 1, SensorType.Energy, this, settings);
         _degradationLevel = new Sensor("Degradation Level", 1, SensorType.Level, this, settings);
         _chargeLevel = new Sensor("Charge Level", 0, SensorType.Level, this, settings);
+        ActivateSensor(_chargeLevel);
         _voltage = new Sensor("Voltage", 0, SensorType.Voltage, this, settings);
+        ActivateSensor(_voltage);
         _remainingCapacity = new Sensor("Remaining Capacity", 2, SensorType.Energy, this, settings);
+        ActivateSensor(_remainingCapacity);
         _chargeDischargeCurrent = new Sensor("Charge/Discharge Current", 0, SensorType.Current, this, settings);
+        ActivateSensor(_chargeDischargeCurrent);
         _chargeDischargeRate = new Sensor("Charge/Discharge Rate", 0, SensorType.Power, this, settings);
+        ActivateSensor(_chargeDischargeRate);
         _remainingTime = new Sensor("Remaining Time (Estimated)", 0, SensorType.TimeSpan, this, settings);
+        ActivateSensor(_remainingTime);
         _temperature = new Sensor("Battery Temperature", 0, SensorType.Temperature, this, settings);
+        ActivateSensor(_temperature);
 
         if (batteryInfo.FullChargedCapacity is not Kernel32.BATTERY_UNKNOWN_CAPACITY &&
             batteryInfo.DesignedCapacity is not Kernel32.BATTERY_UNKNOWN_CAPACITY)
