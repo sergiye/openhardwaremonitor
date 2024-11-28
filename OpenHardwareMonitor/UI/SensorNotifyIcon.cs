@@ -187,6 +187,8 @@ public class SensorNotifyIcon : IDisposable
             case SensorType.Factor:
             case SensorType.Conductivity:
                 return $"{Sensor.Value:F1}";
+            case SensorType.IntFactor:
+                return $"{Sensor.Value:F0}";
             case SensorType.Throughput:
                 return GetThroughputValue(Sensor.Value ?? 0);
             case SensorType.Control:
@@ -371,7 +373,8 @@ public class SensorNotifyIcon : IDisposable
             case SensorType.Level: format = "\n{0}: {1:F1} %"; break;
             case SensorType.Power: format = "\n{0}: {1:F0} W"; break;
             case SensorType.Data: format = "\n{0}: {1:F0} GB"; break;
-            case SensorType.Factor: format = "\n{0}: {1:F3} GB"; break;
+            case SensorType.Factor: format = "\n{0}: {1:F3}"; break;
+            case SensorType.IntFactor: format = "\n{0}: {1:F0}"; break;
             case SensorType.Energy: format = "\n{0}: {0:F0} mWh"; break;
             case SensorType.Noise: format = "\n{0}: {0:F0} dBA"; break;
             case SensorType.Conductivity: format = "\n{0}: {0:F1} µS/cm"; break;

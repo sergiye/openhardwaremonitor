@@ -13,6 +13,7 @@ internal sealed class Battery : Hardware
     private readonly uint _batteryTag;
     private readonly Sensor _chargeDischargeCurrent;
     private readonly Sensor _chargeDischargeRate;
+    private readonly Sensor _cycleCount;
     private readonly Sensor _chargeLevel;
     private readonly Sensor _degradationLevel;
     private readonly Sensor _designedCapacity;
@@ -102,6 +103,13 @@ internal sealed class Battery : Hardware
             ActivateSensor(_designedCapacity);
             ActivateSensor(_fullChargedCapacity);
             ActivateSensor(_degradationLevel);
+        }
+
+        _cycleCount = new Sensor("Charge-Discharge Cycle Count", 0, SensorType.IntFactor, this, settings);
+        if (batteryInfo.CycleCount > 0)
+        {
+            _cycleCount.Value = batteryInfo.CycleCount;
+            ActivateSensor(_cycleCount);
         }
     }
 
@@ -245,6 +253,24 @@ internal sealed class Battery : Hardware
             _temperature.Value = null;
         }
 
+        bqi.InformationLevel = Kernel32.BATTERY_QUERY_INFORMATION_LEVEL.BatteryInformation;
+        Kernel32.BATTERY_INFORMATION bi = default;
+        if (Kernel32.DeviceIoControl(_batteryHandle,
+                                     Kernel32.IOCTL.IOCTL_BATTERY_QUERY_INFORMATION,
+                                     ref bqi,
+                                     Marshal.SizeOf(bqi),
+                                     ref bi,
+                                     Marshal.SizeOf(bi),
+                                     out _,
+                                     IntPtr.Zero))
+        {
+            _cycleCount.Value = bi.CycleCount;
+        }
+        else
+        {
+            _cycleCount.Value = null;
+        }
+
         ActivateSensorIfValueNotNull(_remainingCapacity);
         ActivateSensorIfValueNotNull(_chargeLevel);
         ActivateSensorIfValueNotNull(_voltage);
@@ -252,6 +278,7 @@ internal sealed class Battery : Hardware
         ActivateSensorIfValueNotNull(_chargeDischargeRate);
         ActivateSensorIfValueNotNull(_remainingTime);
         ActivateSensorIfValueNotNull(_temperature);
+        ActivateSensorIfValueNotNull(_cycleCount);
     }
 
     public override void Close()

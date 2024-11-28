@@ -60,6 +60,9 @@ public class SensorNode : Node
             case SensorType.Factor:
                 Format = "{0:F3}";
                 break;
+            case SensorType.IntFactor:
+                Format = "{0:F0}";
+                break;
             case SensorType.Frequency:
                 Format = "{0:F1} Hz";
                 break;

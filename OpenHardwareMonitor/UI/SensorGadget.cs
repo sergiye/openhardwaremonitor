@@ -637,6 +637,9 @@ public class SensorGadget : Gadget
                                 case SensorType.Factor:
                                     format = "{0:F3}";
                                     break;
+                                case SensorType.IntFactor:
+                                    format = "{0:F0}";
+                                    break;
                                 case SensorType.TimeSpan:
                                     format = "{0:g}";
                                     break;

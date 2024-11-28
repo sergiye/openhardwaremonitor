@@ -20,6 +20,7 @@ public enum SensorType
     Control, // %
     Level, // %
     Factor, // 1
+    IntFactor, // 1 (int)
     Data, // GB = 2^30 Bytes
     SmallData, // MB = 2^20 Bytes
     Throughput, // B/s

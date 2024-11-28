@@ -70,6 +70,7 @@ public sealed class TypeNode : Node, IExpandPersistNode
                 Text = "Data";
                 break;
             case SensorType.Factor:
+            case SensorType.IntFactor:
                 Image = EmbeddedResources.GetImage("factor.png");
                 Text = "Factors";
                 break;
