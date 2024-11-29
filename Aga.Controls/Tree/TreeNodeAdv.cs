@@ -164,7 +164,7 @@ namespace Aga.Controls.Tree
 		{
 			get
 			{
-				TreeNodeAdv node = _parent;
+				TreeNodeAdv node = Parent;
 				while (node != null)
 				{
 					if (!node.IsExpanded)
@@ -210,10 +210,11 @@ namespace Aga.Controls.Tree
 		{
 			get
 			{
-				if (_parent == null)
+                TreeNodeAdv parent = this.Parent;
+                if (parent == null)
 					return 0;
 				else
-					return _parent.Level + 1;
+					return parent.Level + 1;
 			}
 		}
 
@@ -221,11 +222,12 @@ namespace Aga.Controls.Tree
 		{
 			get
 			{
-				if (_parent?.Nodes != null)
+                TreeNodeAdv parent = this.Parent;
+                if (parent?.Nodes != null)
 				{
 					int index = Index;
 					if (index > 0)
-						return _parent.Nodes[index - 1];
+						return parent.Nodes[index - 1];
 				}
 				return null;
 			}
@@ -235,11 +237,12 @@ namespace Aga.Controls.Tree
 		{
 			get
 			{
-				if (_parent?.Nodes != null)
+                TreeNodeAdv parent = this.Parent;
+                if (parent?.Nodes != null)
 				{
 					int index = Index;
-					if (index < _parent.Nodes.Count - 1)
-						return _parent.Nodes[index + 1];
+					if (index < parent.Nodes.Count - 1)
+						return parent.Nodes[index + 1];
 				}
 				return null;
 			}
