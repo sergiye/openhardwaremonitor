@@ -46,9 +46,7 @@ public sealed partial class MainForm : Form
     private readonly UnitManager _unitManager;
     private readonly UpdateVisitor _updateVisitor = new();
     private readonly WmiProvider _wmiProvider;
-#if DEBUG
     private readonly Timer _checkUpdatesTimer;
-#endif
 
     private int _delayCount;
     private bool _selectionDragging;
@@ -68,12 +66,12 @@ public sealed partial class MainForm : Form
         this.MinimumSize = new Size(400, 200);
         Text = $"Open Hardware Monitor {(Environment.Is64BitProcess ? "x64" : "x32")} - {Updater.CurrentVersion}";
         Icon = Icon.ExtractAssociatedIcon(Updater.CurrentFileLocation);
-#if DEBUG
         //start check updates timer (silent for errors)
+        var autoUpdate = _settings.GetValue("autoUpdate", true);
         _checkUpdatesTimer = new Timer { Interval = 60 * 60 * 1000 };
         _checkUpdatesTimer.Tick += (_, _) => Updater.CheckForUpdates(true);
-        _checkUpdatesTimer.Start();
-#endif
+        _checkUpdatesTimer.Enabled = autoUpdate;
+        menuItemAutoUpdates.Checked = autoUpdate;
         portableModeMenuItem.Checked = _settings.IsPortable;
 
         _unitManager = new UnitManager(_settings);
@@ -710,6 +708,14 @@ public sealed partial class MainForm : Form
     private void menuItemCheckUpdates_Click(object sender, EventArgs e)
     {
         Updater.CheckForUpdates(false);
+    }
+
+    private void menuItemAutoUpdate_Click(object sender, EventArgs e)
+    {
+        var autoUpdate = !menuItemAutoUpdates.Checked;
+        this.menuItemAutoUpdates.Checked = autoUpdate;
+        _checkUpdatesTimer.Enabled = autoUpdate;
+        _settings.SetValue("autoUpdate", autoUpdate);
     }
 
     private void AboutMenuItem_Click(object sender, EventArgs e)
