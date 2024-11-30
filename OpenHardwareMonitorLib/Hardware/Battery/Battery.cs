@@ -139,6 +139,14 @@ internal sealed class Battery : Hardware
 
     public float? Voltage => _voltage.Value;
 
+    private void ActivateSensorIfValueNotNull(ISensor sensor)
+    {
+        if (sensor.Value != null)
+            ActivateSensor(sensor);
+        else
+            DeactivateSensor(sensor);
+    }
+
     public override void Update()
     {
         Kernel32.BATTERY_WAIT_STATUS bws = default;
@@ -262,6 +270,15 @@ internal sealed class Battery : Hardware
         {
             _cycleCount.Value = null;
         }
+
+        ActivateSensorIfValueNotNull(_remainingCapacity);
+        ActivateSensorIfValueNotNull(_chargeLevel);
+        ActivateSensorIfValueNotNull(_voltage);
+        ActivateSensorIfValueNotNull(_chargeDischargeCurrent);
+        ActivateSensorIfValueNotNull(_chargeDischargeRate);
+        ActivateSensorIfValueNotNull(_remainingTime);
+        ActivateSensorIfValueNotNull(_temperature);
+        ActivateSensorIfValueNotNull(_cycleCount);
     }
 
     public override void Close()
