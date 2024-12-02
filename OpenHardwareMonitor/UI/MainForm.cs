@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Aga.Controls.Tree;
 using Aga.Controls.Tree.NodeControls;
@@ -658,7 +659,9 @@ public sealed partial class MainForm : Form
         RestoreCollapsedNodeState(treeView);
         treeView.Width += 1; //just to apply column auto-resize
 
-        Updater.CheckForUpdates(true); //will display prompt only if update available & when main form displayed
+        //will display prompt only if update available & when main form displayed
+        Task task = Task.Delay(1000)
+            .ContinueWith(t => Updater.CheckForUpdates(true));
 
         FormClosed += MainForm_FormClosed;
     }
