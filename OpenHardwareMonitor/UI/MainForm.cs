@@ -67,6 +67,7 @@ public sealed partial class MainForm : Form
         Text = $"Open Hardware Monitor {(Environment.Is64BitProcess ? "x64" : "x32")} - {Updater.CurrentVersion}";
         Icon = Icon.ExtractAssociatedIcon(Updater.CurrentFileLocation);
         portableModeMenuItem.Checked = _settings.IsPortable;
+        resetOnPowerChangedMenuItem.Checked = _settings.GetValue("resetOnPowerChangedMenuItem", false);
 
         _unitManager = new UnitManager(_settings);
 
@@ -486,10 +487,16 @@ public sealed partial class MainForm : Form
 
     private void PowerModeChanged(object sender, Microsoft.Win32.PowerModeChangedEventArgs eventArgs)
     {
-        //if (eventArgs.Mode == Microsoft.Win32.PowerModes.Resume)
+        if (eventArgs.Mode == Microsoft.Win32.PowerModes.Resume || resetOnPowerChangedMenuItem.Checked)
         {
             _computer.Reset();
         }
+    }
+
+    private void ResetOnPowerChangedMenuItem_Click(object sender, EventArgs eventArgs)
+    {
+        resetOnPowerChangedMenuItem.Checked = !resetOnPowerChangedMenuItem.Checked;
+        _settings.SetValue("resetOnPowerChangedMenuItem", resetOnPowerChangedMenuItem.Checked);
     }
 
     private void InitializeTheme()
