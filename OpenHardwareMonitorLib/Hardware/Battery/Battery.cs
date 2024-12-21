@@ -9,7 +9,6 @@ namespace OpenHardwareMonitor.Hardware.Battery;
 internal sealed class Battery : Hardware
 {
     private readonly SafeFileHandle _batteryHandle;
-    private readonly Kernel32.BATTERY_INFORMATION _batteryInformation;
     private readonly uint _batteryTag;
     private readonly Sensor _chargeDischargeCurrent;
     private readonly Sensor _chargeDischargeRate;
@@ -38,7 +37,6 @@ internal sealed class Battery : Hardware
 
         _batteryTag = batteryTag;
         _batteryHandle = batteryHandle;
-        _batteryInformation = batteryInfo;
 
         if (batteryInfo.Chemistry.SequenceEqual(new[] { 'P', 'b', 'A', 'c' }))
         {
