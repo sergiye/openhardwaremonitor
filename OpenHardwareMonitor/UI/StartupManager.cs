@@ -15,7 +15,7 @@ namespace OpenHardwareMonitor.UI
         private bool _startup;
         private const string REGISTRY_RUN = @"Software\Microsoft\Windows\CurrentVersion\Run";
 
-        private bool IsAdministrator()
+        public bool IsAdministrator()
         {
             try
             {

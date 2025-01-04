@@ -191,23 +191,33 @@ public sealed partial class MainForm : Form
             }
         };
 
-        _readMainboardSensors = new UserOption("mainboardMenuItem", true, mainboardMenuItem, _settings);
-        _readMainboardSensors.Changed += delegate { _computer.IsMotherboardEnabled = _readMainboardSensors.Value; };
+        if (_startupManager.IsAdministrator())
+        {
+            _readMainboardSensors = new UserOption("mainboardMenuItem", true, mainboardMenuItem, _settings);
+            _readMainboardSensors.Changed += delegate { _computer.IsMotherboardEnabled = _readMainboardSensors.Value; };
 
-        _readCpuSensors = new UserOption("cpuMenuItem", true, cpuMenuItem, _settings);
-        _readCpuSensors.Changed += delegate { _computer.IsCpuEnabled = _readCpuSensors.Value; };
+            _readCpuSensors = new UserOption("cpuMenuItem", true, cpuMenuItem, _settings);
+            _readCpuSensors.Changed += delegate { _computer.IsCpuEnabled = _readCpuSensors.Value; };
+
+            _readFanControllersSensors = new UserOption("fanControllerMenuItem", false, fanControllerMenuItem, _settings);
+            _readFanControllersSensors.Changed += delegate { _computer.IsControllerEnabled = _readFanControllersSensors.Value; };
+
+            _readHddSensors = new UserOption("hddMenuItem", false, hddMenuItem, _settings);
+            _readHddSensors.Changed += delegate { _computer.IsStorageEnabled = _readHddSensors.Value; };
+        }
+        else
+        {
+            mainboardMenuItem.Enabled = false;
+            cpuMenuItem.Enabled = false;
+            fanControllerMenuItem.Enabled = false;
+            hddMenuItem.Enabled = false;
+        }
 
         _readRamSensors = new UserOption("ramMenuItem", true, ramMenuItem, _settings);
         _readRamSensors.Changed += delegate { _computer.IsMemoryEnabled = _readRamSensors.Value; };
 
         _readGpuSensors = new UserOption("gpuMenuItem", false, gpuMenuItem, _settings);
         _readGpuSensors.Changed += delegate { _computer.IsGpuEnabled = _readGpuSensors.Value; };
-
-        _readFanControllersSensors = new UserOption("fanControllerMenuItem", false, fanControllerMenuItem, _settings);
-        _readFanControllersSensors.Changed += delegate { _computer.IsControllerEnabled = _readFanControllersSensors.Value; };
-
-        _readHddSensors = new UserOption("hddMenuItem", false, hddMenuItem, _settings);
-        _readHddSensors.Changed += delegate { _computer.IsStorageEnabled = _readHddSensors.Value; };
 
         _readNicSensors = new UserOption("nicMenuItem", false, nicMenuItem, _settings);
         _readNicSensors.Changed += delegate { _computer.IsNetworkEnabled = _readNicSensors.Value; };
