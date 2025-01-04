@@ -129,18 +129,16 @@ namespace OpenHardwareMonitor.UI
         private void CreateSchedulerTask()
         {
             ITaskDefinition definition = _scheduler.NewTask(0);
-            definition.RegistrationInfo.Description =
-              "This task starts the Open Hardware Monitor on Windows startup.";
-            definition.Principal.RunLevel =
-              TASK_RUNLEVEL.TASK_RUNLEVEL_HIGHEST;
+            definition.RegistrationInfo.Description = "This task starts the Open Hardware Monitor on Windows startup.";
+            definition.Principal.RunLevel = TASK_RUNLEVEL.TASK_RUNLEVEL_HIGHEST;
             definition.Settings.DisallowStartIfOnBatteries = false;
             definition.Settings.StopIfGoingOnBatteries = false;
             definition.Settings.ExecutionTimeLimit = "PT0S";
-            _ = (ILogonTrigger)definition.Triggers.Create(TASK_TRIGGER_TYPE2.TASK_TRIGGER_LOGON);
+            var trigger = (ILogonTrigger)definition.Triggers.Create(TASK_TRIGGER_TYPE2.TASK_TRIGGER_LOGON);
+            trigger.UserId = WindowsIdentity.GetCurrent().Name;
             IExecAction action = (IExecAction)definition.Actions.Create(TASK_ACTION_TYPE.TASK_ACTION_EXEC);
             action.Path = Application.ExecutablePath;
-            action.WorkingDirectory =
-              Path.GetDirectoryName(Application.ExecutablePath);
+            action.WorkingDirectory = Path.GetDirectoryName(Application.ExecutablePath);
 
             ITaskFolder root = _scheduler.GetFolder("\\");
             ITaskFolder folder;
