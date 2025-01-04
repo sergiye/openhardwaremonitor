@@ -6,4 +6,4 @@
 [assembly: AssemblyCompany("Sergiy Egoshyn")]
 [assembly: AssemblyProduct("Open Hardware Monitor")]
 [assembly: AssemblyCopyright("Copyright © 2022 Sergiy Egoshyn")]
-[assembly: AssemblyVersion("2024.11.*")]
+[assembly: AssemblyVersion("2025.1.*")]
