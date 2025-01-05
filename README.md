@@ -25,6 +25,8 @@ Supports `Portable` mode for storing temporary driver file and settings configur
 Supports `Light`/`Dark` themes with auto switching mode.
 Supports (manual only) checking for updated versions.
 
+Some sensors are only available when running the application as administrator.
+
 # Download
 
 **The recommended way to get the program is BUILD from source**
