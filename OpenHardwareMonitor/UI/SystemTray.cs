@@ -44,7 +44,7 @@ public class SystemTray : IDisposable
         {
             SendHideShowCommand();
         };
-        _mainIcon.Icon = EmbeddedResources.GetIcon("smallicon.ico");
+        _mainIcon.Icon = EmbeddedResources.GetIcon("icon.ico");
         _mainIcon.Text = "Open Hardware Monitor";
     }
 
