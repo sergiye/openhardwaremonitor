@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
 using OpenHardwareMonitor.UI;
@@ -13,12 +12,6 @@ public static class Program
     [STAThread]
     public static void Main()
     {
-        if ("RU".Equals(RegionHelper.GetGeoInfo(SysGeoType.GEO_ISO2)) ||
-            "RU".Equals(RegionInfo.CurrentRegion.Name))
-        {
-            MessageBox.Show("The application is not compatible with russia region.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-            Environment.Exit(0);
-        }
         if (!mutex.WaitOne(TimeSpan.Zero, true))
         {
             MessageBox.Show("Another instance of the application is already running.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
