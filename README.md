@@ -1,7 +1,7 @@
 # Open hardware monitor
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/sergiye/openhardwaremonitor?style=plastic)
-![GitHub all releases](https://img.shields.io/github/downloads/sergiye/openhardwaremonitor/total?style=plastic)
-![GitHub last commit](https://img.shields.io/github/last-commit/sergiye/openhardwaremonitor?style=plastic)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/sergiye/openhardwaremonitor?style=for-the-badge)
+![GitHub all releases](https://img.shields.io/github/downloads/sergiye/openhardwaremonitor/total?style=for-the-badge&color=ff4f42)
+![GitHub last commit](https://img.shields.io/github/last-commit/sergiye/openhardwaremonitor?style=for-the-badge&color=00AD00)
 
 Open hardware monitor - is free software that can monitor the temperature sensors, fan speeds, voltages, load and clock speeds of your computer.
 
