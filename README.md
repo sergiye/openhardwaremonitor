@@ -27,6 +27,10 @@ Supports (manual only) checking for updated versions.
 
 Some sensors are only available when running the application as administrator.
 
+### `Light`/`Dark` themes example
+
+<img src="https://github.com/sergiye/openhardwaremonitor/raw/master/themes.png" alt="Themes" width="300"/>
+
 # Download
 
 **The recommended way to get the program is BUILD from source**
