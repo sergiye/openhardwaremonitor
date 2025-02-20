@@ -7,6 +7,18 @@ Open hardware monitor - is free software that can monitor the temperature sensor
 
 This application is based on the "original" [openhardwaremonitor](https://github.com/openhardwaremonitor/openhardwaremonitor) project.
 
+----
+
+[<img src="https://github.com/sergiye/hiberbeeTheme/raw/master/assets/ukraine_flag_bar.png" alt="UA"/>](https://u24.gov.ua)
+
+
+Support the Armed Forces of Ukraine and People Affected by Russia’s Aggression on UNITED24, the official fundraising platform of Ukraine: https://u24.gov.ua.
+
+**Слава Україні!**
+
+[<img src="https://github.com/sergiye/hiberbeeTheme/raw/master/assets/ukraine_flag_bar.png" alt="UA"/>](https://u24.gov.ua)
+
+
 ## Features
 
 ### What can it do?
@@ -29,7 +41,7 @@ Some sensors are only available when running the application as administrator.
 
 ### `Light`/`Dark` themes example
 
-<img src="https://github.com/sergiye/openhardwaremonitor/raw/master/themes.png" alt="Themes" width="300"/>
+[<img src="https://github.com/sergiye/openhardwaremonitor/raw/master/themes.png" alt="Themes" width="300"/>](https://github.com/sergiye/openhardwaremonitor/releases)
 
 # Download
 
