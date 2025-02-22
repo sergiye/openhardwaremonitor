@@ -32,7 +32,6 @@ internal sealed class Battery : Hardware
         ISettings settings) :
         base(name, new Identifier("battery", $"{name.Replace(' ', '-')}"), settings)
     {
-        Name = name;
         Manufacturer = manufacturer;
 
         _batteryTag = batteryTag;
