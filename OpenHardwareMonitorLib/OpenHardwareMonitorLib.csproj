@@ -36,7 +36,7 @@
   <ItemGroup>
     <Reference Include="System.Management" />
   </ItemGroup>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Release'">
     <Exec Command="for %%f in ($(OutDir)\*) do if not %%~xf==.dll del /S /Q &quot;%%f&quot;" />
   </Target>
 </Project>
