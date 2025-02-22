@@ -28,7 +28,7 @@ public class Computer : IComputer
     private readonly List<IGroup> _groups = new();
     private readonly object _lock = new();
     private readonly ISettings _settings;
-        
+
     private bool _batteryEnabled;
     private bool _controllerEnabled;
     private bool _cpuEnabled;
@@ -407,6 +407,9 @@ public class Computer : IComputer
     private void Add(IGroup group)
     {
         if (group == null)
+            return;
+
+        if (!VersionCompatibitity.IsCompatible())
             return;
 
         lock (_lock)

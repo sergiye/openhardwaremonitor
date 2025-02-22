@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Reflection;
 using System.ComponentModel;
 
 namespace Aga.Controls.Tree.NodeControls
@@ -175,10 +173,7 @@ namespace Aga.Controls.Tree.NodeControls
 			Rectangle focusRect = new Rectangle(bounds.X, context.Bounds.Y,	
 				bounds.Width, context.Bounds.Height);
 
-			Brush backgroundBrush;
-			Color textColor;
-			Font font;
-			CreateBrushes(node, context, label, out backgroundBrush, out textColor, out font, ref label);
+            CreateBrushes(node, context, label, out Brush backgroundBrush, out Color textColor, out Font font, ref label);
 
 			if (backgroundBrush != null)
 				context.Graphics.FillRectangle(backgroundBrush, focusRect);
@@ -238,22 +233,24 @@ namespace Aga.Controls.Tree.NodeControls
 			if (!context.Enabled)
 				textColor = SystemColors.GrayText;
 
-			if (DrawTextMustBeFired(node))
-			{
-				DrawEventArgs args = new DrawEventArgs(node, this, context, text);
-				args.Text = label;
-				args.TextColor = textColor;
-				args.BackgroundBrush = backgroundBrush;
-				args.Font = font;
+            if (!DrawTextMustBeFired(node))
+                return;
 
-				OnDrawText(args);
+            var args = new DrawEventArgs(node, this, context, text)
+            {
+                Text = label,
+                TextColor = textColor,
+                BackgroundBrush = backgroundBrush,
+                Font = font
+            };
 
-				textColor = args.TextColor;
-				backgroundBrush = args.BackgroundBrush;
-				font = args.Font;
-				label = args.Text;
-			}
-		}
+            OnDrawText(args);
+
+            textColor = args.TextColor;
+            backgroundBrush = args.BackgroundBrush;
+            font = args.Font;
+            label = args.Text;
+        }
 
 		public string GetLabel(TreeNodeAdv node)
 		{

@@ -23,6 +23,9 @@ internal static class Ring0
         if (Software.OperatingSystem.IsUnix)
             return;
 
+        if (!VersionCompatibitity.IsCompatible())
+            return;
+
         if (_driver != null)
             return;
 

@@ -248,14 +248,7 @@ public class SensorNode : Node
 
     public override bool Equals(object obj)
     {
-        if (obj == null)
-            return false;
-
-        if (!(obj is SensorNode s))
-            return false;
-
-
-        return Sensor == s.Sensor;
+        return obj is SensorNode s && Sensor == s.Sensor;
     }
 
     public override int GetHashCode()

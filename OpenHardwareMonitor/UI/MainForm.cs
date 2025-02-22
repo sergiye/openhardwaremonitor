@@ -116,6 +116,13 @@ public sealed partial class MainForm : Form
 
         treeModel.Nodes.Add(_root);
         treeView.Model = treeModel;
+        treeView.DrawControl += (sender, args) =>
+        {
+            // if (args.Node.IsSelected)
+            //     return;
+            if (args.Node.Tag is SensorNode sensorNode && sensorNode.PenColor.HasValue)
+                args.TextColor = sensorNode.PenColor.Value;
+        };
 
         _computer = new Computer(_settings);
 
