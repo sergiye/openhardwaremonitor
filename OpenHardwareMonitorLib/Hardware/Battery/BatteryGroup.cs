@@ -33,7 +33,7 @@ internal class BatteryGroup : IGroup
             // terminator char.
             // See https://github.com/LibreHardwareMonitor/LibreHardwareMonitor/pull/1158#issuecomment-1979559929
             int stringSizeChars = (int)stringSizeBytes / 2;
-            value = Marshal.PtrToStringUni(ptrString, stringSizeChars);
+            value = Marshal.PtrToStringUni(ptrString, stringSizeChars).Trim('\0');
             result = true;
         }
 
