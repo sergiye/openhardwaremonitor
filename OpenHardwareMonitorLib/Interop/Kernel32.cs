@@ -93,6 +93,11 @@ public class Kernel32
     [return: MarshalAs(UnmanagedType.Bool)]
     internal static extern bool GlobalMemoryStatusEx(ref MEMORYSTATUSEX lpBuffer);
 
+    [DllImport(DllName, CharSet = CharSet.Auto, SetLastError = true, EntryPoint = "K32GetPerformanceInfo")]
+    [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    internal static extern bool GetPerformanceInfo(ref PERFORMANCE_INFORMATION pPerformanceInformation, uint cb);
+
     [DllImport(DllName, CallingConvention = CallingConvention.Winapi, CharSet = CharSet.Auto, SetLastError = true)]
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
     internal static extern SafeFileHandle CreateFile
@@ -697,6 +702,25 @@ public class Kernel32
         public ulong ullAvailExtendedVirtual;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct PERFORMANCE_INFORMATION
+    {
+        public uint cb;
+        public nint CommitTotal;
+        public nint CommitLimit;
+        public nint CommitPeak;
+        public nint PhysicalTotal;
+        public nint PhysicalAvailable;
+        public nint SystemCache;
+        public nint KernelTotal;
+        public nint KernelPaged;
+        public nint KernelNonpaged;
+        public nint PageSize;
+        public uint HandleCount;
+        public uint ProcessCount;
+        public uint ThreadCount;
+    }
+
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct SMART_ATTRIBUTE
     {
@@ -895,7 +919,7 @@ public class Kernel32
         public STORAGE_BUS_TYPE BusType;
         public uint RawPropertiesLength;
     }
-    
+
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct DISK_PERFORMANCE
     {
