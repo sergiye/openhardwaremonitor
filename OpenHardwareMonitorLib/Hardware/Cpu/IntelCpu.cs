@@ -218,6 +218,7 @@ internal sealed class IntelCpu : GenericCpu
 
                         case 0xC5: // Intel Core Ultra 9 200 Series ArrowLake
                         case 0xC6: // Intel Core Ultra 7 200 Series ArrowLake
+                        case 0xB5: // Intel Arrow Lake U
                             _microArchitecture = MicroArchitecture.ArrowLake;
                             tjMax = GetTjMaxFromMsr();
                             break;
@@ -234,7 +235,10 @@ internal sealed class IntelCpu : GenericCpu
                             _microArchitecture = MicroArchitecture.ElkhartLake;
                             tjMax = GetTjMaxFromMsr();
                             break;
-
+                        case 0xCC: //Intel Panther Lake
+                            _microArchitecture = MicroArchitecture.PantherLake;
+                            tjMax = GetTjMaxFromMsr();
+                            break;
                         default:
                             _microArchitecture = MicroArchitecture.Unknown;
                             tjMax = Floats(100);
@@ -295,6 +299,7 @@ internal sealed class IntelCpu : GenericCpu
             case MicroArchitecture.LunarLake:
             case MicroArchitecture.Nehalem:
             case MicroArchitecture.MeteorLake:
+            case MicroArchitecture.PantherLake:
             case MicroArchitecture.RaptorLake:
             case MicroArchitecture.RocketLake:
             case MicroArchitecture.SandyBridge:
@@ -413,6 +418,7 @@ internal sealed class IntelCpu : GenericCpu
             MicroArchitecture.KabyLake or
             MicroArchitecture.LunarLake or
             MicroArchitecture.MeteorLake or
+            MicroArchitecture.PantherLake or
             MicroArchitecture.RaptorLake or
             MicroArchitecture.RocketLake or
             MicroArchitecture.SandyBridge or
@@ -619,6 +625,7 @@ internal sealed class IntelCpu : GenericCpu
                         case MicroArchitecture.KabyLake:
                         case MicroArchitecture.LunarLake:
                         case MicroArchitecture.MeteorLake:
+                        case MicroArchitecture.PantherLake:
                         case MicroArchitecture.RaptorLake:
                         case MicroArchitecture.RocketLake:
                         case MicroArchitecture.SandyBridge:
@@ -718,6 +725,7 @@ internal sealed class IntelCpu : GenericCpu
         Skylake,
         TigerLake,
         Tremont,
+        PantherLake,
         RaptorLake,
         SapphireRapids,
         ElkhartLake,
