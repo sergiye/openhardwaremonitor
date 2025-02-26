@@ -105,11 +105,11 @@ namespace OpenHardwareMonitor.Utilities
                 if (string.Compare(CurrentVersion, newVersion, StringComparison.Ordinal) >= 0)
                 {
                     if (!silent)
-                        MessageBox.Show($"Your version is: {CurrentVersion}\nLatest released version is: {newVersion}\nNo need to update.", "Update", MessageBoxButtons.OK,
+                        MessageBox.Show($"Your version: {CurrentVersion}\nLast release: {newVersion}\nNo need to update.", "Update", MessageBoxButtons.OK,
                           MessageBoxIcon.Information);
                     return;
                 }
-                update = MessageBox.Show($"Your version is: {CurrentVersion}\nLatest released version is: {newVersion}\nDownload this update?",
+                update = MessageBox.Show($"Your version: {CurrentVersion}\nLast release: {newVersion}\nDownload this update?",
                   "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
             }
             catch (Exception ex)
