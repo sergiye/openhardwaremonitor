@@ -78,6 +78,7 @@ public sealed partial class MainForm : Form
         // set the DockStyle here, to avoid conflicts with the MainMenu
         Font = SystemFonts.MessageBoxFont;
         treeView.Font = SystemFonts.MessageBoxFont;
+        treeView.KeyDown += TreeView_KeyDown;
 
         // Set the bounds immediately, so that our child components can be
         // properly placed.
@@ -746,93 +747,109 @@ public sealed partial class MainForm : Form
             expandPersistNode.Expanded = info.Node.IsExpanded;
     }
 
+    private void TreeView_KeyDown(object sender, KeyEventArgs e)
+    {
+        var node = treeView.SelectedNode;
+        if (node is not {Tag: SensorNode sensorNode} || sensorNode.Sensor == null)
+            return;
+        switch (e.KeyCode) {
+            case Keys.H:
+                sensorNode.IsVisible = !sensorNode.IsVisible;
+                treeView.SelectedNode = node.NextNode;
+                break;
+            case Keys.P:
+                ShowParameterForm(sensorNode.Sensor);
+                break;
+            case Keys.R:
+                sensorNode.PenColor = null;
+                treeView.SelectedNode = node.NextNode;
+                break;
+        }
+    }
+
     private void TreeView_Click(object sender, EventArgs e)
     {
-        if (!(e is MouseEventArgs m) || (m.Button != MouseButtons.Left && m.Button != MouseButtons.Right))
+        if (e is not MouseEventArgs m || (m.Button != MouseButtons.Left && m.Button != MouseButtons.Right))
             return;
 
         NodeControlInfo info = treeView.GetNodeControlInfoAt(new Point(m.X, m.Y));
         treeView.SelectedNode = info.Node;
-        if (m.Button == MouseButtons.Right && info.Node != null)
-        {
-            if (info.Node.Tag is SensorNode node && node.Sensor != null)
-            {
+        if (m.Button != MouseButtons.Right || info.Node == null)
+            return;
+
+        ToolStripMenuItem item;
+        switch (info.Node.Tag) {
+            case SensorNode node when node.Sensor != null: {
                 treeContextMenu.Items.Clear();
                 if (node.Sensor.Parameters.Count > 0)
                 {
-                    ToolStripItem item = new ToolStripMenuItem("Parameters...");
+                    item = new ToolStripMenuItem("Parameters... (P)");
                     item.Click += delegate { ShowParameterForm(node.Sensor); };
                     treeContextMenu.Items.Add(item);
                 }
 
                 if (nodeTextBoxText.EditEnabled)
                 {
-                    ToolStripItem item = new ToolStripMenuItem("Rename");
+                    item = new ToolStripMenuItem("Rename (F2)");
                     item.Click += delegate { nodeTextBoxText.BeginEdit(); };
                     treeContextMenu.Items.Add(item);
                 }
 
                 if (node.IsVisible)
                 {
-                    ToolStripItem item = new ToolStripMenuItem("Hide");
+                    item = new ToolStripMenuItem("Hide (H)");
                     item.Click += delegate { node.IsVisible = false; };
                     treeContextMenu.Items.Add(item);
                 }
                 else
                 {
-                    ToolStripItem item = new ToolStripMenuItem("Unhide");
+                    item = new ToolStripMenuItem("Unhide (H)");
                     item.Click += delegate { node.IsVisible = true; };
                     treeContextMenu.Items.Add(item);
                 }
 
                 treeContextMenu.Items.Add(new ToolStripSeparator());
+                item = new ToolStripMenuItem("Pen Color...");
+                item.Click += delegate
                 {
-                    ToolStripItem item = new ToolStripMenuItem("Pen Color...");
-                    item.Click += delegate
+                    using (var dialog = new ColorDialog())
                     {
-                        ColorDialog dialog = new() { Color = node.PenColor.GetValueOrDefault() };
+                        dialog.Color = node.PenColor.GetValueOrDefault();
                         if (dialog.ShowDialog() == DialogResult.OK)
                             node.PenColor = dialog.Color;
-                    };
+                    }
+                };
+                treeContextMenu.Items.Add(item);
 
-                    treeContextMenu.Items.Add(item);
-                }
-
-                {
-                    ToolStripItem item = new ToolStripMenuItem("Reset Pen Color");
-                    item.Click += delegate { node.PenColor = null; };
-                    treeContextMenu.Items.Add(item);
-                }
+                item = new ToolStripMenuItem("Reset Pen Color (R)");
+                item.Click += delegate { node.PenColor = null; };
+                treeContextMenu.Items.Add(item);
 
                 treeContextMenu.Items.Add(new ToolStripSeparator());
+                item = new ToolStripMenuItem("Show in Tray") { Checked = _systemTray.Contains(node.Sensor) };
+                item.Click += (s, _) =>
                 {
-                    ToolStripMenuItem item = new("Show in Tray") { Checked = _systemTray.Contains(node.Sensor) };
-                    item.Click += delegate
-                    {
-                        if (item.Checked)
-                            _systemTray.Remove(node.Sensor);
-                        else
-                            _systemTray.Add(node.Sensor, true);
-                    };
-
-                    treeContextMenu.Items.Add(item);
-                }
+                    if (s is not ToolStripMenuItem menuItem)
+                        return;
+                    if (menuItem.Checked)
+                        _systemTray.Remove(node.Sensor);
+                    else
+                        _systemTray.Add(node.Sensor, true);
+                };
+                treeContextMenu.Items.Add(item);
 
                 if (_gadget != null)
                 {
-                    ToolStripMenuItem item = new("Show in Gadget") { Checked = _gadget.Contains(node.Sensor) };
-                    item.Click += delegate
+                    item = new ToolStripMenuItem("Show in Gadget") { Checked = _gadget.Contains(node.Sensor) };
+                    item.Click += (s, _) =>
                     {
-                        if (item.Checked)
-                        {
+                        if (s is not ToolStripMenuItem menuItem)
+                            return;
+                        if (menuItem.Checked)
                             _gadget.Remove(node.Sensor);
-                        }
                         else
-                        {
                             _gadget.Add(node.Sensor);
-                        }
                     };
-
                     treeContextMenu.Items.Add(item);
                 }
 
@@ -849,35 +866,29 @@ public sealed partial class MainForm : Form
                     manualItem.Checked = control.ControlMode == ControlMode.Software;
                     for (int i = 0; i <= 100; i += 5)
                     {
-                        if (i <= control.MaxSoftwareValue &&
-                            i >= control.MinSoftwareValue)
-                        {
-                            ToolStripMenuItem item = new ToolStripRadioButtonMenuItem(i + " %");
-                            manualItem.DropDownItems.Add(item);
-                            item.Checked = control.ControlMode == ControlMode.Software && Math.Round(control.SoftwareValue) == i;
-                            int softwareValue = i;
-                            item.Click += delegate { control.SetSoftware(softwareValue); };
-                        }
+                        if (!(i <= control.MaxSoftwareValue) || !(i >= control.MinSoftwareValue))
+                            continue;
+                        item = new ToolStripRadioButtonMenuItem(i + " %");
+                        manualItem.DropDownItems.Add(item);
+                        item.Checked = control.ControlMode == ControlMode.Software && Math.Round(control.SoftwareValue) == i;
+                        int softwareValue = i;
+                        item.Click += delegate { control.SetSoftware(softwareValue); };
                     }
-
                     treeContextMenu.Items.Add(controlItem);
                 }
-
                 treeContextMenu.Show(treeView, new Point(m.X, m.Y));
+                break;
             }
-
-            if (info.Node.Tag is HardwareNode hardwareNode && hardwareNode.Hardware != null)
-            {
+            case HardwareNode hardwareNode when hardwareNode.Hardware != null: {
                 treeContextMenu.Items.Clear();
-
                 if (nodeTextBoxText.EditEnabled)
                 {
-                    ToolStripItem item = new ToolStripMenuItem("Rename");
+                    item = new ToolStripMenuItem("Rename (F2)");
                     item.Click += delegate { nodeTextBoxText.BeginEdit(); };
                     treeContextMenu.Items.Add(item);
                 }
-
                 treeContextMenu.Show(treeView, new Point(m.X, m.Y));
+                break;
             }
         }
     }
