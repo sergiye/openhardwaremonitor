@@ -404,6 +404,8 @@ public class HttpServer
         var children = new List<object>();
         foreach (Node child in n.Nodes)
         {
+            if (child is SensorNode sn && !sn.IsVisible)
+                continue;
             children.Add(GenerateJsonForNode(child, ref nodeIndex));
         }
 
