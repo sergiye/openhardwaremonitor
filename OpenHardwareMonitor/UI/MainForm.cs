@@ -272,6 +272,10 @@ public sealed partial class MainForm : Form
                 Server.StopHttpListener();
         };
 
+        openWebServerMenuItem.Click += (s, e) => {
+            System.Diagnostics.Process.Start("http://localhost:" + Server.ListenerPort);
+        };
+
         authWebServerMenuItem.Checked = _settings.GetValue("authenticationEnabled", false);
 
         _logSensors = new UserOption("logSensorsMenuItem", false, logSensorsMenuItem, _settings);

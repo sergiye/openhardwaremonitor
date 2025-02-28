@@ -118,6 +118,7 @@ namespace OpenHardwareMonitor.UI
       this.webMenuItemSeparator = new System.Windows.Forms.ToolStripSeparator();
       this.webMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.runWebServerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.openWebServerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.serverPortMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.authWebServerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.helpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -809,6 +810,7 @@ namespace OpenHardwareMonitor.UI
       //
       this.webMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.runWebServerMenuItem,
+            this.openWebServerMenuItem,
             this.serverPortMenuItem,
             this.authWebServerMenuItem});
       this.webMenuItem.Name = "webMenuItem";
@@ -820,6 +822,12 @@ namespace OpenHardwareMonitor.UI
       this.runWebServerMenuItem.Name = "runWebServerMenuItem";
       this.runWebServerMenuItem.Size = new System.Drawing.Size(153, 22);
       this.runWebServerMenuItem.Text = "Run";
+      //
+      // openWebServerMenuItem
+      //
+      this.openWebServerMenuItem.Name = "openWebServerMenuItem";
+      this.openWebServerMenuItem.Size = new System.Drawing.Size(153, 22);
+      this.openWebServerMenuItem.Text = "Open";
       //
       // serverPortMenuItem
       //
@@ -984,6 +992,7 @@ namespace OpenHardwareMonitor.UI
         private System.Windows.Forms.ToolStripSeparator menuItem6;
         private System.Windows.Forms.ToolStripMenuItem webMenuItem;
         private System.Windows.Forms.ToolStripMenuItem runWebServerMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openWebServerMenuItem;
         private System.Windows.Forms.ToolStripMenuItem serverPortMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuItemFileHardware;
         private System.Windows.Forms.ToolStripMenuItem mainboardMenuItem;
