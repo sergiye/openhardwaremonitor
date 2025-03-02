@@ -54,11 +54,14 @@ namespace OpenHardwareMonitor.Utilities
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
         }
 
-        internal static void CheckForUpdates(bool silent)
+        /// <summary>
+        /// Check for a new version
+        /// </summary>
+        /// <returns>True if the check was completed, False if there were errors</returns>
+        internal static bool CheckForUpdates(bool silent)
         {
             string newVersion;
             string newVersionUrl = null;
-            bool update;
             try
             {
                 string jsonString;
@@ -79,7 +82,7 @@ namespace OpenHardwareMonitor.Utilities
                 {
                     if (!silent)
                         MessageBox.Show($"Your version is: {CurrentVersion}\nLatest released version is: {newVersion}\nNo assets found to update.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
+                    return true;
                 }
 
                 if (string.Compare(CurrentVersion, newVersion, StringComparison.Ordinal) >= 0)
@@ -87,18 +90,20 @@ namespace OpenHardwareMonitor.Utilities
                     if (!silent)
                         MessageBox.Show($"Your version: {CurrentVersion}\nLast release: {newVersion}\nNo need to update.", "Update", MessageBoxButtons.OK,
                           MessageBoxIcon.Information);
-                    return;
+                    return true;
                 }
-                update = MessageBox.Show($"Your version: {CurrentVersion}\nLast release: {newVersion}\nDownload this update?",
-                  "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
+                if (MessageBox.Show($"Your version: {CurrentVersion}\nLast release: {newVersion}\nDownload this update?",
+                  "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                {
+                    return true;
+                }
             }
             catch (Exception ex)
             {
                 if (!silent)
                     MessageBox.Show($"Error checking for a new version.\n{ex.Message}", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                update = false;
+                return false;
             }
-            if (!update) return;
 
             try
             {
@@ -108,11 +113,13 @@ namespace OpenHardwareMonitor.Utilities
                 using (var wc = new WebClient())
                     wc.DownloadFile(newVersionUrl, updateFilePath);
                 RestartApp(3, updateFilePath);
+                return true;
             }
             catch (Exception ex)
             {
                 if (!silent)
                     MessageBox.Show($"Error downloading new version\n{ex.Message}", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
             }
         }
 

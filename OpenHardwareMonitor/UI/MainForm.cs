@@ -697,7 +697,13 @@ public sealed partial class MainForm : Form
         treeView.Width += 1; //just to apply column auto-resize
 
         //will display prompt only if update available & when main form displayed
-        Task.Delay(1000).ContinueWith(_ => Updater.CheckForUpdates(true));
+        var timer = new Timer();
+        timer.Interval = 1000;
+        timer.Tick += (_, _) => {
+            timer.Enabled = false;
+            timer.Enabled = !Updater.CheckForUpdates(true);
+        };
+        timer.Enabled = true;
 
         FormClosed += MainForm_FormClosed;
     }
