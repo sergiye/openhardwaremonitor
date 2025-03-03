@@ -1,6 +1,6 @@
 # Open hardware monitor
 [![Release](https://img.shields.io/github/v/release/sergiye/openhardwaremonitor?style=for-the-badge)](https://github.com/sergiye/openhardwaremonitor/releases/latest)
-[![Downloads](https://img.shields.io/github/downloads/sergiye/openhardwaremonitor/total?style=for-the-badge&color=ff4f42)](https://sergiye.github.io/github-release-stats/?username=sergiye&repository=openhardwaremonitor&page=1&per_page=100)
+![Downloads](https://img.shields.io/github/downloads/sergiye/openhardwaremonitor/total?style=for-the-badge&color=ff4f42)
 ![Last commit](https://img.shields.io/github/last-commit/sergiye/openhardwaremonitor?style=for-the-badge&color=00AD00)
 [![Stars](https://img.shields.io/github/stars/sergiye/openhardwaremonitor?style=for-the-badge)](https://github.com/sergiye/openhardwaremonitor/stargazers)
 [![Forks](https://img.shields.io/github/forks/sergiye/openhardwaremonitor?style=for-the-badge)](https://github.com/sergiye/openhardwaremonitor/forks)
@@ -65,4 +65,4 @@ You can check if it works properly on your motherboard. For many manufacturers, 
 
 OpenHardwareMonitor is free and open source software licensed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). You can use it for personal and commercial purposes.
 
-Copyright © 2022 Sergiy Egoshyn
+
