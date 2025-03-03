@@ -1,0 +1,1 @@
+create a "themes" folder next to the OpenHardwareMonitor.exe file and place all theme files there

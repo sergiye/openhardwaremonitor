@@ -224,11 +224,11 @@ namespace Aga.Controls.Tree.NodeControls
 			}
 			else if (context.DrawSelection == DrawSelectionMode.Inactive)
 			{
-				textColor = Parent.ForeColor;
+				textColor = TreeViewAdv.CustomSelectedTextColor;
                 backgroundBrush = SystemBrushes.InactiveBorder;
 			}
 			else if (context.DrawSelection == DrawSelectionMode.FullRowSelect)
-				textColor = Parent.ForeColor;
+				textColor = TreeViewAdv.CustomSelectedTextColor;
 
 			if (!context.Enabled)
 				textColor = SystemColors.GrayText;

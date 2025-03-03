@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Aga.Controls.Tree;
 using Microsoft.Win32;
 using OpenHardwareMonitor.UI.Themes;
+using OpenHardwareMonitor.Utilities;
 
 namespace OpenHardwareMonitor.UI
 {
@@ -105,16 +107,40 @@ namespace OpenHardwareMonitor.UI
             {
                 if (_all == null)
                 {
-                    _all = new List<Theme>();
+                    var temp = new List<Theme>();
                     foreach (Type type in typeof(Theme).Assembly.GetTypes())
                     {
-                        if (type != typeof(Theme) && typeof(Theme).IsAssignableFrom(type))
+                        if (type == typeof(Theme) || !typeof(Theme).IsAssignableFrom(type))
+                            continue;
+                        var theme = (Theme)type.GetConstructor(new Type[] { })?.Invoke(new object[] { });
+                        if (theme != null)
+                            temp.Add(theme);
+                    }
+
+                    var appPath = Path.GetDirectoryName(Updater.CurrentFileLocation);
+                    var themesPath = Path.Combine(appPath, "Themes");
+                    var di = new DirectoryInfo(themesPath);
+                    //var dt = CustomTheme.GetThemeDto(new DarkTheme());
+                    //Directory.CreateDirectory(themesPath);
+                    //dt.ToJsonFile(Path.Combine(themesPath, "custom.json"));
+                    if (di.Exists)
+                    {
+                        foreach (FileInfo fi in di.GetFiles("*.json", SearchOption.TopDirectoryOnly))
                         {
-                            _all.Add((Theme)type.GetConstructor(new Type[] { }).Invoke(new object[] { }));
+                            try
+                            {
+                                string json = File.ReadAllText(fi.FullName);
+                                temp.Add(new CustomTheme(fi.Name, json.FromJson<ThemeDto>()));
+                            }
+                            catch (Exception)
+                            {
+                            }
                         }
                     }
+
+                    _all = temp.OrderBy(x => x.DisplayName).ToList();
                 }
-                return _all.OrderBy(x => x.DisplayName).ToList();
+                return _all;
             }
         }
 
