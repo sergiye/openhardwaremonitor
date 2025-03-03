@@ -54,8 +54,6 @@ Some sensors are only available when running the application as administrator.
 
 **or download build from [releases](https://github.com/sergiye/openhardwaremonitor/releases).**
 
-### Auto builds
-If you have a **GitHub** account, you can download nightly builds [here](https://github.com/sergiye/openhardwaremonitor/actions).
 
 ## How can I help improve it?
 The OpenHardwareMonitor team welcomes feedback and contributions!<br/>
