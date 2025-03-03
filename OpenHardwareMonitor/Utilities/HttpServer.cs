@@ -406,8 +406,13 @@ public class HttpServer
         {
             if (child is SensorNode sn && !sn.IsVisible)
                 continue;
-            children.Add(GenerateJsonForNode(child, ref nodeIndex));
+            var childNode = GenerateJsonForNode(child, ref nodeIndex);
+            if (childNode != null)
+                children.Add(childNode);
         }
+
+        if (n is not SensorNode && children.Count == 0)
+            return null;
 
         if (n is SensorNode sensorNode)
         {
