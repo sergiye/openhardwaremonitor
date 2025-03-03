@@ -55,26 +55,6 @@ namespace OpenHardwareMonitor.Utilities
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
         }
 
-        private static string GetJsonData(string uri, int timeout = 10, string method = "GET")
-        {
-            var request = (HttpWebRequest)WebRequest.Create(uri);
-            request.Method = method;
-            request.Timeout = timeout * 1000;
-            request.UserAgent = "Mozilla/5.0 (Windows NT 11.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.500.27 Safari/537.36";
-            //request.Accept = "text/xml,text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-            request.ContentType = "application/json; charset=utf-8";
-            using (var webResp = request.GetResponse())
-            {
-                using (var stream = webResp.GetResponseStream())
-                {
-                    if (stream == null) return null;
-                    var answer = new StreamReader(stream, Encoding.UTF8);
-                    var result = answer.ReadToEnd();
-                    return result;
-                }
-            }
-        }
-
         internal static void CheckForUpdates(bool silent)
         {
             string newVersion;
@@ -82,11 +62,12 @@ namespace OpenHardwareMonitor.Utilities
             bool update;
             try
             {
-                //using (var wc = new WebClient())
-                //  newVersion = wc.DownloadString($"https://raw.githubusercontent.com/{GithubLandingPage}/master/version.txt").TrimEnd();
-                //newVersionUrl = $"https://github.com/{GithubLandingPage}/releases/download/{newVersion}/{selfFileName}";
-
-                var jsonString = GetJsonData($"https://api.github.com/repos/{GITHUB_LANDING_PAGE}/releases").TrimEnd();
+                string jsonString;
+                using (var wc = new WebClient())
+                {
+                  wc.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 11.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.500.27 Safari/537.36");
+                  jsonString = wc.DownloadString($"https://api.github.com/repos/{GITHUB_LANDING_PAGE}/releases").TrimEnd();
+                }
                 var releases = jsonString.FromJson<GitHubRelease[]>();
                 if (releases == null || releases.Length == 0)
                     throw new Exception("Error getting list of releases.");

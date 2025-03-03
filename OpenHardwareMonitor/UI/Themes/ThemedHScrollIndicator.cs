@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
-using OpenHardwareMonitor.UI;
 
 namespace OpenHardwareMonitor.UI.Themes
 {
