@@ -14,6 +14,7 @@ public partial class ParameterForm : Form
     public ParameterForm()
     {
         InitializeComponent();
+        Theme.Current.Apply(this);
     }
 
     public IReadOnlyList<IParameter> Parameters

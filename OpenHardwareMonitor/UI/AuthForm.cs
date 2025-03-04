@@ -12,6 +12,7 @@ public partial class AuthForm : Form
         InitializeComponent();
         Icon = System.Drawing.Icon.ExtractAssociatedIcon(Utilities.Updater.CurrentFileLocation);
         _parent = m;
+        Theme.Current.Apply(this);
     }
 
     private void AuthForm_Load(object sender, EventArgs e)

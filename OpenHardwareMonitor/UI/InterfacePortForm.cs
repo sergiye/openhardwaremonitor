@@ -3,8 +3,6 @@ using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
 using System.Diagnostics;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using System.Net.NetworkInformation;
 
 namespace OpenHardwareMonitor.UI;
 
@@ -19,6 +17,7 @@ public partial class InterfacePortForm : Form
         Icon = System.Drawing.Icon.ExtractAssociatedIcon(Utilities.Updater.CurrentFileLocation);
         _parent = m;
         _localIP = LoadNetworkInterfaces(_parent.Server.ListenerIp);
+        Theme.Current.Apply(this);
     }
 
     private string LoadNetworkInterfaces(string selectedListenerIp)
