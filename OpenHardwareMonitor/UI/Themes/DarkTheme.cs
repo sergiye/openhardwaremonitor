@@ -7,7 +7,7 @@ namespace OpenHardwareMonitor.UI.Themes
         public override Color ForegroundColor => Color.FromArgb(233, 233, 233);
         public override Color BackgroundColor => Color.FromArgb(30, 30, 30);
         public override Color HyperlinkColor => Color.FromArgb(144, 220, 232);
-        public override Color SelectedForegroundColor => ForegroundColor;
+        public override Color SelectedForegroundColor => Color.Black;
         public override Color SelectedBackgroundColor => ColorTranslator.FromHtml("#009687");
         public override Color LineColor => Color.FromArgb(38, 38, 38);
         public override Color StrongLineColor => Color.FromArgb(53, 53, 53);
