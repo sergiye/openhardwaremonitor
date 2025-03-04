@@ -4,8 +4,8 @@
     "BackgroundColor": "#3C3C3C",
     "ForegroundColor": "#E9E9E9",
     "HyperlinkColor": "#90DCE8",
-    "LineColor": "#303030",
     "SelectedBackgroundColor": "#C6DA36",
     "SelectedForegroundColor": "#000000",
-    "StrongLineColor": "#353535"
+    "LineColor": "#404040",
+    "StrongLineColor": "#454545"
 }
