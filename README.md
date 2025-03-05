@@ -35,13 +35,19 @@ You can see information about devices such as:
  - Power suppliers
  - Laptop batteries
 
-Supports `Portable` mode for storing temporary driver file and settings configuration next to the executable file.
-Supports `Light`/`Dark` themes with auto switching mode.
-Supports (manual only) checking for updated versions.
+### Additional features
 
-Some sensors are only available when running the application as administrator.
+ - `Remote web-server` mode for browsing data from remote machine with custom port and authentification.
+ - `Hide/Unhide` sensors to remove some data from UI and web server.
+ - Multiple `Tray icons` and `Gadget` for selected sensor values.
+ - `Light`/`Dark` themes with auto switching mode.
+ - Custom `color-themes` from external files - You can find some examples [here](https://github.com/sergiye/openhardwaremonitor/tree/dev/themes)
+ - `Portable` mode for storing temporary driver file and settings configuration next to the executable file.
+ - `Updated versions check` - manually from main menu.
+ 
+ Note: Some sensors are only available when running the application as administrator.
 
-### `Light`/`Dark` themes example
+### UI example with `Light`/`Dark` themes 
 
 [<img src="https://github.com/sergiye/openhardwaremonitor/raw/master/themes.png" alt="Themes" width="300"/>](https://github.com/sergiye/openhardwaremonitor/releases)
 
