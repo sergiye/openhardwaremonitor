@@ -15,9 +15,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BAEC1DFE-5D1E-4CDB-8264-6C85B229D812}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HidSharp", "HidSharp\HidSharp.csproj", "{9CE1E1E2-8F82-4170-92B2-0F7F8A66F4E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HidSharp", "HidSharp\HidSharp.csproj", "{9CE1E1E2-8F82-4170-92B2-0F7F8A66F4E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
