@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Aga.Controls.Tree;
 using Microsoft.Win32;
-using OpenHardwareMonitor.UI.Themes;
-using OpenHardwareMonitor.Utilities;
 
 namespace OpenHardwareMonitor.UI
 {
@@ -105,41 +102,7 @@ namespace OpenHardwareMonitor.UI
         {
             get
             {
-                if (_all == null)
-                {
-                    var temp = new List<Theme>();
-                    foreach (Type type in typeof(Theme).Assembly.GetTypes())
-                    {
-                        if (type == typeof(Theme) || !typeof(Theme).IsAssignableFrom(type))
-                            continue;
-                        var theme = (Theme)type.GetConstructor(new Type[] { })?.Invoke(new object[] { });
-                        if (theme != null)
-                            temp.Add(theme);
-                    }
-
-                    var appPath = Path.GetDirectoryName(Updater.CurrentFileLocation);
-                    var themesPath = Path.Combine(appPath, "Themes");
-                    var di = new DirectoryInfo(themesPath);
-                    //var dt = CustomTheme.GetThemeDto(new DarkTheme());
-                    //Directory.CreateDirectory(themesPath);
-                    //dt.ToJsonFile(Path.Combine(themesPath, "custom.json"));
-                    if (di.Exists)
-                    {
-                        foreach (FileInfo fi in di.GetFiles("*.json", SearchOption.TopDirectoryOnly))
-                        {
-                            try
-                            {
-                                string json = File.ReadAllText(fi.FullName);
-                                temp.Add(new CustomTheme(fi.Name, json.FromJson<ThemeDto>()));
-                            }
-                            catch (Exception)
-                            {
-                            }
-                        }
-                    }
-
-                    _all = temp.OrderBy(x => x.DisplayName).ToList();
-                }
+                _all ??= CustomTheme.GetAllThemes().OrderBy(x => x.DisplayName).ToList();
                 return _all;
             }
         }
@@ -191,13 +154,13 @@ namespace OpenHardwareMonitor.UI
 
         public string Id { get; }
         public string DisplayName { get; }
-        public abstract Color BackgroundColor { get; }
-        public abstract Color ForegroundColor { get; }
-        public abstract Color HyperlinkColor { get; }
-        public abstract Color LineColor { get; }
-        public abstract Color StrongLineColor { get; }
-        public abstract Color SelectedBackgroundColor { get; }
-        public abstract Color SelectedForegroundColor { get; }
+        public virtual Color BackgroundColor { get; protected set; }
+        public virtual Color ForegroundColor { get; protected set; }
+        public virtual Color HyperlinkColor { get; protected set; }
+        public virtual Color LineColor { get; protected set; }
+        public virtual Color StrongLineColor { get; protected set; }
+        public virtual Color SelectedBackgroundColor { get; protected set; }
+        public virtual Color SelectedForegroundColor { get; protected set; }
 
         // button
         public virtual Color ButtonBackgroundColor => BackgroundColor;
@@ -231,7 +194,7 @@ namespace OpenHardwareMonitor.UI
 
         // window
         public virtual Color WindowTitlebarBackgroundColor => BackgroundColor;
-        public abstract bool WindowTitlebarFallbackToImmersiveDarkMode { get; }
+        public virtual bool WindowTitlebarFallbackToImmersiveDarkMode { get; protected set; }
         public virtual Color WindowTitlebarForegroundColor => ForegroundColor;
 
         public void Apply(Form form)
