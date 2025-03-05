@@ -528,9 +528,6 @@ public sealed partial class MainForm : Form
         ThemedVScrollIndicator.AddToControl(treeView);
         ThemedHScrollIndicator.AddToControl(treeView);
 
-        string themeSetting = _settings.GetValue("theme", "auto");
-        bool themeSelected = false;
-
         if (Theme.SupportsAutoThemeSwitching())
         {
             _autoThemeMenuItem = new ToolStripRadioButtonMenuItem();
@@ -544,31 +541,42 @@ public sealed partial class MainForm : Form
             themeMenuItem.DropDownItems.Add(_autoThemeMenuItem);
         }
 
-        foreach (Theme theme in Theme.All)
+        void AddThemeMenuItems(IEnumerable<Theme> themes)
         {
-            var item = new ToolStripRadioButtonMenuItem();
-            item.Text = theme.DisplayName;
-            item.Click += (o, e) =>
+            foreach (Theme theme in themes)
             {
-                item.Checked = true;
-                Theme.Current = theme;
-                _settings.SetValue("theme", theme.Id);
-            };
-            themeMenuItem.DropDownItems.Add(item);
+                var item = new ToolStripRadioButtonMenuItem();
+                item.Text = theme.DisplayName;
+                item.Tag = theme;
+                item.Click += OnThemeMenuItemClick;
+                themeMenuItem.DropDownItems.Add(item);
 
-            if (themeSetting == theme.Id)
-            {
-                item.PerformClick();
-                themeSelected = true;
+                if (Theme.Current != null && Theme.Current.Id == theme.Id)
+                {
+                    item.Checked = true;
+                }
             }
         }
 
-        if (!themeSelected)
+        AddThemeMenuItems(Theme.All.Where(t => t is not CustomTheme));
+        themeMenuItem.DropDownItems.Add("-"); //separator
+        AddThemeMenuItems(Theme.All.Where(t => t is CustomTheme));
+
+        if (Theme.Current == null)
         {
             themeMenuItem.DropDownItems[0].PerformClick();
         }
 
         Theme.Current.Apply(this);
+    }
+
+    private void OnThemeMenuItemClick(object sender, EventArgs e)
+    {
+        if (sender is not ToolStripRadioButtonMenuItem item || item.Tag is not Theme theme)
+            return;
+        item.Checked = true;
+        Theme.Current = theme;
+        _settings.SetValue("theme", theme.Id);
     }
 
     private void InsertSorted(IList<Node> nodes, HardwareNode node)
