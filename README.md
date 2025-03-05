@@ -41,7 +41,7 @@ You can see information about devices such as:
  - `Hide/Unhide` sensors to remove some data from UI and web server.
  - Multiple `Tray icons` and `Gadget` for selected sensor values.
  - `Light`/`Dark` themes with auto switching mode.
- - Custom `color-themes` from external files - You can find some examples [here](https://github.com/sergiye/openhardwaremonitor/tree/dev/themes)
+ - Custom `color-themes` from external files - You can find examples [here](https://github.com/sergiye/openhardwaremonitor/tree/dev/OpenHardwareMonitor/Resources/themes)
  - `Portable` mode for storing temporary driver file and settings configuration next to the executable file.
  - `Updated versions check` - manually from main menu.
  
