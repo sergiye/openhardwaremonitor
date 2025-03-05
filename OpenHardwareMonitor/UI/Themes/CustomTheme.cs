@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using OpenHardwareMonitor.Utilities;
 
 namespace OpenHardwareMonitor.UI;
@@ -32,20 +33,6 @@ internal class DarkTheme : Theme
         SelectedBackgroundColor = ColorTranslator.FromHtml("#009687");
         LineColor = Color.FromArgb(38, 38, 38);
         StrongLineColor = Color.FromArgb(53, 53, 53);
-        WindowTitlebarFallbackToImmersiveDarkMode = true;
-    }
-}
-
-internal class BlackTheme : Theme
-{
-    public BlackTheme() : base("black", "Black") {
-        ForegroundColor = Color.FromArgb(218, 218, 218);
-        BackgroundColor = Color.FromArgb(0, 0, 0);
-        HyperlinkColor = Color.FromArgb(144, 220, 232);
-        SelectedForegroundColor = ForegroundColor;
-        SelectedBackgroundColor = ColorTranslator.FromHtml("#2B5278");
-        LineColor = ColorTranslator.FromHtml("#070A12");
-        StrongLineColor = ColorTranslator.FromHtml("#091217");
         WindowTitlebarFallbackToImmersiveDarkMode = true;
     }
 }
@@ -81,13 +68,35 @@ internal class CustomTheme : Theme
 
     public static IEnumerable<Theme> GetAllThemes()
     {
-        foreach (Type type in typeof(Theme).Assembly.GetTypes())
+        var assembly = typeof(Theme).Assembly;
+        foreach (Type type in assembly.GetTypes())
         {
             if (type == typeof(Theme) || !typeof(Theme).IsAssignableFrom(type))
                 continue;
             var theme = (Theme)type.GetConstructor(new Type[] { })?.Invoke(new object[] { });
             if (theme != null)
                 yield return theme;
+        }
+
+        const string resourcesPath = "OpenHardwareMonitor.Resources.themes";
+        foreach (string path in assembly.GetManifestResourceNames().Where(n => n.StartsWith(resourcesPath)))
+        {
+            using (Stream stream = assembly.GetManifestResourceStream(path))
+            {
+                using (StreamReader reader = new(stream))
+                {
+                    ThemeDto dto;
+                    try
+                    {
+                        dto = reader.ReadToEnd().FromJson<ThemeDto>();
+                    }
+                    catch (Exception)
+                    {
+                        continue;
+                    }
+                    yield return new CustomTheme(dto.DisplayName, dto);
+                }
+            }
         }
 
         var appPath = Path.GetDirectoryName(Updater.CurrentFileLocation);
