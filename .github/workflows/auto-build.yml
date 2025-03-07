@@ -1,4 +1,4 @@
-name: dev
+name: auto-build
 
 on:
   push:
@@ -34,9 +34,9 @@ jobs:
           path: |
             bin/OpenHardwareMonitor
 
-      - name: Publish Lib build
-        uses: actions/upload-artifact@v4
-        with:
-          name: OpenHardwareMonitorLib
-          path: |
-            bin/OpenHardwareMonitorLib
+      # - name: Publish Lib build
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: OpenHardwareMonitorLib
+      #     path: |
+      #       bin/OpenHardwareMonitorLib
