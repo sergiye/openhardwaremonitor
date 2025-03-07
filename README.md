@@ -3,6 +3,9 @@
 ![Downloads](https://img.shields.io/github/downloads/sergiye/openhardwaremonitor/total?style=for-the-badge&color=ff4f42)
 ![Last commit](https://img.shields.io/github/last-commit/sergiye/openhardwaremonitor?style=for-the-badge&color=00AD00)
 
+[![Nuget](https://img.shields.io/nuget/v/OpenHardwareMonitorLib?style=for-the-badge)](https://www.nuget.org/packages/OpenHardwareMonitorLib/) 
+[![Nuget](https://img.shields.io/nuget/dt/OpenHardwareMonitorLib?label=nuget-downloads&style=for-the-badge)](https://www.nuget.org/packages/OpenHardwareMonitorLib/)
+
 Open hardware monitor - is free software that can monitor the temperature sensors, fan speeds, voltages, load and clock speeds of your computer.
 
 This application is based on the "original" [openhardwaremonitor](https://github.com/openhardwaremonitor/openhardwaremonitor) project.
@@ -57,6 +60,63 @@ You can see information about devices such as:
 - build
 
 **or download build from [releases](https://github.com/sergiye/openhardwaremonitor/releases).**
+
+
+# Developer information
+**Integrate the library in own application**
+1. Add the [OpenHardwareMonitorLib](https://www.nuget.org/packages/OpenHardwareMonitorLib/) NuGet package to your application.
+2. Use the sample code below.
+
+
+**Sample code**
+```c#
+public class UpdateVisitor : IVisitor {
+    public void VisitComputer(IComputer computer) {
+        computer.Traverse(this);
+    }
+    public void VisitHardware(IHardware hardware) {
+        hardware.Update();
+        foreach (IHardware subHardware in hardware.SubHardware) subHardware.Accept(this);
+    }
+    public void VisitSensor(ISensor sensor) { }
+    public void VisitParameter(IParameter parameter) { }
+}
+
+public void Monitor() {
+    Computer computer = new Computer {
+        IsCpuEnabled = true,
+        IsGpuEnabled = true,
+        IsMemoryEnabled = true,
+        IsMotherboardEnabled = true,
+        IsControllerEnabled = true,
+        IsNetworkEnabled = true,
+        IsStorageEnabled = true
+    };
+
+    computer.Open();
+    computer.Accept(new UpdateVisitor());
+
+    foreach (IHardware hardware in computer.Hardware) {
+        Console.WriteLine("Hardware: {0}", hardware.Name);
+        foreach (IHardware subhardware in hardware.SubHardware) {
+            Console.WriteLine("\tSubhardware: {0}", subhardware.Name);
+            foreach (ISensor sensor in subhardware.Sensors) {
+                Console.WriteLine("\t\tSensor: {0}, value: {1}", sensor.Name, sensor.Value);
+            }
+        }
+
+        foreach (ISensor sensor in hardware.Sensors) {
+            Console.WriteLine("\tSensor: {0}, value: {1}", sensor.Name, sensor.Value);
+        }
+    }
+    
+    computer.Close();
+}
+```
+
+**Administrator rights**
+
+Some sensors require administrator privileges to access the data. Restart your IDE with admin privileges, or add an [app.manifest](https://learn.microsoft.com/en-us/windows/win32/sbscs/application-manifests) file to your project with requestedExecutionLevel on requireAdministrator.
 
 
 ## How can I help improve it?
