@@ -26,6 +26,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="HidSharp" Version="2.1.0" />
+    <PackageReference Include="OpenHardwareMonitorLib" Version="1.0.9197" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Management" />
@@ -77,7 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aga.Controls\Aga.Controls.csproj" />
-    <ProjectReference Include="..\OpenHardwareMonitorLib\OpenHardwareMonitorLib.csproj" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\**" />

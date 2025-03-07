@@ -35,7 +35,7 @@
     <OutputPath>..\bin\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="packageicon.png" Pack="true" PackagePath=""/>
+    <None Include="packageicon.png" Pack="true" PackagePath="" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\inpout32.gz" />
@@ -50,7 +50,7 @@
     <PackageReference Include="Mono.Posix.NETStandard" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HidSharp\HidSharp.csproj" />
+    <PackageReference Include="HidSharp" Version="2.1.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Management" />
