@@ -26,10 +26,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="OpenHardwareMonitorLib" Version="1.0.9196" />
+    <PackageReference Include="OpenHardwareMonitorLib" Version="1.0.9198" />
+    <PackageReference Include="System.Management" Version="9.0.2" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.Management" />
     <Reference Include="System.Web" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Web.Extensions" />
