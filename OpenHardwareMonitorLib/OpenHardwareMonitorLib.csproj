@@ -7,10 +7,26 @@
     <PackageId>$(AssemblyName)</PackageId>
     <Description>Monitor the temperature sensors, fan speeds, voltages, load and clock speeds of your computer.</Description>
     <LangVersion>latest</LangVersion>
-    <PackageIcon>packageicon.png</PackageIcon>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Deterministic>false</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <PackageTags>OpenHardwareMonitor</PackageTags>
+    <Authors>Sergiy Egoshin</Authors>
+    <RepositoryType>git</RepositoryType>
+    <PackageIcon>packageicon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/sergiye/openhardwaremonitor</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/sergiye/openhardwaremonitor</PackageProjectUrl>
+    <Version>1.0.9197</Version>
+    <Copyright>Copyright © Sergiy Egoshin 2025</Copyright>
+    <Company>Sergiy Egoshyn</Company>
+    <Product>OpenHardwareMonitor</Product>
+    <IncludeSymbols>True</IncludeSymbols>
+    <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <OutputPath>..\bin\</OutputPath>
@@ -18,6 +34,9 @@
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <OutputPath>..\bin\</OutputPath>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="packageicon.png" Pack="true" PackagePath=""/>
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\inpout32.gz" />
     <EmbeddedResource Include="Resources\inpoutx64.gz" />
@@ -36,7 +55,7 @@
   <ItemGroup>
     <Reference Include="System.Management" />
   </ItemGroup>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Release'">
+<!--   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Release'">
     <Exec Command="for %%f in ($(OutDir)\*) do if not %%~xf==.dll del /S /Q &quot;%%f&quot;" />
-  </Target>
+  </Target> -->
 </Project>
