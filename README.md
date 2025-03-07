@@ -90,6 +90,7 @@ public void Monitor() {
         IsMotherboardEnabled = true,
         IsControllerEnabled = true,
         IsNetworkEnabled = true,
+        IsBatteryEnabled = true,
         IsStorageEnabled = true
     };
 
