@@ -12,15 +12,14 @@
     <Deterministic>false</Deterministic>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <PackageTags>OpenHardwareMonitor</PackageTags>
     <Authors>Sergiy Egoshin</Authors>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>packageicon.png</PackageIcon>
     <RepositoryUrl>https://github.com/sergiye/openhardwaremonitor</RepositoryUrl>
     <PackageProjectUrl>https://github.com/sergiye/openhardwaremonitor</PackageProjectUrl>
-    <Version>1.0.9197</Version>
+    <Version>1.0.9196</Version>
     <Copyright>Copyright © Sergiy Egoshin 2025</Copyright>
     <Company>Sergiy Egoshyn</Company>
     <Product>OpenHardwareMonitor</Product>

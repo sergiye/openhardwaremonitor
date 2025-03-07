@@ -79,7 +79,7 @@ internal class CustomTheme : Theme
         }
 
         const string resourcesPath = "OpenHardwareMonitor.Resources.themes";
-        foreach (string path in assembly.GetManifestResourceNames().Where(n => n.StartsWith(resourcesPath)))
+        foreach (string path in assembly.GetManifestResourceNames().Where(n => n.StartsWith(resourcesPath) && n.EndsWith(".json")))
         {
             using (Stream stream = assembly.GetManifestResourceStream(path))
             {
