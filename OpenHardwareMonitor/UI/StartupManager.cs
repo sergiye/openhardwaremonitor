@@ -61,7 +61,7 @@ namespace OpenHardwareMonitor.UI
                         }
                         catch (ArgumentException) { }
 
-                        ITaskFolder folder = _scheduler.GetFolder("\\Open Hardware Monitor");
+                        ITaskFolder folder = _scheduler.GetFolder("\\" + Updater.ApplicationTitle);
                         IRegisteredTask task = folder.GetTask("Startup");
                         _startup = (task != null) &&
                           (task.Definition.Triggers.Count > 0) &&
@@ -129,7 +129,7 @@ namespace OpenHardwareMonitor.UI
         private void CreateSchedulerTask()
         {
             ITaskDefinition definition = _scheduler.NewTask(0);
-            definition.RegistrationInfo.Description = "This task starts the Open Hardware Monitor on Windows startup.";
+            definition.RegistrationInfo.Description = $"This task starts the {Updater.ApplicationTitle} on Windows startup.";
             definition.Principal.RunLevel = TASK_RUNLEVEL.TASK_RUNLEVEL_HIGHEST;
             definition.Settings.DisallowStartIfOnBatteries = false;
             definition.Settings.StopIfGoingOnBatteries = false;
@@ -144,11 +144,11 @@ namespace OpenHardwareMonitor.UI
             ITaskFolder folder;
             try
             {
-                folder = root.GetFolder("Open Hardware Monitor");
+                folder = root.GetFolder(Updater.ApplicationTitle);
             }
             catch (IOException)
             {
-                folder = root.CreateFolder("Open Hardware Monitor", "");
+                folder = root.CreateFolder(Updater.ApplicationTitle, "");
             }
             folder.RegisterTaskDefinition("Startup", definition,
               (int)TASK_CREATION.TASK_CREATE_OR_UPDATE, null, null,
@@ -160,13 +160,13 @@ namespace OpenHardwareMonitor.UI
             ITaskFolder root = _scheduler.GetFolder("\\");
             try
             {
-                ITaskFolder folder = root.GetFolder("Open Hardware Monitor");
+                ITaskFolder folder = root.GetFolder(Updater.ApplicationTitle);
                 folder.DeleteTask("Startup", 0);
             }
             catch (IOException) { }
             try
             {
-                root.DeleteFolder("Open Hardware Monitor", 0);
+                root.DeleteFolder(Updater.ApplicationTitle, 0);
             }
             catch (IOException) { }
         }

@@ -10,7 +10,7 @@ public partial class AuthForm : Form
     public AuthForm(MainForm m)
     {
         InitializeComponent();
-        Icon = System.Drawing.Icon.ExtractAssociatedIcon(Utilities.Updater.CurrentFileLocation);
+        Icon = System.Drawing.Icon.ExtractAssociatedIcon(Updater.CurrentFileLocation);
         _parent = m;
         Theme.Current.Apply(this);
     }

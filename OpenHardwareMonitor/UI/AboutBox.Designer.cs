@@ -65,7 +65,6 @@ namespace OpenHardwareMonitor.UI
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(117, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Open Hardware Monitor";
             // 
             // label2
             // 

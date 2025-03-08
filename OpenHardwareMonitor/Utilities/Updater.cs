@@ -6,7 +6,7 @@ using System.Net;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace OpenHardwareMonitor.Utilities
+namespace OpenHardwareMonitor
 {
     public class GitHubRelease
     {
@@ -36,10 +36,9 @@ namespace OpenHardwareMonitor.Utilities
 
     internal static class Updater
     {
-
-        private const string GITHUB_LANDING_PAGE = "sergiye/openhardwaremonitor";
-        private static readonly string selfFileName;
-
+        internal const string ApplicationName = "OpenHardwareMonitor";
+        internal const string ApplicationTitle = "Open Hardware Monitor";
+        internal static readonly string selfFileName;
         internal static readonly string CurrentVersion;
         internal static readonly string CurrentFileLocation;
 
@@ -68,7 +67,7 @@ namespace OpenHardwareMonitor.Utilities
                 using (var wc = new WebClient())
                 {
                   wc.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 11.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.500.27 Safari/537.36");
-                  jsonString = wc.DownloadString($"https://api.github.com/repos/{GITHUB_LANDING_PAGE}/releases").TrimEnd();
+                  jsonString = wc.DownloadString($"https://api.github.com/repos/sergiye/{ApplicationName}/releases").TrimEnd();
                 }
                 var releases = jsonString.FromJson<GitHubRelease[]>();
                 if (releases == null || releases.Length == 0)

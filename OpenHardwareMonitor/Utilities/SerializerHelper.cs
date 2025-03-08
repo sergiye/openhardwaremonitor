@@ -1,12 +1,10 @@
 ﻿using System.IO;
 using System.Web.Script.Serialization;
 
-namespace OpenHardwareMonitor.Utilities
+namespace OpenHardwareMonitor
 {
-
     public static class SerializerHelper
     {
-
         internal static string ToJson(this object value)
         {
             var serializer = new JavaScriptSerializer();

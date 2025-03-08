@@ -14,7 +14,7 @@ public partial class InterfacePortForm : Form
     public InterfacePortForm(MainForm m)
     {
         InitializeComponent();
-        Icon = System.Drawing.Icon.ExtractAssociatedIcon(Utilities.Updater.CurrentFileLocation);
+        Icon = System.Drawing.Icon.ExtractAssociatedIcon(Updater.CurrentFileLocation);
         _parent = m;
         _localIP = LoadNetworkInterfaces(_parent.Server.ListenerIp);
         Theme.Current.Apply(this);

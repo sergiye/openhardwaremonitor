@@ -10,6 +10,7 @@ public sealed partial class AboutBox : Form
     public AboutBox()
     {
         InitializeComponent();
+        label1.Text = Updater.ApplicationTitle;
         Font = SystemFonts.MessageBoxFont;
         label3.Text = "Version " + Application.ProductVersion;
         //pictureBox1.Image = Icon.ExtractAssociatedIcon(Updater.CurrentFileLocation).ToBitmap();

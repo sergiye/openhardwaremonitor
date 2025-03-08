@@ -131,21 +131,28 @@ public class ShowDesktop : IDisposable
             ShowDesktopChangedEvent?.Invoke(_showDesktop);
         }
     }
+}
 
-    private static class NativeMethods
-    {
-        private const string USER = "user32.dll";
+internal static class NativeMethods
+{
+    internal const int WM_USER = 0x0400;
+    private const string USER = "user32.dll";
 
-        [DllImport(USER, CallingConvention = CallingConvention.Winapi)]
-        public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+    [DllImport(USER, CallingConvention = CallingConvention.Winapi)]
+    public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
 
-        [DllImport(USER, CallingConvention = CallingConvention.Winapi)]
-        public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
+    [DllImport("user32.dll", EntryPoint = "SendMessageA", SetLastError = true)]
+    internal static extern IntPtr SendMessage(IntPtr hWnd, UInt32 msg, int wParam, IntPtr lParam);
 
-        [DllImport(USER, CallingConvention = CallingConvention.Winapi)]
-        public static extern IntPtr GetShellWindow();
+    [DllImport(USER, CallingConvention = CallingConvention.Winapi)]
+    public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
 
-        [DllImport(USER, CallingConvention = CallingConvention.Winapi)]
-        public static extern int GetWindowThreadProcessId(IntPtr hWnd, out int processId);
-    }
+    [DllImport("user32.dll")]
+    internal static extern IntPtr FindWindow(string className, string windowName);
+
+    [DllImport(USER, CallingConvention = CallingConvention.Winapi)]
+    public static extern IntPtr GetShellWindow();
+
+    [DllImport(USER, CallingConvention = CallingConvention.Winapi)]
+    public static extern int GetWindowThreadProcessId(IntPtr hWnd, out int processId);
 }

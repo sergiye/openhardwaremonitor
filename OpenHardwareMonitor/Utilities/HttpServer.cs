@@ -102,7 +102,7 @@ public class HttpServer
 
             _listener.Prefixes.Clear();
             _listener.Prefixes.Add(prefix);
-            _listener.Realm = "Open Hardware Monitor";
+            _listener.Realm = Updater.ApplicationTitle;
             _listener.AuthenticationSchemes = AuthEnabled ? AuthenticationSchemes.Basic : AuthenticationSchemes.Anonymous;
             _listener.Start();
 

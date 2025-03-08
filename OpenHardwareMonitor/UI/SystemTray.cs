@@ -45,7 +45,7 @@ public class SystemTray : IDisposable
             SendHideShowCommand();
         };
         _mainIcon.Icon = EmbeddedResources.GetIcon("icon.ico");
-        _mainIcon.Text = "Open Hardware Monitor";
+        _mainIcon.Text = Updater.ApplicationTitle;
     }
 
     private void HardwareRemoved(IHardware hardware)

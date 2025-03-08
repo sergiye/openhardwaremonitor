@@ -5,7 +5,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Aga.Controls.Tree;
 using Aga.Controls.Tree.NodeControls;
@@ -64,7 +63,11 @@ public sealed partial class MainForm : Form
         _settings.Load();
 
         this.MinimumSize = new Size(400, 200);
-        Text = $"Open Hardware Monitor {(Environment.Is64BitProcess ? "x64" : "x32")} - {Updater.CurrentVersion}";
+#if DEBUG
+        Text = $"{Updater.ApplicationTitle} {(Environment.Is64BitProcess ? "x64" : "x32")} - {Updater.CurrentVersion}";
+#else
+        Text = Updater.ApplicationTitle;
+#endif
         Icon = Icon.ExtractAssociatedIcon(Updater.CurrentFileLocation);
         portableModeMenuItem.Checked = _settings.IsPortable;
         resetOnPowerChangedMenuItem.Checked = _settings.GetValue("resetOnPowerChangedMenuItem", false);
@@ -952,6 +955,13 @@ public sealed partial class MainForm : Form
                 SysTrayHideShow();
             else
                 WindowState = FormWindowState.Minimized;
+        }
+        else if (m.Msg == NativeMethods.WM_USER + 1)
+        {
+            Visible = true;
+            WindowState = FormWindowState.Normal;
+            Activate();
+            BringToFront();
         }
         else
         {

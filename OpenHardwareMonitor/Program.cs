@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
 using OpenHardwareMonitor.UI;
@@ -19,6 +20,19 @@ public static class Program
         }
         if (!mutex.WaitOne(TimeSpan.Zero, true))
         {
+            foreach (var process in Process.GetProcesses())
+            {
+                if (process.ProcessName != Updater.ApplicationName) continue;
+                process.Refresh();
+                IntPtr hwnd = process.MainWindowHandle;
+                if (hwnd == (IntPtr)0)
+                    hwnd = NativeMethods.FindWindow(null, Updater.ApplicationTitle);
+                if (hwnd != (IntPtr)0)
+                {
+                    NativeMethods.SendMessage(hwnd, NativeMethods.WM_USER + 1, 0, (IntPtr)0);
+                    Environment.Exit(0);
+                }
+            }
             MessageBox.Show("Another instance of the application is already running.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
             Environment.Exit(0);
         }
