@@ -308,7 +308,7 @@ namespace HidSharp.Platform.MacOS
         {
             if (data == IntPtr.Zero || CFGetTypeID(data) != CFDataGetTypeID()) { return null; }
             byte[] buffer = new byte[checked((int)CFDataGetLength(data))];
-            CFDataGetBytes(data, new CFRange() { Start = (IntPtr)0, Length = (IntPtr)buffer.Length }, buffer);
+            CFDataGetBytes(data, new CFRange() { Start = IntPtr.Zero, Length = (IntPtr)buffer.Length }, buffer);
             return buffer;
         }
 
@@ -349,7 +349,7 @@ namespace HidSharp.Platform.MacOS
         {
             if (str == IntPtr.Zero || CFGetTypeID(str) != CFStringGetTypeID()) { return null; }
             char[] buffer = new char[checked((int)CFStringGetLength(str))];
-            CFStringGetCharacters(str, new CFRange() { Start = (IntPtr)0, Length = (IntPtr)buffer.Length }, buffer);
+            CFStringGetCharacters(str, new CFRange() { Start = IntPtr.Zero, Length = (IntPtr)buffer.Length }, buffer);
             return new string(buffer);
         }
 

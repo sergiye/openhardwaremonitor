@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using OpenHardwareMonitor.UI;
@@ -20,16 +21,16 @@ public static class Program
         }
         if (!mutex.WaitOne(TimeSpan.Zero, true))
         {
-            foreach (var process in Process.GetProcesses())
+            var process = Process.GetProcessesByName(Updater.ApplicationName).FirstOrDefault();
+            if (process != null)
             {
-                if (process.ProcessName != Updater.ApplicationName) continue;
                 process.Refresh();
                 IntPtr hwnd = process.MainWindowHandle;
-                if (hwnd == (IntPtr)0)
+                if (hwnd == IntPtr.Zero)
                     hwnd = NativeMethods.FindWindow(null, Updater.ApplicationTitle);
-                if (hwnd != (IntPtr)0)
+                if (hwnd != IntPtr.Zero)
                 {
-                    NativeMethods.SendMessage(hwnd, NativeMethods.WM_USER + 1, 0, (IntPtr)0);
+                    NativeMethods.SendMessage(hwnd, NativeMethods.WM_USER + 1, 0, IntPtr.Zero);
                     Environment.Exit(0);
                 }
             }
