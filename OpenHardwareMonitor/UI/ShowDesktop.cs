@@ -144,6 +144,9 @@ internal static class NativeMethods
     [DllImport("user32.dll", EntryPoint = "SendMessageA", SetLastError = true)]
     internal static extern IntPtr SendMessage(IntPtr hWnd, UInt32 msg, int wParam, IntPtr lParam);
 
+    [DllImport("user32.dll")]
+    internal static extern bool SetForegroundWindow(IntPtr hWnd);
+
     [DllImport(USER, CallingConvention = CallingConvention.Winapi)]
     public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
 

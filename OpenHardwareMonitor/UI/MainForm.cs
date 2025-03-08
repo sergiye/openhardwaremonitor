@@ -63,11 +63,11 @@ public sealed partial class MainForm : Form
         _settings.Load();
 
         this.MinimumSize = new Size(400, 200);
-#if DEBUG
-        Text = $"{Updater.ApplicationTitle} {(Environment.Is64BitProcess ? "x64" : "x32")} - {Updater.CurrentVersion}";
-#else
+//#if DEBUG
+//        Text = $"{Updater.ApplicationTitle} {(Environment.Is64BitProcess ? "x64" : "x32")} - {Updater.CurrentVersion}";
+//#else
         Text = Updater.ApplicationTitle;
-#endif
+//#endif
         Icon = Icon.ExtractAssociatedIcon(Updater.CurrentFileLocation);
         portableModeMenuItem.Checked = _settings.IsPortable;
         resetOnPowerChangedMenuItem.Checked = _settings.GetValue("resetOnPowerChangedMenuItem", false);
@@ -962,6 +962,7 @@ public sealed partial class MainForm : Form
             WindowState = FormWindowState.Normal;
             Activate();
             BringToFront();
+            NativeMethods.SetForegroundWindow(this.Handle);
         }
         else
         {
