@@ -26,7 +26,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="OpenHardwareMonitorLib" Version="1.0.9198" />
+    <PackageReference Include="OpenHardwareMonitorLib" Version="1.0.9200" />
     <PackageReference Include="System.Management" Version="9.0.2" />
   </ItemGroup>
   <ItemGroup>

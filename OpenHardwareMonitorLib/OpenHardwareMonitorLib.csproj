@@ -12,7 +12,7 @@
     <AssemblyCompany>Sergiy Egoshyn</AssemblyCompany>
     <AssemblyProduct>Open Hardware Monitor</AssemblyProduct>
     <AssemblyCopyright>Copyright © 2022 Sergiy Egoshyn</AssemblyCopyright>
-    <AssemblyVersion>1.0.9198</AssemblyVersion>
+    <AssemblyVersion>1.0.9200</AssemblyVersion>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
@@ -24,7 +24,7 @@
     <PackageIcon>packageicon.png</PackageIcon>
     <RepositoryUrl>https://github.com/sergiye/openhardwaremonitor</RepositoryUrl>
     <PackageProjectUrl>https://github.com/sergiye/openhardwaremonitor</PackageProjectUrl>
-    <Version>1.0.9198</Version>
+    <Version>$(AssemblyVersion)</Version>
     <Copyright>Copyright © Sergiy Egoshin 2025</Copyright>
     <Company>Sergiy Egoshyn</Company>
     <Product>OpenHardwareMonitor</Product>
