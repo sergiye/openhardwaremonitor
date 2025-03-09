@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using OpenHardwareMonitor.Utilities;
@@ -10,12 +11,13 @@ public sealed partial class AboutBox : Form
     public AboutBox()
     {
         InitializeComponent();
-        label1.Text = Updater.ApplicationTitle;
+        lblAppTitle.Text = Updater.ApplicationTitle;
+        lblCopyright.Text = $"Copyright © {Updater.ApplicationName}";
         Font = SystemFonts.MessageBoxFont;
-        label3.Text = "Version " + Application.ProductVersion;
+        lblVersion.Text = $"Version {Application.ProductVersion} {(Environment.Is64BitProcess ? "x64" : "x32")}";
         //pictureBox1.Image = Icon.ExtractAssociatedIcon(Updater.CurrentFileLocation).ToBitmap();
-        pictureBox1.Image = EmbeddedResources.GetIcon("icon.ico").ToBitmap();
-        pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+        picLogo.Image = EmbeddedResources.GetIcon("icon.ico").ToBitmap();
+        picLogo.SizeMode = PictureBoxSizeMode.StretchImage;
         projectLinkLabel.Links.Remove(projectLinkLabel.Links[0]);
         projectLinkLabel.Links.Add(0, projectLinkLabel.Text.Length, "https://github.com/sergiye/openhardwaremonitor");
         licenseLinkLabel.Links.Remove(licenseLinkLabel.Links[0]);

@@ -28,14 +28,14 @@ namespace OpenHardwareMonitor.UI
         /// </summary>
         private void InitializeComponent() {
             this.okButton = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.picLogo = new System.Windows.Forms.PictureBox();
+            this.lblAppTitle = new System.Windows.Forms.Label();
+            this.lblCopyright = new System.Windows.Forms.Label();
+            this.lblVersion = new System.Windows.Forms.Label();
             this.projectLinkLabel = new System.Windows.Forms.LinkLabel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.licenseLinkLabel = new System.Windows.Forms.LinkLabel();
-            ((System.ComponentModel.ISupportInitialize) (this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.picLogo)).BeginInit();
             this.SuspendLayout();
             // 
             // okButton
@@ -49,42 +49,41 @@ namespace OpenHardwareMonitor.UI
             this.okButton.Text = "OK";
             this.okButton.UseVisualStyleBackColor = true;
             // 
-            // pictureBox1
-            this.pictureBox1.Location = new System.Drawing.Point(10, 11);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(48, 48);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
+            // picLogo
+            this.picLogo.Location = new System.Drawing.Point(10, 11);
+            this.picLogo.Name = "picLogo";
+            this.picLogo.Size = new System.Drawing.Size(48, 48);
+            this.picLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.picLogo.TabIndex = 1;
+            this.picLogo.TabStop = false;
             // 
-            // label1
+            // lblAppTitle
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(74, 12);
-            this.label1.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(117, 13);
-            this.label1.TabIndex = 2;
+            this.lblAppTitle.AutoSize = true;
+            this.lblAppTitle.Location = new System.Drawing.Point(74, 12);
+            this.lblAppTitle.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.lblAppTitle.Name = "lblAppTitle";
+            this.lblAppTitle.Size = new System.Drawing.Size(117, 13);
+            this.lblAppTitle.TabIndex = 2;
             // 
-            // label2
+            // lblCopyright
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(74, 46);
-            this.label2.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(250, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Copyright © OpenHardwareMonitor";
+            this.lblCopyright.AutoSize = true;
+            this.lblCopyright.Location = new System.Drawing.Point(74, 46);
+            this.lblCopyright.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.lblCopyright.Name = "lblCopyright";
+            this.lblCopyright.Size = new System.Drawing.Size(250, 13);
+            this.lblCopyright.TabIndex = 3;
             // 
-            // label3
+            // lblVersion
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(74, 29);
-            this.label3.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(127, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Version 9.0.30729.1 Beta";
+            this.lblVersion.AutoSize = true;
+            this.lblVersion.Location = new System.Drawing.Point(74, 29);
+            this.lblVersion.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(127, 13);
+            this.lblVersion.TabIndex = 4;
+            this.lblVersion.Text = "Version 1.2.34567.123";
             // 
             // projectLinkLabel
             // 
@@ -131,10 +130,10 @@ namespace OpenHardwareMonitor.UI
             this.Controls.Add(this.licenseLinkLabel);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.projectLinkLabel);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.lblVersion);
+            this.Controls.Add(this.lblCopyright);
+            this.Controls.Add(this.lblAppTitle);
+            this.Controls.Add(this.picLogo);
             this.Controls.Add(this.okButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -143,7 +142,7 @@ namespace OpenHardwareMonitor.UI
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "About";
-            ((System.ComponentModel.ISupportInitialize) (this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.picLogo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
@@ -151,10 +150,10 @@ namespace OpenHardwareMonitor.UI
         #endregion
 
         private System.Windows.Forms.Button okButton;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.PictureBox picLogo;
+        private System.Windows.Forms.Label lblAppTitle;
+        private System.Windows.Forms.Label lblCopyright;
+        private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.LinkLabel projectLinkLabel;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.LinkLabel licenseLinkLabel;
