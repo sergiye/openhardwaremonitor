@@ -65,7 +65,7 @@ You can see information about devices such as:
 ## Developer information
 **Integrate the library in own application**
 1. Add the [OpenHardwareMonitorLib](https://www.nuget.org/packages/OpenHardwareMonitorLib/) NuGet package to your application.
-2. Use the sample code below or the test console application from [here](https://github.com/sergiye/openhardwaremonitor/tree/dev/OpenHardwareMonitor/LibTest)
+2. Use the sample code below or the test console application from [here](https://github.com/sergiye/openhardwaremonitor/tree/dev/LibTest)
 
 
 **Sample code**
