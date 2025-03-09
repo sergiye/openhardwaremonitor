@@ -169,10 +169,16 @@ public sealed partial class MainForm : Form
         showValue.Changed += delegate { treeView.Columns[1].IsVisible = showValue.Value; };
 
         UserOption showMin = new("minMenuItem", false, minMenuItem, _settings);
-        showMin.Changed += delegate { treeView.Columns[2].IsVisible = showMin.Value; };
+        showMin.Changed += (s, e) => {
+            treeView.Columns[2].IsVisible = showMin.Value;
+            TreeView_SizeChanged(s, e);
+        };
 
         UserOption showMax = new("maxMenuItem", true, maxMenuItem, _settings);
-        showMax.Changed += delegate { treeView.Columns[3].IsVisible = showMax.Value; };
+        showMax.Changed += (s, e) => {
+            treeView.Columns[3].IsVisible = showMax.Value;
+            TreeView_SizeChanged(s, e);
+        };
 
         var _ = new UserOption("startMinMenuItem", false, startMinMenuItem, _settings);
         _minimizeToTray = new UserOption("minTrayMenuItem", true, minTrayMenuItem, _settings);
