@@ -18,7 +18,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
-    <PackageTags>OpenHardwareMonitor</PackageTags>
+    <PackageTags>open, hardware, monitor, monitoring, system, cpu, gpu, battery, temperature</PackageTags>
     <Authors>Sergiy Egoshin</Authors>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>packageicon.png</PackageIcon>
