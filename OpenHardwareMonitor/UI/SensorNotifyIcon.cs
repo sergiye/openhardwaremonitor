@@ -341,7 +341,7 @@ public class SensorNotifyIcon : IDisposable
         return IconFactory.Create(_bitmap);
     }
 
-    public void Update()
+    public void Update(bool showPercentageIcons)
     {
         Icon icon = _notifyIcon.Icon;
 
@@ -350,7 +350,7 @@ public class SensorNotifyIcon : IDisposable
             case SensorType.Load:
             case SensorType.Control:
             case SensorType.Level:
-                _notifyIcon.Icon = CreatePercentageIcon();
+                _notifyIcon.Icon = showPercentageIcons ? CreatePercentageIcon() : CreateTransparentIcon();
                 break;
             default:
                 _notifyIcon.Icon = CreateTransparentIcon();

@@ -61,6 +61,7 @@ namespace OpenHardwareMonitor.UI
       this.resetMinMaxMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.MenuItem3 = new System.Windows.Forms.ToolStripSeparator();
       this.hiddenMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.percentageIconsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.gadgetMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.MenuItem1 = new System.Windows.Forms.ToolStripSeparator();
       this.columnsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -354,6 +355,7 @@ namespace OpenHardwareMonitor.UI
             this.resetMinMaxMenuItem,
             this.MenuItem3,
             this.hiddenMenuItem,
+            this.percentageIconsMenuItem,
             this.gadgetMenuItem,
             this.MenuItem1,
             this.columnsMenuItem});
@@ -378,6 +380,12 @@ namespace OpenHardwareMonitor.UI
       this.hiddenMenuItem.Name = "hiddenMenuItem";
       this.hiddenMenuItem.Size = new System.Drawing.Size(188, 22);
       this.hiddenMenuItem.Text = "Show Hidden Sensors";
+      //
+      // percentageIconsMenuItem
+      //
+      this.percentageIconsMenuItem.Name = "percentageIconsMenuItem";
+      this.percentageIconsMenuItem.Size = new System.Drawing.Size(188, 22);
+      this.percentageIconsMenuItem.Text = "Show Percentage Icons";
       //
       // gadgetMenuItem
       //
@@ -973,6 +981,7 @@ namespace OpenHardwareMonitor.UI
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.ToolStripMenuItem hiddenMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem percentageIconsMenuItem;
         private System.Windows.Forms.ToolStripSeparator MenuItem1;
         private System.Windows.Forms.ToolStripMenuItem columnsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem valueMenuItem;

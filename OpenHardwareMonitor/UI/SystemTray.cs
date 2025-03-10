@@ -15,6 +15,8 @@ public class SystemTray : IDisposable
     private bool _mainIconEnabled;
     private readonly NotifyIconAdv _mainIcon;
 
+    public bool ShowPercentageIcons { get; set; }
+
     public SystemTray(IComputer computer, PersistentSettings settings, UnitManager unitManager)
     {
         _computer = computer;
@@ -94,7 +96,7 @@ public class SystemTray : IDisposable
     public void Redraw()
     {
         foreach (SensorNotifyIcon icon in _sensorList)
-            icon.Update();
+            icon.Update(ShowPercentageIcons);
     }
 
     public bool Contains(ISensor sensor)

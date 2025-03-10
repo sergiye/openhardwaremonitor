@@ -165,6 +165,9 @@ public sealed partial class MainForm : Form
         UserOption showHiddenSensors = new("hiddenMenuItem", false, hiddenMenuItem, _settings);
         showHiddenSensors.Changed += delegate { treeModel.ForceVisible = showHiddenSensors.Value; };
 
+        UserOption showPercentageIcons = new("showPercentageIcons", false, percentageIconsMenuItem, _settings);
+        showPercentageIcons.Changed += delegate { _systemTray.ShowPercentageIcons = showPercentageIcons.Value; };
+
         UserOption showValue = new("valueMenuItem", true, valueMenuItem, _settings);
         showValue.Changed += delegate { treeView.Columns[1].IsVisible = showValue.Value; };
 
