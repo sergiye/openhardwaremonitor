@@ -10,8 +10,9 @@
 
 import wmi
 
-hwmon = wmi.WMI(namespace="root\OpenHardwareMonitor")
-sensors = hwmon.Sensor(SensorType="Control")
+hwmon = wmi.WMI(namespace="root\\OpenHardwareMonitor")
+sensors = hwmon.Sensor()
+# sensors = hwmon.Sensor(SensorType="Temperature")
 
 for s in sensors:
-	print s
+	print(s.Name, " (", s.SensorType, ") : ", s.Value)
