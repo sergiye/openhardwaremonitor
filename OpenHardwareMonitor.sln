@@ -15,10 +15,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BAEC1DFE-5D1E-4CDB-8264-6C85B229D812}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		.vsls.json = .vsls.json
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibTest", "LibTest\LibTest.csproj", "{0A8B894D-B19C-41E5-BF7B-3B95C8746E52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibTest", "LibTest\LibTest.csproj", "{0A8B894D-B19C-41E5-BF7B-3B95C8746E52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
