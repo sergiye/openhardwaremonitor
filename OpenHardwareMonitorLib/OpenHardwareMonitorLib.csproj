@@ -30,7 +30,7 @@
     <Product>OpenHardwareMonitor</Product>
     <IncludeSymbols>True</IncludeSymbols>
     <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <OutputPath>..\bin\</OutputPath>
