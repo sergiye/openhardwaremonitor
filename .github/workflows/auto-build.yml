@@ -27,16 +27,16 @@ jobs:
       - name: Build
         run: msbuild OpenHardwareMonitor.sln -p:Configuration=Release -m
 
-      - name: Publish build
-        uses: actions/upload-artifact@v4
-        with:
-          name: OpenHardwareMonitor
-          path: |
-            bin/OpenHardwareMonitor
-
-      # - name: Publish Lib build
+      # - name: Publish build
       #   uses: actions/upload-artifact@v4
       #   with:
-      #     name: OpenHardwareMonitorLib
+      #     name: OpenHardwareMonitor
       #     path: |
-      #       bin/OpenHardwareMonitorLib
+      #       bin/OpenHardwareMonitor
+
+      - name: Publish Lib build
+        uses: actions/upload-artifact@v4
+        with:
+          name: OpenHardwareMonitorLib
+          path: |
+            bin/OpenHardwareMonitorLib
