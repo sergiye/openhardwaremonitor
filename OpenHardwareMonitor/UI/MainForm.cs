@@ -89,16 +89,6 @@ public sealed partial class MainForm : Form
             Height = _settings.GetValue("mainForm.Height", 640)
         };
 
-        Theme setTheme = Theme.All.FirstOrDefault(theme => _settings.GetValue("theme", "auto") == theme.Id);
-        if (setTheme != null)
-        {
-            Theme.Current = setTheme;
-        }
-        else
-        {
-            Theme.SetAutoTheme();
-        }
-
         nodeTextBoxText.DrawText += NodeTextBoxText_DrawText;
         nodeTextBoxValue.DrawText += NodeTextBoxText_DrawText;
         nodeTextBoxMin.DrawText += NodeTextBoxText_DrawText;
@@ -538,8 +528,7 @@ public sealed partial class MainForm : Form
 
         if (Theme.SupportsAutoThemeSwitching())
         {
-            _autoThemeMenuItem = new ToolStripRadioButtonMenuItem();
-            _autoThemeMenuItem.Text = "Auto";
+            _autoThemeMenuItem = new ToolStripRadioButtonMenuItem("Auto");
             _autoThemeMenuItem.Click += (o, e) =>
             {
                 _autoThemeMenuItem.Checked = true;
@@ -549,12 +538,22 @@ public sealed partial class MainForm : Form
             themeMenuItem.DropDownItems.Add(_autoThemeMenuItem);
         }
 
+        Theme setTheme = Theme.All.FirstOrDefault(theme => _settings.GetValue("theme", "auto") == theme.Id);
+        if (setTheme != null)
+        {
+            Theme.Current = setTheme;
+            Theme.Current.Apply(this);
+        }
+        else
+        {
+            themeMenuItem.DropDownItems[0].PerformClick();
+        }
+
         void AddThemeMenuItems(IEnumerable<Theme> themes)
         {
             foreach (Theme theme in themes)
             {
-                var item = new ToolStripRadioButtonMenuItem();
-                item.Text = theme.DisplayName;
+                var item = new ToolStripRadioButtonMenuItem(theme.DisplayName);
                 item.Tag = theme;
                 item.Click += OnThemeMenuItemClick;
                 themeMenuItem.DropDownItems.Add(item);
@@ -569,13 +568,6 @@ public sealed partial class MainForm : Form
         AddThemeMenuItems(Theme.All.Where(t => t is not CustomTheme));
         themeMenuItem.DropDownItems.Add("-"); //separator
         AddThemeMenuItems(Theme.All.Where(t => t is CustomTheme));
-
-        if (Theme.Current == null)
-        {
-            themeMenuItem.DropDownItems[0].PerformClick();
-        }
-
-        Theme.Current.Apply(this);
     }
 
     private void OnThemeMenuItemClick(object sender, EventArgs e)
