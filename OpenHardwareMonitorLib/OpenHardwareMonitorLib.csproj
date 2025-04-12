@@ -49,11 +49,11 @@
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' != 'net472'">
     <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
-    <PackageReference Include="System.IO.Ports" Version="9.0.3" />
+    <PackageReference Include="System.IO.Ports" Version="9.0.4" />
     <PackageReference Include="System.IO.FileSystem.AccessControl" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Management" Version="9.0.3" />
+    <PackageReference Include="System.Management" Version="9.0.4" />
   </ItemGroup>
   <!--   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Release'">
     <Exec Command="for %%f in ($(OutDir)\*) do if not %%~xf==.dll del /S /Q &quot;%%f&quot;" />
