@@ -27,21 +27,21 @@ public class SystemTray : IDisposable
 
         _mainIcon = new NotifyIconAdv();
 
-        ContextMenu contextMenuStrip = new ContextMenu();
-        var hideShowItem = new MenuItem("Hide/Show") { DefaultItem = true };
+        var contextMenuStrip = new ContextMenuStrip();
+        var hideShowItem = new ToolStripMenuItem("Hide/Show");
         hideShowItem.Click += delegate
         {
             SendHideShowCommand();
         };
-        contextMenuStrip.MenuItems.Add(hideShowItem);
-        contextMenuStrip.MenuItems.Add("-");
-        var exitItem = new MenuItem("Exit");
+        contextMenuStrip.Items.Add(hideShowItem);
+        contextMenuStrip.Items.Add("-");
+        var exitItem = new ToolStripMenuItem("Exit");
         exitItem.Click += delegate
         {
             SendExitCommand();
         };
-        contextMenuStrip.MenuItems.Add(exitItem);
-        _mainIcon.ContextMenu = contextMenuStrip;
+        contextMenuStrip.Items.Add(exitItem);
+        _mainIcon.ContextMenuStrip = contextMenuStrip;
         _mainIcon.DoubleClick += delegate
         {
             SendHideShowCommand();
