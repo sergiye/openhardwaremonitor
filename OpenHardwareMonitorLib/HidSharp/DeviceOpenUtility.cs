@@ -16,7 +16,6 @@
 #endregion
 
 using System;
-using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using HidSharp.Platform;
@@ -125,8 +124,7 @@ namespace HidSharp
 
                         // Let's try again.
                         bool lockIsTransient = em.MutexMayExist(transientName);
-                        using (var tryPriorityMutex = (lockIsInterruptible ? em.CreateMutex(GetResourceNameForPriorityRequest()) : null))
-                        {
+                        using (lockIsInterruptible ? em.CreateMutex(GetResourceNameForPriorityRequest()) : null) {
                             exclusiveEvent.Set();
 
                             int timeout;
@@ -147,7 +145,7 @@ namespace HidSharp
 
                             if (!exclusiveMutex.TryLock(timeout, out exclusiveLock))
                             {
-                                throw DeviceException.CreateIOException(_device, "The device is in use.", Utility.HResult.SharingViolation);
+                                throw DeviceException.CreateIOException(_device, "The device is in use.", HResult.SharingViolation);
                             }
                         }
                     }
@@ -173,7 +171,7 @@ namespace HidSharp
 
                 // *** OK! Now run the sharing monitor.
                 {
-                    var handles = new WaitHandle[] { _closeEvent, exclusiveEvent.WaitHandle };
+                    var handles = new[] { _closeEvent, exclusiveEvent.WaitHandle };
                     Exception ex = null;
 
                     HidSharpDiagnostics.Trace("Started the sharing monitor thread ({0}).",
@@ -210,7 +208,7 @@ namespace HidSharp
 
                     HidSharpDiagnostics.Trace("Exited its sharing monitor thread ({0}).{1}",
                                               Thread.CurrentThread.ManagedThreadId,
-                                              (ex != null ? " " + ex.ToString() : ""));
+                                              ex != null ? " " + ex : "");
                 }
             }
             finally
