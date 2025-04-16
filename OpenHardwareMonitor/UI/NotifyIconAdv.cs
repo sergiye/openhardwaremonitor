@@ -257,6 +257,24 @@ public class NotifyIconAdv : IDisposable
         }
     }
 
+    public ContextMenu ContextMenu
+    {
+        get
+        {
+            if (_genericNotifyIcon != null)
+                return _genericNotifyIcon.ContextMenu;
+            else
+                return _windowsNotifyIcon.ContextMenu;
+        }
+        set
+        {
+            if (_genericNotifyIcon != null)
+                _genericNotifyIcon.ContextMenu = value;
+            else
+                _windowsNotifyIcon.ContextMenu = value;
+        }
+    }
+
     public ContextMenuStrip ContextMenuStrip
     {
         get
@@ -385,6 +403,7 @@ public class NotifyIconAdv : IDisposable
         public string BalloonTipText { get; set; }
         public ToolTipIcon BalloonTipIcon { get; set; }
         public string BalloonTipTitle { get; set; }
+        public ContextMenu ContextMenu { get; set; }
         public ContextMenuStrip ContextMenuStrip { get; set; }
 
         public Icon Icon
@@ -468,6 +487,7 @@ public class NotifyIconAdv : IDisposable
                     UpdateNotifyIcon(false);
                     _window.DestroyHandle();
                     _window = null;
+                    ContextMenu = null;
                     ContextMenuStrip = null;
                 }
             }
@@ -518,12 +538,21 @@ public class NotifyIconAdv : IDisposable
 
         private void ShowContextMenu()
         {
-            if (ContextMenuStrip == null)
+            if (ContextMenu == null && ContextMenuStrip == null)
                 return;
 
             NativeMethods.Point p = new NativeMethods.Point();
             NativeMethods.GetCursorPos(ref p);
             NativeMethods.SetForegroundWindow(new HandleRef(_window, _window.Handle));
+
+            if (ContextMenu != null)
+            {
+                ContextMenu.GetType().InvokeMember("OnPopup", BindingFlags.NonPublic | BindingFlags.InvokeMethod | BindingFlags.Instance, null, ContextMenu, new object[] { EventArgs.Empty });
+                NativeMethods.TrackPopupMenuEx(new HandleRef(ContextMenu, ContextMenu.Handle), 72, p.X, p.Y, new HandleRef(_window, _window.Handle), IntPtr.Zero);
+                NativeMethods.PostMessage(
+                  new HandleRef(_window, _window.Handle), WM_NULL, 0, 0);
+                return;
+            }
 
             ContextMenuStrip?.GetType().InvokeMember("ShowInTaskbar",
                                                      BindingFlags.NonPublic | BindingFlags.InvokeMethod |
@@ -631,6 +660,13 @@ public class NotifyIconAdv : IDisposable
 
         private void ProcessInitMenuPopup(ref Message message)
         {
+            if (ContextMenu != null && (bool)ContextMenu.GetType().InvokeMember("ProcessInitMenuPopup",
+                BindingFlags.NonPublic | BindingFlags.InvokeMethod |
+                BindingFlags.Instance, null, ContextMenu,
+                new object[] { message.WParam }))
+            {
+                return;
+            }
             _window.DefWndProc(ref message);
         }
 
@@ -672,7 +708,7 @@ public class NotifyIconAdv : IDisposable
                             ProcessMouseDown(MouseButtons.Right, false);
                             return;
                         case WM_RBUTTONUP:
-                            if (ContextMenuStrip != null)
+                            if (ContextMenu != null || ContextMenuStrip != null)
                                 ShowContextMenu();
                             ProcessMouseUp(MouseButtons.Right);
                             return;
