@@ -807,7 +807,7 @@ namespace Aga.Controls.Tree
 			RowMap.Clear();
 			int row = 0;
 			_contentWidth = 0;
-			foreach (TreeNodeAdv node in VisibleNodes.ToList())
+			foreach (TreeNodeAdv node in VisibleNodes)
 			{
 				node.Row = row;
 				RowMap.Add(node);

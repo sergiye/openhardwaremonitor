@@ -66,17 +66,26 @@ namespace Aga.Controls.Tree
 		/// <summary>
 		/// returns all nodes, which parent is expanded
 		/// </summary>
-		private IEnumerable<TreeNodeAdv> VisibleNodes
+		private List<TreeNodeAdv> VisibleNodes
 		{
 			get
 			{
+                var result = new List<TreeNodeAdv>();
 				TreeNodeAdv node = Root;
 				while (node != null)
 				{
-					node = node.NextVisibleNode;
-					if (node != null)
-						yield return node;
+                    try
+                    {
+                        node = node.NextVisibleNode;
+                        if (node != null)
+                            result.Add(node);
+                    }
+                    catch (Exception)
+                    {
+                        break;
+                    }
 				}
+                return result;
 			}
 		}
 
