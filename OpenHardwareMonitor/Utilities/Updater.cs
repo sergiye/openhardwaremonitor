@@ -4,7 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+#if !NOWINFORMS
 using System.Windows.Forms;
+#endif
 
 namespace sergiye.Common {
   public class GitHubRelease {
@@ -80,24 +82,40 @@ namespace sergiye.Common {
         newVersionUrl = asset?.Browser_download_url;
         if (string.IsNullOrEmpty(newVersionUrl)) {
           if (!silent)
-            MessageBox.Show($"Your version is: {CurrentVersion}\nLatest released version is: {newVersion}\nNo assets found to update.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+#if NOWINFORMS
+            Console.WriteLine($"Your version is: {CurrentVersion}\nLatest released version is: {newVersion}\nNo assets found to update.");
+#else
+            MessageBox.Show($"Your version is: {CurrentVersion}\nLatest released version is: {newVersion}\nNo assets found to update.", ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+#endif
           return true;
         }
 
         if (string.Compare(CurrentVersion, newVersion, StringComparison.Ordinal) >= 0) {
           if (!silent)
-            MessageBox.Show($"Your version: {CurrentVersion}\nLast release: {newVersion}\nNo need to update.", "Update", MessageBoxButtons.OK,
+#if NOWINFORMS
+            Console.WriteLine($"Your version: {CurrentVersion}\nLast release: {newVersion}\nNo need to update.");
+#else
+            MessageBox.Show($"Your version: {CurrentVersion}\nLast release: {newVersion}\nNo need to update.", ApplicationName, MessageBoxButtons.OK,
               MessageBoxIcon.Information);
+#endif
           return true;
         }
+#if NOWINFORMS
+        Console.WriteLine($"New version found: {newVersion}, app will be updated after close.");
+#else
         if (MessageBox.Show($"Your version: {CurrentVersion}\nLast release: {newVersion}\nDownload this update?",
-          "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
+          ApplicationName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
           return true;
         }
+#endif
       }
       catch (Exception ex) {
         if (!silent)
-          MessageBox.Show($"Error checking for a new version.\n{ex.Message}", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+#if NOWINFORMS
+          Console.WriteLine($"Error checking for a new version.\n{ex.Message}");
+#else
+          MessageBox.Show($"Error checking for a new version.\n{ex.Message}", ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+#endif
         return false;
       }
 
@@ -112,7 +130,11 @@ namespace sergiye.Common {
       }
       catch (Exception ex) {
         if (!silent)
-          MessageBox.Show($"Error downloading new version\n{ex.Message}", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+#if NOWINFORMS
+          Console.WriteLine($"Error downloading new version\n{ex.Message}");
+#else
+          MessageBox.Show($"Error downloading new version\n{ex.Message}", ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+#endif
         return false;
       }
     }
@@ -133,7 +155,11 @@ namespace sergiye.Common {
         WorkingDirectory = Path.GetTempPath()
       };
       Process.Start(startInfo);
-      Application.Exit(); // Environment.Exit(0);
+#if NOWINFORMS
+      Environment.Exit(0);
+#else
+      Application.Exit();
+#endif
     }
   }
 }
