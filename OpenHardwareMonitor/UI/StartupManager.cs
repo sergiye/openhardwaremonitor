@@ -5,6 +5,7 @@ using System.Security;
 using System.Security.Principal;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using sergiye.Common;
 
 namespace OpenHardwareMonitor.UI
 {

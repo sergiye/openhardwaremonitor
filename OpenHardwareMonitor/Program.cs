@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using OpenHardwareMonitor.UI;
+using sergiye.Common;
 
 namespace OpenHardwareMonitor;
 
@@ -38,7 +39,7 @@ public static class Program
             Environment.Exit(0);
         }
 
-        Utilities.Crasher.Listen();
+        Crasher.Listen();
 
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);

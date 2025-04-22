@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading;
 using OpenHardwareMonitor.Hardware;
 using OpenHardwareMonitor.UI;
+using sergiye.Common;
 
 namespace OpenHardwareMonitor.Utilities;
 

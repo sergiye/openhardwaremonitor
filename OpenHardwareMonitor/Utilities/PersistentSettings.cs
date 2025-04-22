@@ -6,6 +6,7 @@ using System.IO;
 using System.Windows.Forms;
 using OpenHardwareMonitor.Hardware;
 using Microsoft.Win32;
+using sergiye.Common;
 
 namespace OpenHardwareMonitor.Utilities;
 

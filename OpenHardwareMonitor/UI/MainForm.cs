@@ -12,6 +12,7 @@ using OpenHardwareMonitor.Hardware;
 using OpenHardwareMonitor.UI.Themes;
 using OpenHardwareMonitor.Utilities;
 using OpenHardwareMonitor.WMI;
+using sergiye.Common;
 
 namespace OpenHardwareMonitor.UI;
 

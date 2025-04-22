@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace OpenHardwareMonitor.Utilities
+namespace sergiye.Common
 {
     public static class Crasher
     {
@@ -26,7 +26,7 @@ namespace OpenHardwareMonitor.Utilities
             if (e.ExceptionObject is Exception)
             {
                 var details = ((Exception)e.ExceptionObject).TraceException();
-                var path = Path.Combine(Path.GetDirectoryName(typeof(Crasher).Assembly.Location), "OpenHardwareMonitor_crash_" + DateTime.UtcNow.ToString("yyyyMMddHHmmss"));
+                var path = Path.Combine(Path.GetDirectoryName(typeof(Crasher).Assembly.Location), "Crash_" + DateTime.UtcNow.ToString("yyyyMMddHHmmss"));
                 File.WriteAllText(path, details);
             }
 

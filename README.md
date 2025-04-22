@@ -3,7 +3,7 @@
 ![Downloads](https://img.shields.io/github/downloads/sergiye/openhardwaremonitor/total?style=for-the-badge&color=ff4f42)
 ![Last commit](https://img.shields.io/github/last-commit/sergiye/openhardwaremonitor?style=for-the-badge&color=00AD00)
 
-[![Nuget](https://img.shields.io/nuget/v/OpenHardwareMonitorLib?style=for-the-badge)](https://www.nuget.org/packages/OpenHardwareMonitorLib/) 
+[![Nuget](https://img.shields.io/nuget/v/OpenHardwareMonitorLib?style=for-the-badge)](https://www.nuget.org/packages/OpenHardwareMonitorLib/)
 [![Nuget](https://img.shields.io/nuget/dt/OpenHardwareMonitorLib?label=nuget-downloads&style=for-the-badge)](https://www.nuget.org/packages/OpenHardwareMonitorLib/)
 
 Open hardware monitor - is free software that can monitor the temperature sensors, fan speeds, voltages, load and clock speeds of your computer.
@@ -38,17 +38,17 @@ You can see information about devices such as:
 
 ### Additional features
 
- - `Remote web-server` mode for browsing data from remote machine with custom port and authentification.
+ - `Remote web-server` mode for browsing data from remote machine with custom port and authentication.
  - `Hide/Unhide` sensors to remove some data from UI and web server.
  - Multiple `Tray icons` and `Gadget` for selected sensor values.
  - `Light`/`Dark` themes with auto switching mode.
  - Custom `color-themes` from external files - You can find examples [here](https://github.com/sergiye/openhardwaremonitor/tree/dev/OpenHardwareMonitor/Resources/themes)
  - `Portable` mode for storing temporary driver file and settings configuration next to the executable file.
  - `Updated versions check` - manually from main menu.
- 
+
  Note: Some sensors are only available when running the application as administrator.
 
-### UI example with `Light`/`Dark` themes 
+### UI example with `Light`/`Dark` themes
 
 [<img src="https://github.com/sergiye/openhardwaremonitor/raw/master/themes.png" alt="Themes" width="300"/>](https://github.com/sergiye/openhardwaremonitor/releases)
 
@@ -110,7 +110,7 @@ public void Monitor() {
             Console.WriteLine("\tSensor: {0}, value: {1}", sensor.Name, sensor.Value);
         }
     }
-    
+
     computer.Close();
 }
 ```

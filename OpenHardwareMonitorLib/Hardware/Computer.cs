@@ -17,6 +17,7 @@ using OpenHardwareMonitor.Hardware.Motherboard;
 using OpenHardwareMonitor.Hardware.Network;
 using OpenHardwareMonitor.Hardware.Psu.Corsair;
 using OpenHardwareMonitor.Hardware.Storage;
+using sergiye.Common;
 
 namespace OpenHardwareMonitor.Hardware;
 
