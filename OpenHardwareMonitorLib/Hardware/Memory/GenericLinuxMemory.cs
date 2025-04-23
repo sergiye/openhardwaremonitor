@@ -5,9 +5,11 @@ namespace OpenHardwareMonitor.Hardware.Memory;
 
 internal sealed class GenericLinuxMemory : Hardware
 {
+    private readonly Sensor _physicalMemoryTotal;
     private readonly Sensor _physicalMemoryAvailable;
     private readonly Sensor _physicalMemoryLoad;
     private readonly Sensor _physicalMemoryUsed;
+    private readonly Sensor _virtualMemoryTotal;
     private readonly Sensor _virtualMemoryAvailable;
     private readonly Sensor _virtualMemoryLoad;
     private readonly Sensor _virtualMemoryUsed;
@@ -16,23 +18,15 @@ internal sealed class GenericLinuxMemory : Hardware
 
     public GenericLinuxMemory(string name, ISettings settings) : base(name, new Identifier("ram"), settings)
     {
-        _physicalMemoryUsed = new Sensor("Memory Used", 0, SensorType.Data, this, settings);
-        ActivateSensor(_physicalMemoryUsed);
+        ActivateSensor(_physicalMemoryLoad = new Sensor("Physical Memory", 0, SensorType.Load, this, settings));
+        ActivateSensor(_virtualMemoryLoad = new Sensor("Virtual Memory", 1, SensorType.Load, this, settings));
 
-        _physicalMemoryAvailable = new Sensor("Memory Available", 1, SensorType.Data, this, settings);
-        ActivateSensor(_physicalMemoryAvailable);
-
-        _physicalMemoryLoad = new Sensor("Memory", 0, SensorType.Load, this, settings);
-        ActivateSensor(_physicalMemoryLoad);
-
-        _virtualMemoryUsed = new Sensor("Virtual Memory Used", 2, SensorType.Data, this, settings);
-        ActivateSensor(_virtualMemoryUsed);
-
-        _virtualMemoryAvailable = new Sensor("Virtual Memory Available", 3, SensorType.Data, this, settings);
-        ActivateSensor(_virtualMemoryAvailable);
-
-        _virtualMemoryLoad = new Sensor("Virtual Memory", 1, SensorType.Load, this, settings);
-        ActivateSensor(_virtualMemoryLoad);
+        ActivateSensor(_physicalMemoryTotal = new Sensor("Physical Memory Total", 0, SensorType.Data, this, settings));
+        ActivateSensor(_physicalMemoryUsed = new Sensor("Physical Memory Used", 1, SensorType.Data, this, settings));
+        ActivateSensor(_physicalMemoryAvailable = new Sensor("Physical Memory Available", 2, SensorType.Data, this, settings));
+        ActivateSensor(_virtualMemoryTotal = new Sensor("Virtual Memory Total", 3, SensorType.Data, this, settings));
+        ActivateSensor(_virtualMemoryUsed = new Sensor("Virtual Memory Used", 4, SensorType.Data, this, settings));
+        ActivateSensor(_virtualMemoryAvailable = new Sensor("Virtual Memory Available", 5, SensorType.Data, this, settings));
     }
 
     public override void Update()
@@ -49,7 +43,8 @@ internal sealed class GenericLinuxMemory : Hardware
                 float usedMemory_GB = totalMemory_GB - freeMemory_GB - cachedMemory_GB;
 
                 _physicalMemoryUsed.Value = usedMemory_GB;
-                _physicalMemoryAvailable.Value = totalMemory_GB;
+                _physicalMemoryTotal.Value = totalMemory_GB;
+                _physicalMemoryAvailable.Value = freeMemory_GB;
                 _physicalMemoryLoad.Value = 100.0f * (usedMemory_GB / totalMemory_GB);
             }
             {
@@ -58,7 +53,8 @@ internal sealed class GenericLinuxMemory : Hardware
                 float usedSwapMemory_GB = totalSwapMemory_GB - freeSwapMemory_GB;
 
                 _virtualMemoryUsed.Value = usedSwapMemory_GB;
-                _virtualMemoryAvailable.Value = totalSwapMemory_GB;
+                _virtualMemoryTotal.Value = totalSwapMemory_GB;
+                _virtualMemoryAvailable.Value = freeSwapMemory_GB;
                 _virtualMemoryLoad.Value = 100.0f * (usedSwapMemory_GB / totalSwapMemory_GB);
             }
         }
