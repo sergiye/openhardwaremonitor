@@ -12,7 +12,7 @@
     <AssemblyCompany>Sergiy Egoshyn</AssemblyCompany>
     <AssemblyProduct>Open Hardware Monitor</AssemblyProduct>
     <AssemblyCopyright>Copyright © 2022 Sergiy Egoshyn</AssemblyCopyright>
-    <AssemblyVersion>1.0.9201</AssemblyVersion>
+    <AssemblyVersion>1.0.9244.2</AssemblyVersion>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
@@ -24,6 +24,7 @@
     <PackageIcon>packageicon.png</PackageIcon>
     <RepositoryUrl>https://github.com/sergiye/openhardwaremonitor</RepositoryUrl>
     <PackageProjectUrl>https://github.com/sergiye/openhardwaremonitor</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <Version>$(AssemblyVersion)</Version>
     <Copyright>Copyright © Sergiy Egoshin 2025</Copyright>
     <Company>Sergiy Egoshyn</Company>
@@ -40,6 +41,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="packageicon.png" Pack="true" PackagePath="" />
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\inpout32.gz" />
@@ -47,15 +49,11 @@
     <EmbeddedResource Include="Resources\WinRing0.gz" />
     <EmbeddedResource Include="Resources\WinRing0x64.gz" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' != 'net472'">
+  <ItemGroup>
     <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
     <PackageReference Include="System.IO.Ports" Version="9.0.4" />
     <PackageReference Include="System.IO.FileSystem.AccessControl" Version="5.0.0" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="System.Management" Version="9.0.4" />
+    <PackageReference Include="Mono.Posix.NETStandard" Version="1.0.0" />
   </ItemGroup>
-  <!--   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Release'">
-    <Exec Command="for %%f in ($(OutDir)\*) do if not %%~xf==.dll del /S /Q &quot;%%f&quot;" />
-  </Target> -->
 </Project>
