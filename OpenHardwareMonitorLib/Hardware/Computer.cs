@@ -410,7 +410,7 @@ public class Computer : IComputer
         if (group == null)
             return;
 
-        if (!VersionCompatibitity.IsCompatible())
+        if (!VersionCompatibility.IsCompatible())
             return;
 
         lock (_lock)

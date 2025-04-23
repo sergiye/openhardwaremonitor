@@ -15,7 +15,7 @@ public static class Program
     [STAThread]
     public static void Main()
     {
-        if (!VersionCompatibitity.IsCompatible())
+        if (!VersionCompatibility.IsCompatible())
         {
             MessageBox.Show("The application is not compatible with your region.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             Environment.Exit(0);
