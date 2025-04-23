@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>net472;netstandard2.0</TargetFrameworks>
     <AssemblyName>OpenHardwareMonitorLib</AssemblyName>
     <RootNamespace>OpenHardwareMonitor</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -12,7 +12,7 @@
     <AssemblyCompany>Sergiy Egoshyn</AssemblyCompany>
     <AssemblyProduct>Open Hardware Monitor</AssemblyProduct>
     <AssemblyCopyright>Copyright © 2022 Sergiy Egoshyn</AssemblyCopyright>
-    <AssemblyVersion>1.0.9244.2</AssemblyVersion>
+    <AssemblyVersion>1.0.9244.3</AssemblyVersion>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
@@ -54,6 +54,10 @@
     <PackageReference Include="System.IO.Ports" Version="9.0.4" />
     <PackageReference Include="System.IO.FileSystem.AccessControl" Version="5.0.0" />
     <PackageReference Include="System.Management" Version="9.0.4" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="Mono.Posix.NETStandard" Version="1.0.0" />
   </ItemGroup>
 </Project>
