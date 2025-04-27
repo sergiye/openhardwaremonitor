@@ -3,7 +3,7 @@
 ![Downloads](https://img.shields.io/github/downloads/sergiye/openhardwaremonitor/total?style=for-the-badge&color=ff4f42)
 ![Last commit](https://img.shields.io/github/last-commit/sergiye/openhardwaremonitor?style=for-the-badge&color=00AD00)
 
-[![Nuget](https://img.shields.io/nuget/v/OpenHardwareMonitorLib?style=for-the-badge)](https://www.nuget.org/packages/OpenHardwareMonitorLib/) 
+[![Nuget](https://img.shields.io/nuget/v/OpenHardwareMonitorLib?style=for-the-badge)](https://www.nuget.org/packages/OpenHardwareMonitorLib/)
 [![Nuget](https://img.shields.io/nuget/dt/OpenHardwareMonitorLib?label=nuget-downloads&style=for-the-badge)](https://www.nuget.org/packages/OpenHardwareMonitorLib/)
 
 Open hardware monitor - is free software that can monitor the temperature sensors, fan speeds, voltages, load and clock speeds of your computer.
@@ -12,14 +12,14 @@ This application is based on the "original" [openhardwaremonitor](https://github
 
 ----
 
-[<img src="https://github.com/sergiye/hiberbeeTheme/raw/master/assets/ukraine_flag_bar.png" alt="UA"/>](https://u24.gov.ua)
+[![UA](https://github.com/sergiye/hiberbeeTheme/raw/master/assets/ukraine_flag_bar.png)](https://u24.gov.ua)
 
 
 Support the Armed Forces of Ukraine and People Affected by Russia’s Aggression on UNITED24, the official fundraising platform of Ukraine: https://u24.gov.ua.
 
 **Слава Україні!**
 
-[<img src="https://github.com/sergiye/hiberbeeTheme/raw/master/assets/ukraine_flag_bar.png" alt="UA"/>](https://u24.gov.ua)
+[![UA](https://github.com/sergiye/hiberbeeTheme/raw/master/assets/ukraine_flag_bar.png)](https://u24.gov.ua)
 
 
 ## Features
@@ -38,17 +38,17 @@ You can see information about devices such as:
 
 ### Additional features
 
- - `Remote web-server` mode for browsing data from remote machine with custom port and authentification.
+ - `Remote web-server` mode for browsing data from remote machine with custom port and authentication.
  - `Hide/Unhide` sensors to remove some data from UI and web server.
  - Multiple `Tray icons` and `Gadget` for selected sensor values.
  - `Light`/`Dark` themes with auto switching mode.
  - Custom `color-themes` from external files - You can find examples [here](https://github.com/sergiye/openhardwaremonitor/tree/dev/OpenHardwareMonitor/Resources/themes)
  - `Portable` mode for storing temporary driver file and settings configuration next to the executable file.
  - `Updated versions check` - manually from main menu.
- 
+
  Note: Some sensors are only available when running the application as administrator.
 
-### UI example with `Light`/`Dark` themes 
+### UI example with `Light`/`Dark` themes
 
 [<img src="https://github.com/sergiye/openhardwaremonitor/raw/master/themes.png" alt="Themes" width="300"/>](https://github.com/sergiye/openhardwaremonitor/releases)
 
@@ -70,48 +70,36 @@ You can see information about devices such as:
 
 **Sample code**
 ```c#
-public class UpdateVisitor : IVisitor {
-    public void VisitComputer(IComputer computer) {
-        computer.Traverse(this);
-    }
-    public void VisitHardware(IHardware hardware) {
-        hardware.Update();
-        foreach (IHardware subHardware in hardware.SubHardware) subHardware.Accept(this);
-    }
-    public void VisitSensor(ISensor sensor) { }
-    public void VisitParameter(IParameter parameter) { }
-}
+class HardwareInfoProvider : IVisitor, IDisposable {
 
-public void Monitor() {
-    Computer computer = new Computer {
-        IsCpuEnabled = true,
-        IsGpuEnabled = true,
-        IsMemoryEnabled = true,
-        IsMotherboardEnabled = true,
-        IsControllerEnabled = true,
-        IsNetworkEnabled = true,
-        IsBatteryEnabled = true,
-        IsStorageEnabled = true
+  private readonly Computer computer;
+
+  public HardwareInfoProvider() {
+    computer = new Computer {
+      IsCpuEnabled = true,
+      IsMemoryEnabled = true,
     };
-
     computer.Open(false);
-    computer.Accept(new UpdateVisitor());
+  }
 
-    foreach (IHardware hardware in computer.Hardware) {
-        Console.WriteLine("Hardware: {0}", hardware.Name);
-        foreach (IHardware subhardware in hardware.SubHardware) {
-            Console.WriteLine("\tSubhardware: {0}", subhardware.Name);
-            foreach (ISensor sensor in subhardware.Sensors) {
-                Console.WriteLine("\t\tSensor: {0}, value: {1}", sensor.Name, sensor.Value);
-            }
-        }
+  internal float Cpu { get; private set; }
+  internal float Memory { get; private set; }
 
-        foreach (ISensor sensor in hardware.Sensors) {
-            Console.WriteLine("\tSensor: {0}, value: {1}", sensor.Name, sensor.Value);
-        }
-    }
-    
-    computer.Close();
+  public void VisitComputer(IComputer computer) => computer.Traverse(this);
+  public void VisitHardware(IHardware hardware) => hardware.Update();
+  public void VisitSensor(ISensor sensor) { }
+  public void VisitParameter(IParameter parameter) { }
+  public void Dispose() => computer.Close();
+
+  internal void Refresh() {
+    computer.Accept(this);
+    var cpuTotal = computer.Hardware.FirstOrDefault(h => h.HardwareType == HardwareType.Cpu)?.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Load && s.Name == "CPU Total");
+    Cpu = cpuTotal?.Value ?? -1;
+
+    var memorySensorName = "Physical Memory Available"; //"Virtual Memory Available";
+    var memUsed = computer.Hardware.FirstOrDefault(h => h.HardwareType == HardwareType.Memory)?.Sensors.FirstOrDefault(s => s.SensorType == SensorType.Data && s.Name == memorySensorName);
+    Memory = (memUsed == null || !memUsed.Value.HasValue) ? -1 : memUsed.Value.Value * 1024; //GB -> MB
+  }
 }
 ```
 
