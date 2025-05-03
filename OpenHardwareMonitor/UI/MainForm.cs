@@ -699,10 +699,10 @@ public sealed partial class MainForm : Form
 
         //will display prompt only if update available & when main form displayed
         var timer = new Timer();
-        timer.Interval = 1000;
-        timer.Tick += (_, _) => {
+        timer.Interval = 3000;
+        timer.Tick += async (_, _) => {
             timer.Enabled = false;
-            timer.Enabled = !Updater.CheckForUpdates(true);
+            timer.Enabled = ! await Updater.CheckForUpdatesAsync(true).ConfigureAwait(false);
         };
         timer.Enabled = true;
 
