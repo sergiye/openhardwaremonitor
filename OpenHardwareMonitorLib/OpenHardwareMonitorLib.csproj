@@ -1,0 +1,63 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net472;netstandard2.0</TargetFrameworks>
+    <AssemblyName>OpenHardwareMonitorLib</AssemblyName>
+    <RootNamespace>OpenHardwareMonitor</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PackageId>$(AssemblyName)</PackageId>
+    <Description>Monitor the temperature sensors, fan speeds, voltages, load and clock speeds of your computer.</Description>
+    <LangVersion>latest</LangVersion>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <AssemblyTitle>Open Hardware Monitor Lib</AssemblyTitle>
+    <AssemblyCompany>Sergiy Egoshyn</AssemblyCompany>
+    <AssemblyProduct>Open Hardware Monitor</AssemblyProduct>
+    <AssemblyCopyright>Copyright © 2022 Sergiy Egoshyn</AssemblyCopyright>
+    <AssemblyVersion>1.0.9244.4</AssemblyVersion>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+    <PackageTags>open, hardware, monitor, monitoring, system, cpu, gpu, battery, temperature</PackageTags>
+    <Authors>Sergiy Egoshin</Authors>
+    <RepositoryType>git</RepositoryType>
+    <PackageIcon>packageicon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/sergiye/openhardwaremonitor</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/sergiye/openhardwaremonitor</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Version>$(AssemblyVersion)</Version>
+    <Copyright>Copyright © Sergiy Egoshin 2025</Copyright>
+    <Company>Sergiy Egoshyn</Company>
+    <Product>OpenHardwareMonitor</Product>
+    <IncludeSymbols>True</IncludeSymbols>
+    <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <OutputPath>..\bin\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <OutputPath>..\bin\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="packageicon.png" Pack="true" PackagePath="" />
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\inpout32.gz" />
+    <EmbeddedResource Include="Resources\inpoutx64.gz" />
+    <EmbeddedResource Include="Resources\WinRing0.gz" />
+    <EmbeddedResource Include="Resources\WinRing0x64.gz" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+    <PackageReference Include="System.IO.Ports" Version="9.0.4" />
+    <PackageReference Include="System.IO.FileSystem.AccessControl" Version="5.0.0" />
+    <PackageReference Include="System.Management" Version="9.0.4" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="Mono.Posix.NETStandard" Version="1.0.0" />
+  </ItemGroup>
+</Project>
