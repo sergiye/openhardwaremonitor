@@ -1,7 +1,7 @@
 # Open hardware monitor
-[![Release](https://img.shields.io/github/v/release/sergiye/openhardwaremonitor?style=for-the-badge)](https://github.com/sergiye/openhardwaremonitor/releases/latest)
-![Downloads](https://img.shields.io/github/downloads/sergiye/openhardwaremonitor/total?style=for-the-badge&color=ff4f42)
-![Last commit](https://img.shields.io/github/last-commit/sergiye/openhardwaremonitor?style=for-the-badge&color=00AD00)
+[![Release](https://img.shields.io/github/v/release/NewOpenHardwareMonitor/openhardwaremonitor?style=for-the-badge)](https://github.com/NewOpenHardwareMonitor/openhardwaremonitor/releases/latest)
+![Downloads](https://img.shields.io/github/downloads/NewOpenHardwareMonitor/openhardwaremonitor/total?style=for-the-badge&color=ff4f42)
+![Last commit](https://img.shields.io/github/last-commit/NewOpenHardwareMonitor/openhardwaremonitor?style=for-the-badge&color=00AD00)
 
 [![Nuget](https://img.shields.io/nuget/v/OpenHardwareMonitorLib?style=for-the-badge)](https://www.nuget.org/packages/OpenHardwareMonitorLib/)
 [![Nuget](https://img.shields.io/nuget/dt/OpenHardwareMonitorLib?label=nuget-downloads&style=for-the-badge)](https://www.nuget.org/packages/OpenHardwareMonitorLib/)
@@ -11,16 +11,6 @@ Open hardware monitor - is free software that can monitor the temperature sensor
 This application is based on the "original" [openhardwaremonitor](https://github.com/openhardwaremonitor/openhardwaremonitor) project.
 
 ----
-
-[![UA](https://github.com/sergiye/hiberbeeTheme/raw/master/assets/ukraine_flag_bar.png)](https://u24.gov.ua)
-
-
-Support the Armed Forces of Ukraine and People Affected by Russia’s Aggression on UNITED24, the official fundraising platform of Ukraine: https://u24.gov.ua.
-
-**Слава Україні!**
-
-[![UA](https://github.com/sergiye/hiberbeeTheme/raw/master/assets/ukraine_flag_bar.png)](https://u24.gov.ua)
-
 
 ## Features
 
@@ -42,7 +32,7 @@ You can see information about devices such as:
  - `Hide/Unhide` sensors to remove some data from UI and web server.
  - Multiple `Tray icons` and `Gadget` for selected sensor values.
  - `Light`/`Dark` themes with auto switching mode.
- - Custom `color-themes` from external files - You can find examples [here](https://github.com/sergiye/openhardwaremonitor/tree/dev/OpenHardwareMonitor/Resources/themes)
+ - Custom `color-themes` from external files - You can find examples [here](https://github.com/NewOpenHardwareMonitor/openhardwaremonitor/tree/dev/OpenHardwareMonitor/Resources/themes)
  - `Portable` mode for storing temporary driver file and settings configuration next to the executable file.
  - `Updated versions check` - manually from main menu.
 
@@ -50,22 +40,22 @@ You can see information about devices such as:
 
 ### UI example with `Light`/`Dark` themes
 
-[<img src="https://github.com/sergiye/openhardwaremonitor/raw/master/themes.png" alt="Themes" width="300"/>](https://github.com/sergiye/openhardwaremonitor/releases)
+[<img src="https://github.com/NewOpenHardwareMonitor/openhardwaremonitor/raw/master/themes.png" alt="Themes" width="300"/>](https://github.com/NewOpenHardwareMonitor/openhardwaremonitor/releases)
 
 ## Download
 
 **The recommended way to get the program is BUILD from source**
 - Install git, Visual Studio
-- `git clone https://github.com/sergiye/openhardwaremonitor.git`
+- `git clone https://github.com/NewOpenHardwareMonitor/openhardwaremonitor.git`
 - build
 
-**or download build from [releases](https://github.com/sergiye/openhardwaremonitor/releases).**
+**or download build from [releases](https://github.com/NewOpenHardwareMonitor/openhardwaremonitor/releases).**
 
 
 ## Developer information
 **Integrate the library in own application**
 1. Add the [OpenHardwareMonitorLib](https://www.nuget.org/packages/OpenHardwareMonitorLib/) NuGet package to your application.
-2. Use the sample code below or the test console application from [here](https://github.com/sergiye/openhardwaremonitor/tree/dev/LibTest)
+2. Use the sample code below or the test console application from [here](https://github.com/NewOpenHardwareMonitor/openhardwaremonitor/tree/dev/LibTest)
 
 
 **Sample code**
