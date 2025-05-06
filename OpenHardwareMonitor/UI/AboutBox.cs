@@ -20,7 +20,7 @@ public sealed partial class AboutBox : Form
         picLogo.Image = EmbeddedResources.GetIcon("icon.ico").ToBitmap();
         picLogo.SizeMode = PictureBoxSizeMode.StretchImage;
         projectLinkLabel.Links.Remove(projectLinkLabel.Links[0]);
-        projectLinkLabel.Links.Add(0, projectLinkLabel.Text.Length, "https://github.com/sergiye/openhardwaremonitor");
+        projectLinkLabel.Links.Add(0, projectLinkLabel.Text.Length, $"https://github.com/{Updater.ApplicationCompany}/{Updater.ApplicationName}");
         licenseLinkLabel.Links.Remove(licenseLinkLabel.Links[0]);
         licenseLinkLabel.Links.Add(0, licenseLinkLabel.Text.Length, "https://www.mozilla.org/en-US/MPL/2.0/");
         Theme.Current.Apply(this);

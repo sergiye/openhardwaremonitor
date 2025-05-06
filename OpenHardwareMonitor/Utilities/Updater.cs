@@ -95,10 +95,14 @@ namespace sergiye.Common {
     /// </summary>
     /// <returns>True if the check was completed, False if there were errors</returns>
     internal static async Task<bool> CheckForUpdatesAsync(bool silent) {
+#if DEBUG
+        return true;
+#endif
       try {
         string jsonString;
         using (var wc = new WebClient()) {
           wc.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 11.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.500.27 Safari/537.36");
+          wc.Headers.Add("Accept", "application/json");
           jsonString = await wc.DownloadStringTaskAsync(GetAppReleasesUrl()).ConfigureAwait(false);
         }
         return CheckForUpdatesInternal(silent, jsonString);
