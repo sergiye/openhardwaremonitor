@@ -101,6 +101,7 @@ namespace OpenHardwareMonitor.UI
       this.updateInterval2sMenuItem = new OpenHardwareMonitor.UI.ToolStripRadioButtonMenuItem();
       this.updateInterval5sMenuItem = new OpenHardwareMonitor.UI.ToolStripRadioButtonMenuItem();
       this.updateInterval10sMenuItem = new OpenHardwareMonitor.UI.ToolStripRadioButtonMenuItem();
+      this.throttleAtaUpdateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.fileRotationMethod = new System.Windows.Forms.ToolStripMenuItem();
       this.perSessionFileRotationMenuItem = new OpenHardwareMonitor.UI.ToolStripRadioButtonMenuItem();
       this.dailyFileRotationMenuItem = new OpenHardwareMonitor.UI.ToolStripRadioButtonMenuItem();
@@ -440,6 +441,7 @@ namespace OpenHardwareMonitor.UI
             this.logSensorsMenuItem,
             this.loggingIntervalMenuItem,
             this.updateIntervalMenuItem,
+            this.throttleAtaUpdateMenuItem,
             this.fileRotationMethod,
             this.sensorValuesTimeWindowMenuItem,
             this.webMenuItemSeparator,
@@ -684,6 +686,13 @@ namespace OpenHardwareMonitor.UI
       this.updateInterval10sMenuItem.Name = "updateInterval10sMenuItem";
       this.updateInterval10sMenuItem.Size = new System.Drawing.Size(108, 22);
       this.updateInterval10sMenuItem.Text = "10s";
+      //
+      // throttleATAUpdateMenuItem
+      //
+      this.throttleAtaUpdateMenuItem.CheckOnClick = true;
+      this.throttleAtaUpdateMenuItem.Name = "throttleATAUpdateMenuItem";
+      this.throttleAtaUpdateMenuItem.Size = new System.Drawing.Size(107, 22);
+      this.throttleAtaUpdateMenuItem.Text = "Throttle ATA Storage";
       //
       // fileRotationMethod
       //
@@ -1031,6 +1040,7 @@ namespace OpenHardwareMonitor.UI
         private ToolStripRadioButtonMenuItem updateInterval2sMenuItem;
         private ToolStripRadioButtonMenuItem updateInterval5sMenuItem;
         private ToolStripRadioButtonMenuItem updateInterval10sMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem throttleAtaUpdateMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nicMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sensorValuesTimeWindowMenuItem;
         private ToolStripRadioButtonMenuItem timeWindow30sMenuItem;
