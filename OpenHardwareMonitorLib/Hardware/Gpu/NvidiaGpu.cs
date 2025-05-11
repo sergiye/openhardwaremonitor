@@ -315,7 +315,7 @@ internal sealed class NvidiaGpu : GenericGpu
                 _pcieThroughputRx = new Sensor("GPU PCIe Rx", 0, SensorType.Throughput, this, settings);
                 _pcieThroughputTx = new Sensor("GPU PCIe Tx", 1, SensorType.Throughput, this, settings);
 
-                if (!Software.OperatingSystem.IsUnix)
+                if (!OperatingSystemHelper.IsUnix)
                 {
                     NvidiaML.NvmlPciInfo? pciInfo = NvidiaML.NvmlDeviceGetPciInfo(_nvmlDevice.Value);
 

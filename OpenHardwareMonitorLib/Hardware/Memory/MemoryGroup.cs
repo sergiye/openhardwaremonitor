@@ -8,7 +8,7 @@ internal class MemoryGroup : IGroup
 
     public MemoryGroup(ISettings settings)
     {
-        _hardware = [Software.OperatingSystem.IsUnix ? new GenericLinuxMemory("Memory", settings) : new GenericWindowsMemory("Memory", settings)];
+        _hardware = [OperatingSystemHelper.IsUnix ? new GenericLinuxMemory("Memory", settings) : new GenericWindowsMemory("Memory", settings)];
     }
 
     public string GetReport()

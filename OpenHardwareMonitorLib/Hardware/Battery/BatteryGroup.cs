@@ -44,7 +44,7 @@ internal class BatteryGroup : IGroup
     public unsafe BatteryGroup(ISettings settings)
     {
         // No implementation for battery information on Unix systems
-        if (Software.OperatingSystem.IsUnix)
+        if (OperatingSystemHelper.IsUnix)
             return;
 
         IntPtr hdev = SetupApi.SetupDiGetClassDevs(ref SetupApi.GUID_DEVICE_BATTERY, IntPtr.Zero, IntPtr.Zero, SetupApi.DIGCF_PRESENT | SetupApi.DIGCF_DEVICEINTERFACE);

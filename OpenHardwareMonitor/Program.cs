@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using OpenHardwareMonitor.UI;
-using sergiye.Common;
 
 namespace OpenHardwareMonitor;
 
@@ -15,11 +14,22 @@ public static class Program
     [STAThread]
     public static void Main()
     {
-        if (!VersionCompatibility.IsCompatible())
+        if (!OperatingSystemHelper.IsCompatible(false, out var errorMessage, out var fixAction))
         {
-            MessageBox.Show("The application is not compatible with your region.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            if (fixAction != null)
+            {
+                if (MessageBox.Show(errorMessage, Updater.ApplicationName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    fixAction?.Invoke();
+                }
+            }
+            else
+            {
+                MessageBox.Show(errorMessage, Updater.ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             Environment.Exit(0);
         }
+
         if (!mutex.WaitOne(TimeSpan.Zero, true))
         {
             var process = Process.GetProcessesByName(Updater.ApplicationName).FirstOrDefault();

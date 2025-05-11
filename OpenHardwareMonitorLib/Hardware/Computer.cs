@@ -17,7 +17,6 @@ using OpenHardwareMonitor.Hardware.Motherboard;
 using OpenHardwareMonitor.Hardware.Network;
 using OpenHardwareMonitor.Hardware.Psu.Corsair;
 using OpenHardwareMonitor.Hardware.Storage;
-using sergiye.Common;
 
 namespace OpenHardwareMonitor.Hardware;
 
@@ -410,7 +409,7 @@ public class Computer : IComputer
         if (group == null)
             return;
 
-        if (!VersionCompatibility.IsCompatible())
+        if (!OperatingSystemHelper.IsCompatible(false, out var _, out var _))
             return;
 
         lock (_lock)

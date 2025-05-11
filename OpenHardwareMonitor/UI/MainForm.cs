@@ -10,10 +10,8 @@ using Aga.Controls.Tree;
 using Aga.Controls.Tree.NodeControls;
 using OpenHardwareMonitor.Hardware;
 using OpenHardwareMonitor.Hardware.Storage;
-using OpenHardwareMonitor.UI.Themes;
 using OpenHardwareMonitor.Utilities;
 using OpenHardwareMonitor.WMI;
-using sergiye.Common;
 
 namespace OpenHardwareMonitor.UI;
 
@@ -123,7 +121,7 @@ public sealed partial class MainForm : Form
         _systemTray.HideShowCommand += HideShowClick;
         _systemTray.ExitCommand += ExitClick;
 
-        if (Software.OperatingSystem.IsUnix)
+        if (OperatingSystemHelper.IsUnix)
         {
             // Unix
             treeView.RowHeight = Math.Max(treeView.RowHeight, 18);
@@ -543,6 +541,7 @@ public sealed partial class MainForm : Form
         treeContextMenu.Renderer = new ThemedToolStripRenderer();
         ThemedVScrollIndicator.AddToControl(treeView);
         ThemedHScrollIndicator.AddToControl(treeView);
+        TreeViewAdvThemeExtender.SubscribeToThemes();
 
         if (Theme.SupportsAutoThemeSwitching())
         {
@@ -556,15 +555,12 @@ public sealed partial class MainForm : Form
             themeMenuItem.DropDownItems.Add(_autoThemeMenuItem);
         }
 
-        Theme setTheme = Theme.All.FirstOrDefault(theme => _settings.GetValue("theme", "auto") == theme.Id);
+        var allThemes = CustomTheme.GetAllThemes("themes", "OpenHardwareMonitor.Resources.themes").OrderBy(x => x.DisplayName).ToList();
+        Theme setTheme = allThemes.FirstOrDefault(theme => _settings.GetValue("theme", "auto") == theme.Id);
         if (setTheme != null)
         {
             Theme.Current = setTheme;
             Theme.Current.Apply(this);
-        }
-        else
-        {
-            themeMenuItem.DropDownItems[0].PerformClick();
         }
 
         void AddThemeMenuItems(IEnumerable<Theme> themes)
@@ -583,9 +579,14 @@ public sealed partial class MainForm : Form
             }
         }
 
-        AddThemeMenuItems(Theme.All.Where(t => t is not CustomTheme));
+        AddThemeMenuItems(allThemes.Where(t => t is not CustomTheme));
         themeMenuItem.DropDownItems.Add("-"); //separator
-        AddThemeMenuItems(Theme.All.Where(t => t is CustomTheme));
+        AddThemeMenuItems(allThemes.Where(t => t is CustomTheme));
+
+        if (setTheme == null && themeMenuItem.DropDownItems.Count > 0)
+        {
+            themeMenuItem.DropDownItems[0].PerformClick();
+        }
     }
 
     private void OnThemeMenuItemClick(object sender, EventArgs e)
@@ -714,12 +715,22 @@ public sealed partial class MainForm : Form
         RestoreCollapsedNodeState(treeView);
         treeView.Width += 1; //just to apply column auto-resize
 
+        Updater.Subscribe(
+          (message, isError) => {
+              MessageBox.Show(message, Updater.ApplicationName, MessageBoxButtons.OK, isError ? MessageBoxIcon.Warning : MessageBoxIcon.Information);
+          },
+          (message) => {
+              return MessageBox.Show(message, Updater.ApplicationName, MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK;
+          },
+          Application.Exit
+        );
+
         //will display prompt only if update available & when main form displayed
         var timer = new Timer();
         timer.Interval = 3000;
         timer.Tick += async (_, _) => {
             timer.Enabled = false;
-            timer.Enabled = ! await Updater.CheckForUpdatesAsync(true).ConfigureAwait(false);
+            timer.Enabled = ! await Updater.CheckForUpdatesAsync(true);
         };
         timer.Enabled = true;
 

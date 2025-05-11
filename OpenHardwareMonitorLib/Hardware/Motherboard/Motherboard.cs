@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using OpenHardwareMonitor.Hardware.Motherboard.Lpc;
 using OpenHardwareMonitor.Hardware.Motherboard.Lpc.EC;
-using OperatingSystem = OpenHardwareMonitor.Software.OperatingSystem;
 
 namespace OpenHardwareMonitor.Hardware.Motherboard;
 
@@ -55,7 +54,7 @@ public class Motherboard : IHardware
 
         _customName = settings.GetValue(new Identifier(Identifier, "name").ToString(), _name);
 
-        if (OperatingSystem.IsUnix)
+        if (OperatingSystemHelper.IsUnix)
         {
             _lmSensors = new LMSensors();
             superIO = _lmSensors.SuperIO;

@@ -211,12 +211,12 @@ internal static class OpCode
         else
         {
             rdTscCode = Rdtsc64;
-            cpuidCode = Software.OperatingSystem.IsUnix ? CpuId64Linux : CpuId64Windows;
+            cpuidCode = OperatingSystemHelper.IsUnix ? CpuId64Linux : CpuId64Windows;
         }
 
         _size = (ulong)(rdTscCode.Length + cpuidCode.Length);
 
-        if (Software.OperatingSystem.IsUnix)
+        if (OperatingSystemHelper.IsUnix)
         {
 #if NETFRAMEWORK
             Assembly assembly = Assembly.Load("Mono.Posix, Version=2.0.0.0, Culture=neutral, " + "PublicKeyToken=0738eb9f132ed756");
@@ -261,7 +261,7 @@ internal static class OpCode
         Rdtsc = null;
         CpuId = null;
 
-        if (Software.OperatingSystem.IsUnix)
+        if (OperatingSystemHelper.IsUnix)
         {
 #if NETFRAMEWORK
             Assembly assembly = Assembly.Load("Mono.Posix, Version=2.0.0.0, Culture=neutral, " + "PublicKeyToken=0738eb9f132ed756");

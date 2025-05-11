@@ -5,7 +5,6 @@ using System.Security;
 using System.Security.Principal;
 using System.Windows.Forms;
 using Microsoft.Win32;
-using sergiye.Common;
 
 namespace OpenHardwareMonitor.UI
 {
@@ -32,7 +31,7 @@ namespace OpenHardwareMonitor.UI
 
         public StartupManager()
         {
-            if (Software.OperatingSystem.IsUnix)
+            if (OperatingSystemHelper.IsUnix)
             {
                 _scheduler = null;
                 IsAvailable = false;

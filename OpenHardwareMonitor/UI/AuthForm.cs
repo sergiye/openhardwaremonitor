@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using sergiye.Common;
 
 namespace OpenHardwareMonitor.UI;
 

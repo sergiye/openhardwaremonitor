@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
-using sergiye.Common;
 
 namespace OpenHardwareMonitor.Hardware;
 
@@ -21,10 +20,10 @@ internal static class Ring0
     public static void Open(bool portable)
     {
         // no implementation for unix systems
-        if (Software.OperatingSystem.IsUnix)
+        if (OperatingSystemHelper.IsUnix)
             return;
 
-        if (!VersionCompatibility.IsCompatible())
+        if (!OperatingSystemHelper.IsCompatible(false, out var _, out var _))
             return;
 
         if (_driver != null)
@@ -90,7 +89,7 @@ internal static class Ring0
 
     private static bool Extract(string filePath)
     {
-        string resourceName = $"{nameof(OpenHardwareMonitor)}.Resources.{(Software.OperatingSystem.Is64Bit ? "WinRing0x64.gz" : "WinRing0.gz")}";
+        string resourceName = $"{nameof(OpenHardwareMonitor)}.Resources.{(OperatingSystemHelper.Is64Bit ? "WinRing0x64.gz" : "WinRing0.gz")}";
 
         Assembly assembly = typeof(Ring0).Assembly;
         long requiredLength = 0;

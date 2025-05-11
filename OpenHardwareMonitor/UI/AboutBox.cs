@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using OpenHardwareMonitor.Utilities;
-using sergiye.Common;
 
 namespace OpenHardwareMonitor.UI;
 

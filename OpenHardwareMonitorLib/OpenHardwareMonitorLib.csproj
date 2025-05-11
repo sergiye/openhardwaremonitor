@@ -9,8 +9,8 @@
     <LangVersion>latest</LangVersion>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <AssemblyTitle>Open Hardware Monitor Lib</AssemblyTitle>
-    <AssemblyCompany>Sergiy Egoshyn</AssemblyCompany>
-    <AssemblyProduct>Open Hardware Monitor</AssemblyProduct>
+    <AssemblyCompany>SergiyE</AssemblyCompany>
+    <AssemblyProduct>OpenHardwareMonitor</AssemblyProduct>
     <AssemblyCopyright>Copyright © 2022 Sergiy Egoshyn</AssemblyCopyright>
     <AssemblyVersion>1.0.9244.4</AssemblyVersion>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
@@ -22,13 +22,13 @@
     <Authors>Sergiy Egoshin</Authors>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>packageicon.png</PackageIcon>
-    <RepositoryUrl>https://github.com/sergiye/openhardwaremonitor</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/sergiye/openhardwaremonitor</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/$(AssemblyCompany)/$(AssemblyProduct)</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/$(AssemblyCompany)/$(AssemblyProduct)</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Copyright>$(AssemblyCopyright)</Copyright>
+    <Company>$(AssemblyCompany)</Company>
+    <Product>$(AssemblyProduct)</Product>
     <Version>$(AssemblyVersion)</Version>
-    <Copyright>Copyright © Sergiy Egoshin 2025</Copyright>
-    <Company>Sergiy Egoshyn</Company>
-    <Product>OpenHardwareMonitor</Product>
     <IncludeSymbols>True</IncludeSymbols>
     <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
@@ -39,6 +39,11 @@
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <OutputPath>..\bin\</OutputPath>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\common\sergiye.Common\ISettings.cs" Link="common\ISettings.cs" />
+    <Compile Include="..\..\common\sergiye.Common\RegionHelper.cs" Link="common\RegionHelper.cs" />
+    <Compile Include="..\..\common\sergiye.Common\OperatingSystemHelper.cs" Link="common\OperatingSystemHelper.cs" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packageicon.png" Pack="true" PackagePath="" />
     <None Include="..\README.md" Pack="true" PackagePath="\" />

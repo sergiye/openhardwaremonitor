@@ -12,7 +12,7 @@ internal class StorageGroup : IGroup
 
     public StorageGroup(ISettings settings)
     {
-        if (Software.OperatingSystem.IsUnix)
+        if (OperatingSystemHelper.IsUnix)
             return;
 
         Dictionary<uint, List<(uint, ulong)>> storageSpaceDiskToPhysicalDiskMap = GetStorageSpaceDiskToPhysicalDiskMap();
@@ -71,7 +71,7 @@ internal class StorageGroup : IGroup
     {
         var diskToPhysicalDisk = new Dictionary<uint, List<(uint, ulong)>>();
 
-        if (!Software.OperatingSystem.IsWindows8OrGreater)
+        if (!OperatingSystemHelper.IsWindows8OrGreater)
             return diskToPhysicalDisk;
 
         try

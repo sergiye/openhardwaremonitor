@@ -452,7 +452,7 @@ internal sealed class IntelCpu : GenericCpu
                         continue;
 
                     // Don't show the "GPU Graphics" sensor on windows, it will show up under the GPU instead.
-                    if (i == 2 && !Software.OperatingSystem.IsUnix)
+                    if (i == 2 && !OperatingSystemHelper.IsUnix)
                         continue;
 
                     _lastEnergyTime[i] = DateTime.UtcNow;

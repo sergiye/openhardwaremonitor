@@ -141,7 +141,7 @@ internal static class NvidiaML
                 return true;
             }
 
-            if (Software.OperatingSystem.IsUnix)
+            if (OperatingSystemHelper.IsUnix)
             {
                 try
                 {
@@ -186,7 +186,7 @@ internal static class NvidiaML
 
     private static bool IsNvmlCompatibleWindowsVersion()
     {
-        return Software.OperatingSystem.Is64Bit && ((Environment.OSVersion.Version.Major > 6) || (Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor >= 1));
+        return OperatingSystemHelper.Is64Bit && ((Environment.OSVersion.Version.Major > 6) || (Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor >= 1));
     }
 
     private static bool InitialiseDelegates()
@@ -257,7 +257,7 @@ internal static class NvidiaML
         {
             if (IsAvailable)
             {
-                if (Software.OperatingSystem.IsUnix)
+                if (OperatingSystemHelper.IsUnix)
                 {
                     nvmlShutdown();
                 }
@@ -277,7 +277,7 @@ internal static class NvidiaML
         if (IsAvailable)
         {
             NvmlDevice nvmlDevice;
-            if (Software.OperatingSystem.IsUnix)
+            if (OperatingSystemHelper.IsUnix)
             {
                 try
                 {
@@ -309,7 +309,7 @@ internal static class NvidiaML
         if (IsAvailable)
         {
             NvmlDevice nvmlDevice;
-            if (Software.OperatingSystem.IsUnix)
+            if (OperatingSystemHelper.IsUnix)
             {
                 if (nvmlDeviceGetHandleByPciBusId(pciBusId, out nvmlDevice) == NvmlReturn.Success)
                     return nvmlDevice;
@@ -333,7 +333,7 @@ internal static class NvidiaML
         if (IsAvailable)
         {
             int powerUsage;
-            if (Software.OperatingSystem.IsUnix)
+            if (OperatingSystemHelper.IsUnix)
             {
                 if (nvmlDeviceGetPowerUsage(nvmlDevice, out powerUsage) == NvmlReturn.Success)
                     return powerUsage;
@@ -357,7 +357,7 @@ internal static class NvidiaML
         if (IsAvailable)
         {
             uint pcieThroughput;
-            if (Software.OperatingSystem.IsUnix)
+            if (OperatingSystemHelper.IsUnix)
             {
                 if (nvmlDeviceGetPcieThroughput(nvmlDevice, counter, out pcieThroughput) == NvmlReturn.Success)
                     return pcieThroughput;
@@ -382,7 +382,7 @@ internal static class NvidiaML
         {
             var pci = new NvmlPciInfo();
 
-            if (Software.OperatingSystem.IsUnix)
+            if (OperatingSystemHelper.IsUnix)
             {
                 if (nvmlDeviceGetPciInfo(nvmlDevice, ref pci) == NvmlReturn.Success)
                     return pci;

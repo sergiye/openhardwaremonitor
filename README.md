@@ -40,16 +40,11 @@ You can see information about devices such as:
 
 ### UI example with `Light`/`Dark` themes
 
-[<img src="https://github.com/sergiye/openhardwaremonitor/raw/master/themes.png" alt="Themes" width="300"/>](https://github.com/sergiye/openhardwaremonitor/releases)
+[<img src="https://github.com/sergiye/openhardwaremonitor/raw/master/themes.png" alt="Themes" width="300"/>](https://github.com/sergiye/openhardwaremonitor/raw/master/themes.png)
 
 ## Download
 
-**The recommended way to get the program is BUILD from source**
-- Install git, Visual Studio
-- `git clone https://github.com/sergiye/openhardwaremonitor.git`
-- build
-
-**or download build from [releases](https://github.com/sergiye/openhardwaremonitor/releases).**
+The published version can be obtained from [releases](https://github.com/sergiye/openhardwaremonitor/releases).
 
 
 ## Developer information

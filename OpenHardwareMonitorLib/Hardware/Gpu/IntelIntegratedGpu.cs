@@ -129,7 +129,7 @@ internal class IntelIntegratedGpu : GenericGpu
 
     private static string GetName(string deviceId)
     {
-        if (!Software.OperatingSystem.IsUnix)
+        if (!OperatingSystemHelper.IsUnix)
         {
             string path = @"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum\" + D3DDisplayDevice.GetActualDeviceIdentifier(deviceId);
             if (Registry.GetValue(path, "DeviceDesc", null) is string deviceDesc)

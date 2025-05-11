@@ -13,7 +13,7 @@ internal class IntelGpuGroup : IGroup
 
     public IntelGpuGroup(List<IntelCpu> intelCpus, ISettings settings)
     {
-        if (!Software.OperatingSystem.IsUnix && intelCpus?.Count > 0)
+        if (!OperatingSystemHelper.IsUnix && intelCpus?.Count > 0)
         {
             _report.AppendLine("Intel GPU (D3D)");
             _report.AppendLine();
