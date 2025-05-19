@@ -12,7 +12,7 @@
     <AssemblyCompany>SergiyE</AssemblyCompany>
     <AssemblyProduct>OpenHardwareMonitor</AssemblyProduct>
     <AssemblyCopyright>Copyright © 2022 Sergiy Egoshyn</AssemblyCopyright>
-    <AssemblyVersion>1.0.9244.4</AssemblyVersion>
+    <AssemblyVersion>1.0.9270</AssemblyVersion>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
@@ -41,7 +41,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\..\common\sergiye.Common\ISettings.cs" Link="common\ISettings.cs" />
-    <Compile Include="..\..\common\sergiye.Common\RegionHelper.cs" Link="common\RegionHelper.cs" />
     <Compile Include="..\..\common\sergiye.Common\OperatingSystemHelper.cs" Link="common\OperatingSystemHelper.cs" />
   </ItemGroup>
   <ItemGroup>
