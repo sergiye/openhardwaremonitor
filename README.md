@@ -1,16 +1,14 @@
 # Open hardware monitor
-[![Release](https://img.shields.io/github/v/release/sergiye/openhardwaremonitor?style=for-the-badge)](https://github.com/sergiye/openhardwaremonitor/releases/latest)
-![Downloads](https://img.shields.io/github/downloads/sergiye/openhardwaremonitor/total?style=for-the-badge&color=ff4f42)
-![Last commit](https://img.shields.io/github/last-commit/sergiye/openhardwaremonitor?style=for-the-badge&color=00AD00)
+[![Release](https://img.shields.io/github/v/release/sergiye/openhardwaremonitor)](https://github.com/sergiye/openhardwaremonitor/releases/latest)
+![Downloads](https://img.shields.io/github/downloads/sergiye/openhardwaremonitor/total?color=ff4f42)
+![Last commit](https://img.shields.io/github/last-commit/sergiye/openhardwaremonitor?color=00AD00)
 
-[![Nuget](https://img.shields.io/nuget/v/OpenHardwareMonitorLib?style=for-the-badge)](https://www.nuget.org/packages/OpenHardwareMonitorLib/)
-[![Nuget](https://img.shields.io/nuget/dt/OpenHardwareMonitorLib?label=nuget-downloads&style=for-the-badge)](https://www.nuget.org/packages/OpenHardwareMonitorLib/)
+[![Nuget](https://img.shields.io/nuget/v/OpenHardwareMonitorLib)](https://www.nuget.org/packages/OpenHardwareMonitorLib/)
+[![Nuget](https://img.shields.io/nuget/dt/OpenHardwareMonitorLib?label=nuget-downloads)](https://www.nuget.org/packages/OpenHardwareMonitorLib/)
 
 Open hardware monitor - is free software that can monitor the temperature sensors, fan speeds, voltages, load and clock speeds of your computer.
 
 This application is based on the "original" [openhardwaremonitor](https://github.com/openhardwaremonitor/openhardwaremonitor) project.
-
-----
 
 ## Features
 
@@ -97,8 +95,18 @@ Some sensors require administrator privileges to access the data. Restart your I
 The OpenHardwareMonitor team welcomes feedback and contributions!<br/>
 You can check if it works properly on your motherboard. For many manufacturers, the way of reading data differs a bit, so if you notice any inaccuracies, please send us a pull request. If you have any suggestions or improvements, don't hesitate to create an issue.
 
+Also, don't forget to star the repository to help other people find it.
+
+[![Star History Chart](https://api.star-history.com/svg?repos=sergiye/openhardwaremonitor&type=Date)](https://star-history.com/#sergiye/openhardwaremonitor&Date)
+
+[![Stargazers repo roster for @sergiye/openhardwaremonitor](https://reporoster.com/stars/sergiye/openhardwaremonitor)](https://github.com/sergiye/openhardwaremonitor/stargazers)
+
+## Donate!
+Every [cup of coffee](https://patreon.com/SergiyE) you donate will help this app become better and let me know that this project is in demand.
+
 ## License
 
-OpenHardwareMonitor is free and open source software licensed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). You can use it for personal and commercial purposes.
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
