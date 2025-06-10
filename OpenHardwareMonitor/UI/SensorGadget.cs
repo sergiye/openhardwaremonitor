@@ -125,6 +125,7 @@ public class SensorGadget : Gadget
         Resize(settings.GetValue("sensorGadget.Width", Size.Width));
 
         ContextMenuStrip contextMenuStrip = new ContextMenuStrip();
+        contextMenuStrip.Renderer = new ThemedToolStripRenderer();
         ToolStripMenuItem hardwareNamesItem = new ToolStripMenuItem("Hardware Names");
         contextMenuStrip.Items.Add(hardwareNamesItem);
         ToolStripMenuItem fontSizeMenu = new ToolStripMenuItem("Font Size");
