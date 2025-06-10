@@ -43,40 +43,40 @@ public class SensorNotifyIcon : IDisposable
         Color = settings.GetValue(new Identifier(sensor.Identifier, "traycolor").ToString(), defaultColor);
 
         _pen = new Pen(Color.FromArgb(96, Color.Black));
-        var contextMenuStrip = new ContextMenu();
-        var hideShowItem = new MenuItem("Hide/Show") { DefaultItem = true };
+        var contextMenuStrip = new ContextMenuStrip();
+        contextMenuStrip.Renderer = new ThemedToolStripRenderer();
+        var hideShowItem = new ToolStripMenuItem("Hide/Show");
         hideShowItem.Click += delegate
         {
             sensorSystemTray.SendHideShowCommand();
         };
-        contextMenuStrip.MenuItems.Add(hideShowItem);
-        contextMenuStrip.MenuItems.Add("-");
-        var removeItem = new MenuItem("Remove Sensor");
+        contextMenuStrip.Items.Add(hideShowItem);
+        contextMenuStrip.Items.Add("-");
+        var removeItem = new ToolStripMenuItem("Remove Sensor");
         removeItem.Click += delegate
         {
             sensorSystemTray.Remove(Sensor);
         };
-        contextMenuStrip.MenuItems.Add(removeItem);
-        var colorItem = new MenuItem("Change Color...");
+        contextMenuStrip.Items.Add(removeItem);
+        var colorItem = new ToolStripMenuItem("Change Color...");
         colorItem.Click += delegate
         {
             ColorDialog dialog = new ColorDialog { Color = Color };
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 Color = dialog.Color;
-                settings.SetValue(new Identifier(sensor.Identifier,
-                                                 "traycolor").ToString(), Color);
+                settings.SetValue(new Identifier(sensor.Identifier, "traycolor").ToString(), Color);
             }
         };
-        contextMenuStrip.MenuItems.Add(colorItem);
-        contextMenuStrip.MenuItems.Add("-");
-        var exitItem = new MenuItem("Exit");
+        contextMenuStrip.Items.Add(colorItem);
+        contextMenuStrip.Items.Add("-");
+        var exitItem = new ToolStripMenuItem("Exit");
         exitItem.Click += delegate
         {
             sensorSystemTray.SendExitCommand();
         };
-        contextMenuStrip.MenuItems.Add(exitItem);
-        _notifyIcon.ContextMenu = contextMenuStrip;
+        contextMenuStrip.Items.Add(exitItem);
+        _notifyIcon.ContextMenuStrip = contextMenuStrip;
         _notifyIcon.DoubleClick += delegate
         {
             sensorSystemTray.SendHideShowCommand();
