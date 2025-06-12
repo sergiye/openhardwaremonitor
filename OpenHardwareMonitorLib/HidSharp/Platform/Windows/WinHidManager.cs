@@ -1,34 +1,12 @@
-﻿#region License
-/* Copyright 2012-2013 James F. Bellinger <http://www.zer7.com/software/hidsharp>
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing,
-   software distributed under the License is distributed on an
-   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-   KIND, either express or implied.  See the License for the
-   specific language governing permissions and limitations
-   under the License. */
-#endregion
-
-// TODO: The individual radio notifications only seem to happen after we've already connected.
+﻿// TODO: The individual radio notifications only seem to happen after we've already connected.
 //       If we can find a way to force discovery mode for BLE devices, by all means enable this.
 //#define BLUETOOTH_NOTIFY
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Security.AccessControl;
-using System.Text;
 using System.Threading;
-using HidSharp.Experimental;
 using HidSharp.Utility;
-using Microsoft.Win32;
 
 namespace HidSharp.Platform.Windows
 {
@@ -329,7 +307,7 @@ namespace HidSharp.Platform.Windows
                         // For now, this doesn't raise the DeviceList Changed event. It only seems to occur at connection.
                     }
                 }
-                
+
                 return (IntPtr)1;
             }
 

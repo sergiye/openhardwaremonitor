@@ -1,21 +1,4 @@
-﻿#region License
-/* Copyright 2012, 2017 James F. Bellinger <http://www.zer7.com/software/hidsharp>
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing,
-   software distributed under the License is distributed on an
-   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-   KIND, either express or implied.  See the License for the
-   specific language governing permissions and limitations
-   under the License. */
-#endregion
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,11 +11,11 @@ namespace HidSharp.Platform.Linux
     {
 		Queue<byte[]> _inputQueue;
 		Queue<CommonOutputReport> _outputQueue;
-		
+
 		int _handle;
 		Thread _readThread, _writeThread;
 		volatile bool _shutdown;
-		
+
         internal LinuxHidStream(LinuxHidDevice device)
             : base(device)
         {
@@ -42,7 +25,7 @@ namespace HidSharp.Platform.Linux
             _readThread = new Thread(ReadThread) { IsBackground = true, Name = "HID Reader" };
             _writeThread = new Thread(WriteThread) { IsBackground = true, Name = "HID Writer" };
         }
-		
+
 		internal static int DeviceHandleFromPath(string path, HidDevice hidDevice, NativeMethods.oflag oflag)
 		{
             IntPtr udev = NativeMethodsLibudev.Instance.udev_new();
@@ -85,26 +68,26 @@ namespace HidSharp.Platform.Linux
                     NativeMethodsLibudev.Instance.udev_unref(udev);
 				}
 			}
-			
+
 			throw new FileNotFoundException("HID class device not found.");
 		}
-		
+
         internal void Init(string path)
         {
 			int handle;
             handle = DeviceHandleFromPath(path, Device, NativeMethods.oflag.RDWR | NativeMethods.oflag.NONBLOCK);
-			
+
 			_handle = handle;
 			HandleInitAndOpen();
-			
+
 			_readThread.Start();
 			_writeThread.Start();
         }
-		
+
         protected override void Dispose(bool disposing)
         {
 			if (!HandleClose()) { return; }
-			
+
             _shutdown = true;
             try { lock (_inputQueue) { Monitor.PulseAll(_inputQueue); } } catch { }
 			try { lock (_outputQueue) { Monitor.PulseAll(_outputQueue); } } catch { }
@@ -116,16 +99,16 @@ namespace HidSharp.Platform.Linux
 
             base.Dispose(disposing);
 		}
-		
+
 		internal override void HandleFree()
 		{
 			NativeMethods.retry(() => NativeMethods.close(_handle)); _handle = -1;
 		}
-		
+
 		unsafe void ReadThread()
 		{
 			if (!HandleAcquire()) { return; }
-			
+
 			try
 			{
 				lock (_inputQueue)
@@ -133,7 +116,7 @@ namespace HidSharp.Platform.Linux
                     var pfd = new NativeMethods.pollfd();
 					pfd.fd = _handle;
 					pfd.events = NativeMethods.pollev.IN;
-						
+
 					while (!_shutdown)
 					{
 					tryReadAgain:
@@ -183,7 +166,7 @@ namespace HidSharp.Platform.Linux
 				HandleRelease();
 			}
 		}
-		
+
         public override int Read(byte[] buffer, int offset, int count)
         {
             return CommonRead(buffer, offset, count, _inputQueue);
@@ -215,7 +198,7 @@ namespace HidSharp.Platform.Linux
 		unsafe void WriteThread()
 		{
 			if (!HandleAcquire()) { return; }
-			
+
 			try
 			{
 				lock (_outputQueue)
@@ -258,7 +241,7 @@ namespace HidSharp.Platform.Linux
 							_outputQueue.Dequeue();
                             outputReport.Done = true;
 							Monitor.PulseAll(_outputQueue);
-						}	
+						}
 					}
 				}
 			}
@@ -267,7 +250,7 @@ namespace HidSharp.Platform.Linux
 				HandleRelease();
 			}
 		}
-		
+
         public override void Write(byte[] buffer, int offset, int count)
         {
             CommonWrite(buffer, offset, count, _outputQueue, false, Device.GetMaxOutputReportLength());

@@ -1,21 +1,4 @@
-﻿#region License
-/* Copyright 2016-2018 James F. Bellinger <http://www.zer7.com/software/hidsharp>
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing,
-   software distributed under the License is distributed on an
-   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-   KIND, either express or implied.  See the License for the
-   specific language governing permissions and limitations
-   under the License. */
-#endregion
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace HidSharp
@@ -35,7 +18,7 @@ namespace HidSharp
         /// This allows one process using HIDSharp to lock other processes out of using a HID device.
         /// Processes may request interruption, allowing interprocess cooperation.
         /// (For example, a data logging application can make itself interruptible and allow another process to use the HID device temporarily.)
-        /// 
+        ///
         /// Defaults to <c>false</c>.
         /// </summary>
         public static OpenOption Exclusive { get; private set; }
@@ -44,7 +27,7 @@ namespace HidSharp
         /// Allow other processes to send interruption requests.
         /// If another other process with higher priority attempts to open the HID device this process is using,
         /// this process will receive an <see cref="DeviceStream.InterruptRequested"/> event on an arbitrary thread.
-        /// 
+        ///
         /// <see cref="OpenOption.Exclusive"/> must be <c>true</c> for this to work.
         /// Defaults to <c>false</c>.
         /// </summary>
@@ -71,7 +54,7 @@ namespace HidSharp
 
         /// <summary>
         /// If a HID device is opened by another process transiently, HIDSharp will wait some time for the process to give up the HID device before failing to open the stream.
-        /// 
+        ///
         /// <see cref="OpenOption.Exclusive"/> must be <c>true</c> for this to work.
         /// Defaults to <c>false</c>.
         /// </summary>

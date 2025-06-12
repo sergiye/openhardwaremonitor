@@ -1,25 +1,7 @@
-﻿#region License
-/* Copyright 2010-2012, 2016 James F. Bellinger <http://www.zer7.com/software/hidsharp>
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing,
-   software distributed under the License is distributed on an
-   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-   KIND, either express or implied.  See the License for the
-   specific language governing permissions and limitations
-   under the License. */
-#endregion
-
-#pragma warning disable 169, 649
+﻿#pragma warning disable 169, 649
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
@@ -615,7 +597,7 @@ namespace HidSharp.Platform.Windows
 
             [FieldOffset(29)]
             public byte IsReadable;
-            
+
             [FieldOffset(30)]
             public byte IsWritable;
 
@@ -949,7 +931,7 @@ namespace HidSharp.Platform.Windows
         public static int CM_Get_Device_ID(uint devInst, out string deviceID)
         {
             int ret; deviceID = null;
-            
+
             int length;
             ret = CM_Get_Device_ID_Size(out length, devInst);
             if (ret != 0) { return ret; }
@@ -1035,7 +1017,7 @@ namespace HidSharp.Platform.Windows
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool GetVersionEx(ref OSVERSIONINFO version);
-         
+
         [DllImport("hid.dll")]
         public static extern void HidD_GetHidGuid(out Guid hidGuid);
 
@@ -1363,7 +1345,7 @@ namespace HidSharp.Platform.Windows
 			if (!CloseHandle(handle)) { return false; }
 			handle = IntPtr.Zero; return true;
 		}
-		
+
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public unsafe static extern bool ReadFile(IntPtr handle, byte* buffer, int bytesToRead,

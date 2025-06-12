@@ -1,23 +1,5 @@
-﻿#region License
-/* Copyright 2012, 2017-2018 James F. Bellinger <http://www.zer7.com/software/hidsharp>
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing,
-   software distributed under the License is distributed on an
-   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-   KIND, either express or implied.  See the License for the
-   specific language governing permissions and limitations
-   under the License. */
-#endregion
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -43,7 +25,7 @@ namespace HidSharp.Platform.MacOS
             _readThread = new Thread(ReadThread) { IsBackground = true, Name = "HID Reader" };
             _writeThread = new Thread(WriteThread) { IsBackground = true, Name = "HID Writer" };
         }
-		
+
 		internal void Init(NativeMethods.io_string_t path)
 		{
             IntPtr handle; int retryCount = 0, maxRetries = 10;
@@ -92,7 +74,7 @@ namespace HidSharp.Platform.MacOS
             _readThread.Start();
             _writeThread.Start();
 		}
-		
+
         protected override void Dispose(bool disposing)
         {
 			if (!HandleClose()) { return; }
@@ -126,7 +108,7 @@ namespace HidSharp.Platform.MacOS
 		{
 			NativeMethods.CFRelease(_handle); _handle = IntPtr.Zero;
 		}
-		
+
         void ReadThreadCallback(IntPtr context, NativeMethods.IOReturn result, IntPtr sender,
                                 NativeMethods.IOHIDReportType type,
 		                        uint reportID, IntPtr report, IntPtr reportLength)
@@ -174,7 +156,7 @@ namespace HidSharp.Platform.MacOS
                     NativeMethods.CFRunLoopRun();
                     NativeMethods.IOHIDDeviceUnscheduleFromRunLoop(_handle, _readRunLoop, NativeMethods.kCFRunLoopDefaultMode);
                 }
-				
+
 				GC.KeepAlive(this);
 				GC.KeepAlive(inputCallback);
                 GC.KeepAlive(removalCallback);
@@ -194,7 +176,7 @@ namespace HidSharp.Platform.MacOS
         public unsafe override void GetFeature(byte[] buffer, int offset, int count)
         {
             Throw.If.OutOfRange(buffer, offset, count);
-			
+
 			HandleAcquireIfOpenOrFail();
 			try
 			{
@@ -211,7 +193,7 @@ namespace HidSharp.Platform.MacOS
 	                if (NativeMethods.IOReturn.Success != NativeMethods.IOHIDDeviceGetReport(_handle, NativeMethods.IOHIDReportType.Feature,
 	                                                                           (IntPtr)reportID, reportPtr,
 	                                                                           ref reportLength))
-	
+
 	                {
 	                    throw new IOException("GetFeature failed.");
 	                }
@@ -226,16 +208,16 @@ namespace HidSharp.Platform.MacOS
         unsafe void WriteThread()
         {
 			if (!HandleAcquire()) { return; }
-			
+
 			try
-	        {	
+	        {
 				lock (_outputQueue)
-				{								
+				{
 	                while (true)
 	                {
 	                    while (!_shutdown && _outputQueue.Count == 0) { Monitor.Wait(_outputQueue); }
 						if (_shutdown) { break; }
-	
+
 						NativeMethods.IOReturn ret;
 	                    CommonOutputReport outputReport = _outputQueue.Peek();
 	                    try
@@ -243,7 +225,7 @@ namespace HidSharp.Platform.MacOS
 	                        fixed (byte* outputReportBytes = outputReport.Bytes)
 	                        {
 	                            Monitor.Exit(_outputQueue);
-	
+
 	                            try
 	                            {
                                     int reportID = outputReport.Bytes[0];

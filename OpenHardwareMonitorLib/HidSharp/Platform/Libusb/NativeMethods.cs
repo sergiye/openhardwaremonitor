@@ -1,20 +1,3 @@
-#region License
-/* Copyright 2012 James F. Bellinger <http://www.zer7.com/software/hidsharp>
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing,
-   software distributed under the License is distributed on an
-   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-   KIND, either express or implied.  See the License for the
-   specific language governing permissions and limitations
-   under the License. */
-#endregion
-
 using System;
 using System.Runtime.InteropServices;
 
@@ -23,7 +6,7 @@ namespace HidSharp.Platform.Libusb
 	static class NativeMethods
 	{
 		const string Libusb = "libusb-1.0";
-		
+
         [StructLayout(LayoutKind.Sequential)]
 		public struct DeviceDescriptor
 		{
@@ -33,14 +16,14 @@ namespace HidSharp.Platform.Libusb
 			public ushort idVendor, idProduct, bcdDevice;
 			public byte iManufacturer, iProduct, iSerialNumber, bNumConfigurations;
 		}
-	
+
 		public enum DeviceClass : byte
 		{
 			HID = 0x03,
 			MassStorage = 0x08,
 			VendorSpecific = 0xff
 		}
-		
+
 		public enum DescriptorType : byte
 		{
 			Device = 0x01,
@@ -53,18 +36,18 @@ namespace HidSharp.Platform.Libusb
 			Physical = 0x23,
 			Hub = 0x29
 		}
-		
+
 		public enum EndpointDirection : byte
 		{
 			In = 0x80,
 			Out = 0,
 		}
-		
+
 		public enum Request : byte
 		{
 			GetDescriptor = 0x06
 		}
-		
+
 		public enum RequestRecipient : byte
 		{
 			Device = 0,
@@ -72,22 +55,22 @@ namespace HidSharp.Platform.Libusb
 			Endpoint = 2,
 			Other = 3
 		}
-		
+
 		public enum RequestType : byte
 		{
 			Standard = 0x00,
 			Class = 0x20,
 			Vendor = 0x40
 		}
-		
+
 		public enum TransferType : byte
 		{
 			Control = 0,
 			Isochronous,
 			Bulk,
-			Interrupt	
+			Interrupt
 		}
-		
+
 		public enum Error
 		{
 			None = 0,
@@ -104,79 +87,79 @@ namespace HidSharp.Platform.Libusb
 			OutOfMemory = -11,
 			NotSupported = -12
 		}
-		
+
 		[DllImport(Libusb)]
 		public static extern Error libusb_init(out IntPtr context);
-		
+
 		[DllImport(Libusb)]
 		public static extern void libusb_set_debug(IntPtr context, int level);
-		
+
 		[DllImport(Libusb)]
 		public static extern void libusb_exit(IntPtr context);
-		
+
 		[DllImport(Libusb)]
 		public static extern IntPtr libusb_get_device_list(IntPtr context, out IntPtr list);
-		
+
 		[DllImport(Libusb)]
 		public static extern void libusb_free_device_list(IntPtr context, IntPtr list);
-		
+
 		[DllImport(Libusb)]
 		public static extern IntPtr libusb_ref_device(IntPtr device);
-		
+
 		[DllImport(Libusb)]
 		public static extern void libusb_unref_device(IntPtr device);
-		
+
 		[DllImport(Libusb)]
 		public static extern int libusb_get_max_packet_size(IntPtr device, byte endpoint);
-		
+
 		[DllImport(Libusb)]
 		public static extern Error libusb_open(IntPtr device, out IntPtr deviceHandle);
-		
+
 		[DllImport(Libusb)]
 		public static extern void libusb_close(IntPtr deviceHandle);
-		
+
 		[DllImport(Libusb)]
 		public static extern Error libusb_get_configuration(IntPtr deviceHandle, out int configuration);
-		
+
 		[DllImport(Libusb)]
 		public static extern Error libusb_set_configuration(IntPtr deviceHandle, int configuration);
-		
+
 		[DllImport(Libusb)]
 		public static extern Error libusb_claim_interface(IntPtr deviceHandle, int @interface);
-		
+
 		[DllImport(Libusb)]
 		public static extern Error libusb_release_interface(IntPtr deviceHandle, int @interface);
-		
+
 		[DllImport(Libusb)]
 		public static extern Error libusb_set_interface_alt_setting(IntPtr deviceHandle, int @interface, int altSetting);
-		
+
 		[DllImport(Libusb)]
 		public static extern Error libusb_clear_halt(IntPtr deviceHandle, byte endpoint);
-		
+
 		[DllImport(Libusb)]
 		public static extern Error libusb_reset_device(IntPtr deviceHandle);
-		
+
 		[DllImport(Libusb)]
 		public static extern Error libusb_kernel_driver_active(IntPtr deviceHandle, int @interface);
-		
+
 		[DllImport(Libusb)]
 		public static extern Error libusb_detach_kernel_driver(IntPtr deviceHandle, int @interface);
-		
+
 		[DllImport(Libusb)]
 		public static extern Error libusb_attach_kernel_driver(IntPtr deviceHandle, int @interface);
-		
+
 		[DllImport(Libusb)]
 		public static extern IntPtr libusb_get_version();
-				
+
 		[DllImport(Libusb)]
 		public static extern Error libusb_get_device_descriptor(IntPtr device, out DeviceDescriptor descriptor);
-		
+
 		[DllImport(Libusb)]
 		public static extern Error libusb_get_active_config_descriptor(IntPtr device, out IntPtr configuration);
 
 		[DllImport(Libusb)]
 		public static extern Error libusb_get_config_descriptor_by_value(IntPtr device, byte index, out IntPtr configuration);
-		
+
 		[DllImport(Libusb)]
 		public static extern void libusb_free_config_descriptor(IntPtr configuration);
 
@@ -193,28 +176,28 @@ namespace HidSharp.Platform.Libusb
 			return libusb_get_descriptor_core(deviceHandle,
 			                                  type, index, data, wLength, 0);
 		}
-		
+
 		public static Error libusb_get_string_descriptor(IntPtr deviceHandle, DescriptorType type, byte index, ushort languageID, byte[] data, ushort wLength)
 		{
 			return libusb_get_descriptor_core(deviceHandle,
 			                                  DescriptorType.String, index,
-			                                  data, wLength, languageID);	
+			                                  data, wLength, languageID);
 		}
-		
+
 		[DllImport(Libusb)]
 		public static extern Error libusb_control_transfer(IntPtr deviceHandle,
 		                                            	   byte bmRequestType, byte bRequest,
 		                                            	   ushort wValue, ushort wIndex,
 		                                            	   byte[] data, ushort wLength,
 		                                            	   uint timeout);
-		
+
 		[DllImport(Libusb)]
 		public static extern Error libusb_bulk_transfer(IntPtr deviceHandle,
 		                                         	    byte endpoint,
 		                                         	    byte[] data, int length,
 		                                         	    out int transferred,
 		                                         	    uint timeout);
-		
+
 		[DllImport(Libusb)]
 		public static extern Error libusb_interrupt_transfer(IntPtr deviceHandle,
 		                                         	  	     byte endpoint,

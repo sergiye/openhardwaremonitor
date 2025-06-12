@@ -1,21 +1,4 @@
-﻿#region License
-/* Copyright 2012-2013 James F. Bellinger <http://www.zer7.com/software/hidsharp>
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing,
-   software distributed under the License is distributed on an
-   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-   KIND, either express or implied.  See the License for the
-   specific language governing permissions and limitations
-   under the License. */
-#endregion
-
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 
 #pragma warning disable 420
@@ -39,7 +22,7 @@ namespace HidSharp
         /// <exclude />
         public override void Flush()
         {
-            
+
         }
 
         /// <summary>
@@ -98,8 +81,8 @@ namespace HidSharp
         /// <param name="buffer">The buffer of data to send. Place the Report ID in the byte at index <paramref name="offset"/>.</param>
         /// <param name="offset">The index in the buffer to start the write from.</param>
         /// <param name="count">The number of bytes in the feature request.</param>
-        public abstract void SetFeature(byte[] buffer, int offset, int count);	
-		
+        public abstract void SetFeature(byte[] buffer, int offset, int count);
+
         /// <summary>
         /// Writes an HID Output Report to the device.
         /// </summary>
