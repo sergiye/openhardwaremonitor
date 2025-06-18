@@ -8,7 +8,7 @@ namespace OpenHardwareMonitor.UI
     {
         internal static void SubscribeToThemes()
         {
-            Theme.OnCurrentChecnged += () => { AssignRendersTheme(Theme.Current); };
+            Theme.OnCurrentChanged += () => { AssignRendersTheme(Theme.Current); };
             Theme.OnApplyToControl += (control, theme) => {
                 if (control is TreeViewAdv treeView)
                 {
