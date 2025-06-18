@@ -14,7 +14,7 @@ public sealed partial class AboutBox : Form
         lblAppTitle.Text = Updater.ApplicationTitle;
         lblCopyright.Text = $"Copyright © {Updater.ApplicationName}";
         Font = SystemFonts.MessageBoxFont;
-        lblVersion.Text = $"Version {Application.ProductVersion} {(Environment.Is64BitProcess ? "x64" : "x32")}";
+        lblVersion.Text = $"Version {Application.ProductVersion} {(Environment.Is64BitProcess ? "x64" : "x86")}";
         //pictureBox1.Image = Icon.ExtractAssociatedIcon(Updater.CurrentFileLocation).ToBitmap();
         picLogo.Image = EmbeddedResources.GetIcon("icon.ico").ToBitmap();
         picLogo.SizeMode = PictureBoxSizeMode.StretchImage;
