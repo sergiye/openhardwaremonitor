@@ -555,37 +555,41 @@ public sealed partial class MainForm : Form
             themeMenuItem.DropDownItems.Add(_autoThemeMenuItem);
         }
 
+        var settingsTheme = _settings.GetValue("theme", "auto");
         var allThemes = CustomTheme.GetAllThemes("themes", "OpenHardwareMonitor.Resources.themes").OrderBy(x => x.DisplayName).ToList();
-        Theme setTheme = allThemes.FirstOrDefault(theme => _settings.GetValue("theme", "auto") == theme.Id);
+        var setTheme = allThemes.FirstOrDefault(theme => settingsTheme == theme.Id);
         if (setTheme != null)
         {
             Theme.Current = setTheme;
-            Theme.Current.Apply(this);
-        }
-
-        void AddThemeMenuItems(IEnumerable<Theme> themes)
-        {
-            foreach (Theme theme in themes)
-            {
-                var item = new ToolStripRadioButtonMenuItem(theme.DisplayName);
-                item.Tag = theme;
-                item.Click += OnThemeMenuItemClick;
-                themeMenuItem.DropDownItems.Add(item);
-
-                if (Theme.Current != null && Theme.Current.Id == theme.Id)
-                {
-                    item.Checked = true;
-                }
-            }
         }
 
         AddThemeMenuItems(allThemes.Where(t => t is not CustomTheme));
-        themeMenuItem.DropDownItems.Add("-"); //separator
-        AddThemeMenuItems(allThemes.Where(t => t is CustomTheme));
+        var customThemes = allThemes.Where(t => t is CustomTheme).ToList();
+        if (customThemes.Count > 0)
+        {
+            themeMenuItem.DropDownItems.Add("-");
+            AddThemeMenuItems(customThemes);
+        }
 
         if (setTheme == null && themeMenuItem.DropDownItems.Count > 0)
-        {
             themeMenuItem.DropDownItems[0].PerformClick();
+
+        Theme.Current.Apply(this);
+    }
+
+    private void AddThemeMenuItems(IEnumerable<Theme> themes)
+    {
+        foreach (Theme theme in themes)
+        {
+            var item = new ToolStripRadioButtonMenuItem(theme.DisplayName);
+            item.Tag = theme;
+            item.Click += OnThemeMenuItemClick;
+            themeMenuItem.DropDownItems.Add(item);
+
+            if (Theme.Current != null && Theme.Current.Id == theme.Id)
+            {
+                item.Checked = true;
+            }
         }
     }
 
