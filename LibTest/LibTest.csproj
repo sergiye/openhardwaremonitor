@@ -7,6 +7,6 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="OpenHardwareMonitorLib" Version="1.0.9270" />
+    <PackageReference Include="OpenHardwareMonitorLib" Version="1.0.9300" />
   </ItemGroup>
 </Project>

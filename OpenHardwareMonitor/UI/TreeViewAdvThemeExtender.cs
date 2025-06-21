@@ -74,7 +74,7 @@ namespace OpenHardwareMonitor.UI
                 {
                     g.FillRectangle(brush, rect);
                 }
-                using (Pen pen = new Pen(current.TreeRowSepearatorColor))
+                using (Pen pen = new Pen(current.TreeRowSeparatorColor))
                 {
                     g.DrawLine(pen, rect.Left, rect.Top, rect.Right, rect.Top);
                     g.DrawLine(pen, rect.Left, rect.Top + 1, rect.Right, rect.Top + 1);
@@ -86,7 +86,7 @@ namespace OpenHardwareMonitor.UI
                 TextRenderer.DrawText(g, text, font, rect, current.TreeTextColor, TextFormatFlags.Left);
             };
 
-            TreeViewAdv.CustomHorizontalLinePen = new Pen(current.TreeRowSepearatorColor);
+            TreeViewAdv.CustomHorizontalLinePen = new Pen(current.TreeRowSeparatorColor);
             TreeViewAdv.CustomSelectedRowBrush = new SolidBrush(current.TreeSelectedBackgroundColor);
             TreeViewAdv.CustomSelectedTextColor = current.TreeSelectedTextColor;
         }
