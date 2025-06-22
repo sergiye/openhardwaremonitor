@@ -778,6 +778,11 @@ public sealed partial class MainForm : Form
         CloseApplication();
     }
 
+    private void menuItemSite_Click(object sender, EventArgs e)
+    {
+        Updater.VisitAppSite();
+    }
+
     private void menuItemCheckUpdates_Click(object sender, EventArgs e)
     {
         Updater.CheckForUpdates(false);

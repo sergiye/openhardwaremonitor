@@ -124,6 +124,7 @@ namespace OpenHardwareMonitor.UI
       this.serverPortMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.authWebServerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.helpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.menuItemSite = new System.Windows.Forms.ToolStripMenuItem();
       this.menuItemCheckUpdates = new System.Windows.Forms.ToolStripMenuItem();
       this.aboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.treeContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -863,11 +864,19 @@ namespace OpenHardwareMonitor.UI
       // helpMenuItem
       //
       this.helpMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemSite,
             this.menuItemCheckUpdates,
             this.aboutMenuItem});
       this.helpMenuItem.Name = "helpMenuItem";
       this.helpMenuItem.Size = new System.Drawing.Size(44, 22);
       this.helpMenuItem.Text = "Help";
+      //
+      // menuItemSite
+      //
+      this.menuItemSite.Name = "menuItemSite";
+      this.menuItemSite.Size = new System.Drawing.Size(170, 22);
+      this.menuItemSite.Text = "Site";
+      this.menuItemSite.Click += new System.EventHandler(this.menuItemSite_Click);
       //
       // menuItemCheckUpdates
       //
@@ -975,6 +984,7 @@ namespace OpenHardwareMonitor.UI
         private Aga.Controls.Tree.NodeControls.NodeTextBox nodeTextBoxMax;
         private System.Windows.Forms.ToolStripMenuItem viewMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuItemSite;
         private System.Windows.Forms.ToolStripMenuItem menuItemCheckUpdates;
         private System.Windows.Forms.ToolStripMenuItem aboutMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveReportMenuItem;
