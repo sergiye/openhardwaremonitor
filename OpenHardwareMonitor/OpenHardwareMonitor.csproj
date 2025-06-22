@@ -84,6 +84,7 @@
     <Compile Include="..\..\common\sergiye.Common\SerializerHelper.cs" Link="common\SerializerHelper.cs" />
     <Compile Include="..\..\common\sergiye.Common\Updater.cs" Link="common\Updater.cs" />
     <Compile Include="..\..\common\sergiye.Common\Crasher.cs" Link="common\Crasher.cs" />
+    <Compile Include="..\..\common\sergiye.Common\WinApiHelper.cs" Link="common\WinApiHelper.cs" />
     <Compile Include="..\..\common\sergiye.Common.UI\PersistentSettings.cs" Link="common\PersistentSettings.cs" />
     <Compile Include="..\..\common\sergiye.Common.UI\Themes\CustomTheme.cs" Link="common\Themes\CustomTheme.cs" />
     <Compile Include="..\..\common\sergiye.Common.UI\Themes\DarkTheme.cs" Link="common\Themes\DarkTheme.cs" />

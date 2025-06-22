@@ -21,7 +21,7 @@ public class ShowDesktop : IDisposable
 
         CreateParams cp = new CreateParams { ExStyle = GadgetWindow.WS_EX_TOOLWINDOW, Caption = _referenceWindowCaption };
         _referenceWindow.CreateHandle(cp);
-        NativeMethods.SetWindowPos(_referenceWindow.Handle,
+        WinApiHelper.SetWindowPos(_referenceWindow.Handle,
                                    GadgetWindow.HWND_BOTTOM,
                                    0,
                                    0,
@@ -82,23 +82,23 @@ public class ShowDesktop : IDisposable
     // the desktop worker window (if available) can hide the reference window
     private IntPtr GetDesktopWorkerWindow()
     {
-        IntPtr shellWindow = NativeMethods.GetShellWindow();
+        IntPtr shellWindow = WinApiHelper.GetShellWindow();
         if (shellWindow == IntPtr.Zero)
             return IntPtr.Zero;
 
 
-        NativeMethods.GetWindowThreadProcessId(shellWindow, out int shellId);
+        WinApiHelper.GetWindowThreadProcessId(shellWindow, out int shellId);
 
         IntPtr workerWindow = IntPtr.Zero;
-        while ((workerWindow = NativeMethods.FindWindowEx(IntPtr.Zero, workerWindow, "WorkerW", null)) != IntPtr.Zero)
+        while ((workerWindow = WinApiHelper.FindWindowEx(IntPtr.Zero, workerWindow, "WorkerW", null)) != IntPtr.Zero)
         {
-            NativeMethods.GetWindowThreadProcessId(workerWindow, out int workerId);
+            WinApiHelper.GetWindowThreadProcessId(workerWindow, out int workerId);
             if (workerId == shellId)
             {
-                IntPtr window = NativeMethods.FindWindowEx(workerWindow, IntPtr.Zero, "SHELLDLL_DefView", null);
+                IntPtr window = WinApiHelper.FindWindowEx(workerWindow, IntPtr.Zero, "SHELLDLL_DefView", null);
                 if (window != IntPtr.Zero)
                 {
-                    IntPtr desktopWindow = NativeMethods.FindWindowEx(window, IntPtr.Zero, "SysListView32", null);
+                    IntPtr desktopWindow = WinApiHelper.FindWindowEx(window, IntPtr.Zero, "SysListView32", null);
                     if (desktopWindow != IntPtr.Zero)
                         return workerWindow;
                 }
@@ -116,7 +116,7 @@ public class ShowDesktop : IDisposable
         if (workerWindow != IntPtr.Zero)
         {
             // search if the reference window is behind the worker window
-            IntPtr reference = NativeMethods.FindWindowEx(IntPtr.Zero, workerWindow, null, _referenceWindowCaption);
+            IntPtr reference = WinApiHelper.FindWindowEx(IntPtr.Zero, workerWindow, null, _referenceWindowCaption);
             showDesktopDetected = reference != IntPtr.Zero;
         }
         else
@@ -131,31 +131,4 @@ public class ShowDesktop : IDisposable
             ShowDesktopChangedEvent?.Invoke(_showDesktop);
         }
     }
-}
-
-internal static class NativeMethods
-{
-    internal const int WM_USER = 0x0400;
-    private const string USER = "user32.dll";
-
-    [DllImport(USER, CallingConvention = CallingConvention.Winapi)]
-    public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
-
-    [DllImport("user32.dll", EntryPoint = "SendMessageA", SetLastError = true)]
-    internal static extern IntPtr SendMessage(IntPtr hWnd, UInt32 msg, int wParam, IntPtr lParam);
-
-    [DllImport("user32.dll")]
-    internal static extern bool SetForegroundWindow(IntPtr hWnd);
-
-    [DllImport(USER, CallingConvention = CallingConvention.Winapi)]
-    public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
-
-    [DllImport("user32.dll")]
-    internal static extern IntPtr FindWindow(string className, string windowName);
-
-    [DllImport(USER, CallingConvention = CallingConvention.Winapi)]
-    public static extern IntPtr GetShellWindow();
-
-    [DllImport(USER, CallingConvention = CallingConvention.Winapi)]
-    public static extern int GetWindowThreadProcessId(IntPtr hWnd, out int processId);
 }

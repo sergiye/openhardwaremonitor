@@ -961,20 +961,15 @@ public sealed partial class MainForm : Form
 
     protected override void WndProc(ref Message m)
     {
-        const int WM_SYSCOMMAND = 0x112;
-        const int WM_WININICHANGE = 0x001A;
-        const int SC_MINIMIZE = 0xF020;
-        const int SC_CLOSE = 0xF060;
-
-        if (_minimizeToTray.Value && m.Msg == WM_SYSCOMMAND && m.WParam.ToInt64() == SC_MINIMIZE)
+        if (_minimizeToTray.Value && m.Msg == WinApiHelper.WM_SYS_COMMAND && m.WParam.ToInt64() == WinApiHelper.SC_MINIMIZE)
         {
             SysTrayHideShow();
         }
-        else if (m.Msg == WM_WININICHANGE && Marshal.PtrToStringUni(m.LParam) == "ImmersiveColorSet" && _autoThemeMenuItem?.Checked == true)
+        else if (m.Msg == WinApiHelper.WM_WININICHANGE && Marshal.PtrToStringUni(m.LParam) == "ImmersiveColorSet" && _autoThemeMenuItem?.Checked == true)
         {
             Theme.SetAutoTheme();
         }
-        else if (_minimizeOnClose.Value && m.Msg == WM_SYSCOMMAND && m.WParam.ToInt64() == SC_CLOSE)
+        else if (_minimizeOnClose.Value && m.Msg == WinApiHelper.WM_SYS_COMMAND && m.WParam.ToInt64() == WinApiHelper.SC_CLOSE)
         {
             //Apparently the user wants to minimize rather than close
             //Now we still need to check if we're going to the tray or not
@@ -986,13 +981,13 @@ public sealed partial class MainForm : Form
             else
                 WindowState = FormWindowState.Minimized;
         }
-        else if (m.Msg == NativeMethods.WM_USER + 1)
+        else if (m.Msg == WinApiHelper.WM_SHOWME)
         {
             Visible = true;
             WindowState = FormWindowState.Normal;
             Activate();
             BringToFront();
-            NativeMethods.SetForegroundWindow(this.Handle);
+            WinApiHelper.SetForegroundWindow(this.Handle);
         }
         else
         {
