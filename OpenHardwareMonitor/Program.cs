@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 using OpenHardwareMonitor.UI;
 
@@ -9,11 +8,11 @@ namespace OpenHardwareMonitor;
 
 public static class Program
 {
-    static Mutex mutex = new Mutex(true, "{3661aef2-95dc-433e-932c-2e06112d24ec}");
-
     [STAThread]
     public static void Main()
     {
+        Crasher.Listen();
+
         if (!OperatingSystemHelper.IsCompatible(false, out var errorMessage, out var fixAction))
         {
             if (fixAction != null)
@@ -30,26 +29,13 @@ public static class Program
             Environment.Exit(0);
         }
 
-        if (!mutex.WaitOne(TimeSpan.Zero, true))
+        if (WinApiHelper.CheckRunningInstances(true, true))
         {
-            var process = Process.GetProcessesByName(Updater.ApplicationName).FirstOrDefault();
-            if (process != null)
-            {
-                process.Refresh();
-                IntPtr hwnd = process.MainWindowHandle;
-                if (hwnd == IntPtr.Zero)
-                    hwnd = NativeMethods.FindWindow(null, Updater.ApplicationTitle);
-                if (hwnd != IntPtr.Zero)
-                {
-                    NativeMethods.SendMessage(hwnd, NativeMethods.WM_USER + 1, 0, IntPtr.Zero);
-                    Environment.Exit(0);
-                }
-            }
-            MessageBox.Show("Another instance of the application is already running.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-            Environment.Exit(0);
+            // fallback
+            MessageBox.Show($"{Updater.ApplicationName} is already running.", Updater.ApplicationName,
+              MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            return;
         }
-
-        Crasher.Listen();
 
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
@@ -60,7 +46,6 @@ public static class Program
                 Application.Exit();
             };
             Application.Run();
-            mutex.ReleaseMutex();
         }
     }
 }
