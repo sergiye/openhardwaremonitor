@@ -59,11 +59,9 @@ namespace OpenHardwareMonitor.UI
       this.exitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.viewMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.resetMinMaxMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.MenuItem3 = new System.Windows.Forms.ToolStripSeparator();
       this.hiddenMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.percentageIconsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.gadgetMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.MenuItem1 = new System.Windows.Forms.ToolStripSeparator();
       this.columnsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.valueMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.minMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -354,12 +352,13 @@ namespace OpenHardwareMonitor.UI
       // viewMenuItem
       //
       this.viewMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.resetMinMaxMenuItem,
-            this.MenuItem3,
             this.hiddenMenuItem,
             this.percentageIconsMenuItem,
             this.gadgetMenuItem,
-            this.MenuItem1,
+            this.separatorMenuItem,
+            this.themeMenuItem,
+            this.temperatureUnitsMenuItem,
+            this.resetMinMaxMenuItem,
             this.columnsMenuItem});
       this.viewMenuItem.Name = "viewMenuItem";
       this.viewMenuItem.Size = new System.Drawing.Size(44, 22);
@@ -371,11 +370,6 @@ namespace OpenHardwareMonitor.UI
       this.resetMinMaxMenuItem.Size = new System.Drawing.Size(188, 22);
       this.resetMinMaxMenuItem.Text = "Reset Min/Max";
       this.resetMinMaxMenuItem.Click += new System.EventHandler(this.ResetMinMaxMenuItem_Click);
-      //
-      // MenuItem3
-      //
-      this.MenuItem3.Name = "MenuItem3";
-      this.MenuItem3.Size = new System.Drawing.Size(185, 6);
       //
       // hiddenMenuItem
       //
@@ -394,11 +388,6 @@ namespace OpenHardwareMonitor.UI
       this.gadgetMenuItem.Name = "gadgetMenuItem";
       this.gadgetMenuItem.Size = new System.Drawing.Size(188, 22);
       this.gadgetMenuItem.Text = "Show Gadget";
-      //
-      // MenuItem1
-      //
-      this.MenuItem1.Name = "MenuItem1";
-      this.MenuItem1.Size = new System.Drawing.Size(185, 6);
       //
       // columnsMenuItem
       //
@@ -435,9 +424,6 @@ namespace OpenHardwareMonitor.UI
             this.minTrayMenuItem,
             this.minCloseMenuItem,
             this.startupMenuItem,
-            this.separatorMenuItem,
-            this.temperatureUnitsMenuItem,
-            this.themeMenuItem,
             this.logSeparatorMenuItem,
             this.logSensorsMenuItem,
             this.loggingIntervalMenuItem,
@@ -1001,7 +987,6 @@ namespace OpenHardwareMonitor.UI
         private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.ToolStripMenuItem hiddenMenuItem;
         private System.Windows.Forms.ToolStripMenuItem percentageIconsMenuItem;
-        private System.Windows.Forms.ToolStripSeparator MenuItem1;
         private System.Windows.Forms.ToolStripMenuItem columnsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem valueMenuItem;
         private System.Windows.Forms.ToolStripMenuItem minMenuItem;
@@ -1012,7 +997,6 @@ namespace OpenHardwareMonitor.UI
         private ToolStripRadioButtonMenuItem fahrenheitMenuItem;
         private System.Windows.Forms.ToolStripSeparator MenuItem2;
         private System.Windows.Forms.ToolStripMenuItem resetMinMaxMenuItem;
-        private System.Windows.Forms.ToolStripSeparator MenuItem3;
         private System.Windows.Forms.ToolStripMenuItem gadgetMenuItem;
         private System.Windows.Forms.ToolStripMenuItem minCloseMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resetMenuItem;

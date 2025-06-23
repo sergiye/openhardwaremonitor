@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Aga.Controls.Tree;
 using Aga.Controls.Tree.NodeControls;
@@ -17,7 +16,6 @@ namespace OpenHardwareMonitor.UI;
 
 public sealed partial class MainForm : Form
 {
-    private ToolStripMenuItem _autoThemeMenuItem;
     private readonly UserOption _autoStart;
     private readonly Computer _computer;
     private readonly SensorGadget _gadget;
@@ -543,63 +541,21 @@ public sealed partial class MainForm : Form
         ThemedHScrollIndicator.AddToControl(treeView);
         TreeViewAdvThemeExtender.SubscribeToThemes();
 
-        if (Theme.SupportsAutoThemeSwitching())
-        {
-            _autoThemeMenuItem = new ToolStripRadioButtonMenuItem("Auto");
-            _autoThemeMenuItem.Click += (o, e) =>
+        //themeMenuItem.MenuItems.Clear();
+        var currentItem = CustomTheme.FillThemesMenu((title, theme, onClick) => {
+            if (theme == null && onClick == null)
             {
-                _autoThemeMenuItem.Checked = true;
-                Theme.SetAutoTheme();
-                _settings.SetValue("theme", "auto");
-            };
-            themeMenuItem.DropDownItems.Add(_autoThemeMenuItem);
-        }
-
-        var settingsTheme = _settings.GetValue("theme", "auto");
-        var allThemes = CustomTheme.GetAllThemes("themes", "OpenHardwareMonitor.Resources.themes").OrderBy(x => x.DisplayName).ToList();
-        var setTheme = allThemes.FirstOrDefault(theme => settingsTheme == theme.Id);
-        if (setTheme != null)
-        {
-            Theme.Current = setTheme;
-        }
-
-        AddThemeMenuItems(allThemes.Where(t => t is not CustomTheme));
-        var customThemes = allThemes.Where(t => t is CustomTheme).ToList();
-        if (customThemes.Count > 0)
-        {
-            themeMenuItem.DropDownItems.Add("-");
-            AddThemeMenuItems(customThemes);
-        }
-
-        if (setTheme == null && themeMenuItem.DropDownItems.Count > 0)
-            themeMenuItem.DropDownItems[0].PerformClick();
-
-        Theme.Current.Apply(this);
-    }
-
-    private void AddThemeMenuItems(IEnumerable<Theme> themes)
-    {
-        foreach (Theme theme in themes)
-        {
-            var item = new ToolStripRadioButtonMenuItem(theme.DisplayName);
-            item.Tag = theme;
-            item.Click += OnThemeMenuItemClick;
-            themeMenuItem.DropDownItems.Add(item);
-
-            if (Theme.Current != null && Theme.Current.Id == theme.Id)
-            {
-                item.Checked = true;
+                themeMenuItem.DropDownItems.Add(title);
+                return null;
             }
-        }
-    }
-
-    private void OnThemeMenuItemClick(object sender, EventArgs e)
-    {
-        if (sender is not ToolStripRadioButtonMenuItem item || item.Tag is not Theme theme)
-            return;
-        item.Checked = true;
-        Theme.Current = theme;
-        _settings.SetValue("theme", theme.Id);
+            var item = new ToolStripRadioButtonMenuItem(title, null, onClick);
+            themeMenuItem.DropDownItems.Add(item);
+            return item;
+        }, () => {
+            _settings.SetValue("theme", Theme.IsAutoThemeEnabled ? "auto" : Theme.Current.Id);
+        }, _settings.GetValue("theme", "auto"), "OpenHardwareMonitor.Resources.themes");
+        currentItem?.PerformClick();
+        Theme.Current.Apply(this);
     }
 
     private void InsertSorted(IList<Node> nodes, HardwareNode node)
@@ -970,10 +926,10 @@ public sealed partial class MainForm : Form
         {
             SysTrayHideShow();
         }
-        else if (m.Msg == WinApiHelper.WM_WININICHANGE && Marshal.PtrToStringUni(m.LParam) == "ImmersiveColorSet" && _autoThemeMenuItem?.Checked == true)
-        {
-            Theme.SetAutoTheme();
-        }
+        //else if (m.Msg == WinApiHelper.WM_WININICHANGE && Marshal.PtrToStringUni(m.LParam) == "ImmersiveColorSet" && Theme.IsAutoThemeEnabled)
+        //{
+        //    Theme.SetAutoTheme();
+        //}
         else if (_minimizeOnClose.Value && m.Msg == WinApiHelper.WM_SYS_COMMAND && m.WParam.ToInt64() == WinApiHelper.SC_CLOSE)
         {
             //Apparently the user wants to minimize rather than close
