@@ -19,13 +19,15 @@ internal static class MemoryLinux
                 float usedMemoryGb = totalMemoryGb - freeMemoryGb - cachedMemoryGb;
 
                 memory.PhysicalMemoryUsed.Value = usedMemoryGb;
-                memory.PhysicalMemoryAvailable.Value = totalMemoryGb;
+                memory.PhysicalMemoryTotal.Value = totalMemoryGb;
+                memory.PhysicalMemoryAvailable.Value = freeMemoryGb;
                 memory.PhysicalMemoryLoad.Value = 100.0f * (usedMemoryGb / totalMemoryGb);
             }
         }
         catch
         {
             memory.PhysicalMemoryUsed.Value = null;
+            memory.PhysicalMemoryTotal.Value = null;
             memory.PhysicalMemoryAvailable.Value = null;
             memory.PhysicalMemoryLoad.Value = null;
         }
@@ -43,13 +45,15 @@ internal static class MemoryLinux
                 float usedSwapMemoryGb = totalSwapMemoryGb - freeSwapMemoryGb;
 
                 memory.VirtualMemoryUsed.Value = usedSwapMemoryGb;
-                memory.VirtualMemoryAvailable.Value = totalSwapMemoryGb;
+                memory.VirtualMemoryTotal.Value = totalSwapMemoryGb;
+                memory.VirtualMemoryAvailable.Value = freeSwapMemoryGb;
                 memory.VirtualMemoryLoad.Value = 100.0f * (usedSwapMemoryGb / totalSwapMemoryGb);
             }
         }
         catch
         {
             memory.VirtualMemoryUsed.Value = null;
+            memory.VirtualMemoryTotal.Value = null;
             memory.VirtualMemoryAvailable.Value = null;
             memory.VirtualMemoryLoad.Value = null;
         }

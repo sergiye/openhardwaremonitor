@@ -35,8 +35,8 @@ internal class MemoryGroup : IGroup
 
     public MemoryGroup(ISettings settings)
     {
-        _hardware.Add(new VirtualMemory(settings));
         _hardware.Add(new TotalMemory(settings));
+        _hardware.Add(new VirtualMemory(settings));
 
         //No RAM detected
         if (!DetectThermalSensors(out List<SPDAccessor> accessors))
