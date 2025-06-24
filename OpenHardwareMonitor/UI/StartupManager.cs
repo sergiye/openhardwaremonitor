@@ -15,20 +15,6 @@ namespace OpenHardwareMonitor.UI
         private bool _startup;
         private const string REGISTRY_RUN = @"Software\Microsoft\Windows\CurrentVersion\Run";
 
-        public bool IsAdministrator()
-        {
-            try
-            {
-                WindowsIdentity identity = WindowsIdentity.GetCurrent();
-                WindowsPrincipal principal = new(identity);
-                return principal.IsInRole(WindowsBuiltInRole.Administrator);
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
         public StartupManager()
         {
             if (OperatingSystemHelper.IsUnix)
@@ -38,7 +24,7 @@ namespace OpenHardwareMonitor.UI
                 return;
             }
 
-            if (IsAdministrator())
+            if (OperatingSystemHelper.IsAdministrator())
             {
                 try
                 {

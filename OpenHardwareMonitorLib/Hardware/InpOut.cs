@@ -194,13 +194,9 @@ internal static class InpOut
             if (stream != null)
             {
                 using FileStream target = new(filePath, FileMode.Create);
-
-                stream.Position = 1; // Skip first byte.
-
+                //stream.Position = 1; // Skip first byte.
                 using var gzipStream = new GZipStream(stream, CompressionMode.Decompress);
-
                 gzipStream.CopyTo(target);
-
                 requiredLength = target.Length;
             }
         }

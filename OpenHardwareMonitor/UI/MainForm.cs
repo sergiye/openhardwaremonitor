@@ -197,7 +197,7 @@ public sealed partial class MainForm : Form
             }
         };
 
-        if (_startupManager.IsAdministrator())
+        if (OperatingSystemHelper.IsAdministrator())
         {
             _readMainboardSensors = new UserOption("mainboardMenuItem", true, mainboardMenuItem, _settings);
             _readMainboardSensors.Changed += delegate { _computer.IsMotherboardEnabled = _readMainboardSensors.Value; };

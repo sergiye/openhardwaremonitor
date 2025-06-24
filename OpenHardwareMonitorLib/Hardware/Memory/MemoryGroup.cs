@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Timers;
+using System.Threading.Tasks;
 using RAMSPDToolkit.I2CSMBus;
 using RAMSPDToolkit.SPD;
 using RAMSPDToolkit.SPD.Enums;
@@ -13,19 +13,15 @@ internal class MemoryGroup : IGroup
 {
     //Retry 12x
     private const int RetryCount = 12;
-
     //Retry every 2.5 seconds
-    private const double RetryTime = 2500;
+    private const int RetryTime = 2500;
     private static readonly object _lock = new();
 
     private readonly List<Hardware> _hardware = [];
-    private int _elapsedCounter;
-
-    private Timer _timer;
 
     static MemoryGroup()
     {
-        if (Ring0.IsOpen)
+        if (OperatingSystemHelper.IsAdministrator() && Ring0.IsOpen)
         {
             //Assign implementation of IDriver
             DriverManager.Driver = new RAMSPDToolkitDriver(Ring0.KernelDriver);
@@ -38,30 +34,23 @@ internal class MemoryGroup : IGroup
         _hardware.Add(new TotalMemory(settings));
         _hardware.Add(new VirtualMemory(settings));
 
-        //No RAM detected
-        if (!DetectThermalSensors(out List<SPDAccessor> accessors))
+        if (OperatingSystemHelper.IsAdministrator())
         {
-            //Retry a couple of times
-            //SMBus might not be detected right after boot
-            _timer = new Timer(RetryTime);
-
-            _timer.Elapsed += (_, _) =>
+            Task.Run(async () =>
             {
-                if (_elapsedCounter++ >= RetryCount || DetectThermalSensors(out accessors))
+                var _elapsedCounter = 0;
+                while (true)
                 {
-                    _timer.Stop();
-                    _timer = null;
-
-                    if (accessors != null)
-                        AddDimms(accessors, settings);
+                    //SMBus might not be detected right after boot
+                    if (DetectThermalSensors(out var accessors) || _elapsedCounter++ >= RetryCount)
+                    {
+                        if (accessors != null)
+                            AddDimms(accessors, settings);
+                        break;
+                    }
+                    await Task.Delay(RetryTime);
                 }
-            };
-
-            _timer.Start();
-        }
-        else
-        {
-            AddDimms(accessors, settings);
+            });
         }
     }
 
