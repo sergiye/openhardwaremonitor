@@ -1,5 +1,8 @@
 *.user
 *.suo
-Bin/
-Obj/
+[Bb]in/
+[Oo]bj/
+.idea/
 .vs/
+packages/
+FodyWeavers.xsd
