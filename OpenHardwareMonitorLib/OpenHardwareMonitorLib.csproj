@@ -40,10 +40,6 @@
     <OutputPath>..\bin\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\common\sergiye.Common\ISettings.cs" Link="common\ISettings.cs" />
-    <Compile Include="..\..\common\sergiye.Common\OperatingSystemHelper.cs" Link="common\OperatingSystemHelper.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packageicon.png" Pack="true" PackagePath="" />
     <None Include="..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
@@ -59,6 +55,7 @@
     <PackageReference Include="System.IO.FileSystem.AccessControl" Version="5.0.0" />
     <PackageReference Include="System.Management" Version="9.0.6" />
     <PackageReference Include="RAMSPDToolkit-NDD" Version="1.1.4" />
+    <PackageReference Include="sergiye.Common" Version="1.*" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
   </ItemGroup>

@@ -11,6 +11,7 @@ using OpenHardwareMonitor.Hardware;
 using OpenHardwareMonitor.Hardware.Storage;
 using OpenHardwareMonitor.Utilities;
 using OpenHardwareMonitor.WMI;
+using Logger = OpenHardwareMonitor.Utilities.Logger;
 
 namespace OpenHardwareMonitor.UI;
 
