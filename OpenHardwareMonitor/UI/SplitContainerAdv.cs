@@ -22,11 +22,7 @@ public class SplitContainerAdv : SplitContainer
     protected override void OnPaint(PaintEventArgs e)
     {
         base.OnPaint(e);
-        Graphics g = e.Graphics;
-        Rectangle r = SplitterRectangle;
-
-        using (SolidBrush brush = new SolidBrush(_mouseOver ? Theme.Current.SplitterHoverColor : Theme.Current.SplitterColor))
-            g.FillRectangle(brush, r);
+        e.Graphics.FillRectangle(_mouseOver ? Theme.SelectedBackBrush : Theme.BackgroundBrush, SplitterRectangle);
     }
 
     protected override void OnKeyDown(KeyEventArgs e)

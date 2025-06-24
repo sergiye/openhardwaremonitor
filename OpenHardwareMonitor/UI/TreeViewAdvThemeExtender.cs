@@ -8,39 +8,32 @@ namespace OpenHardwareMonitor.UI
     {
         internal static void SubscribeToThemes()
         {
-            Theme.OnCurrentChanged += () => { AssignRendersTheme(Theme.Current); };
+            Theme.OnCurrentChanged += () => { AssignRendersTheme(); };
             Theme.OnApplyToControl += (control, theme) => {
                 if (control is TreeViewAdv treeView)
                 {
-                    treeView.BackColor = theme.TreeBackgroundColor;
-                    treeView.ForeColor = theme.TreeTextColor;
-                    treeView.LineColor = theme.TreeOutlineColor;
+                    treeView.BackColor = theme.BackgroundColor;
+                    treeView.ForeColor = theme.ForegroundColor;
+                    treeView.LineColor = theme.ForegroundColor;
                     return true;
                 }
                 return false;
             };
         }
 
-        internal static void AssignRendersTheme(Theme current)
+        internal static void AssignRendersTheme()
         {
             TreeViewAdv.CustomPlusMinusRenderFunc = (g, rect, isExpanded) =>
             {
                 int x = rect.Left;
                 int y = rect.Top + 5;
                 int size = 8;
-                using (Brush brush = new SolidBrush(current.BackgroundColor))
+                g.FillRectangle(Theme.BackgroundBrush, x - 1, y - 1, size + 4, size + 4);
+                g.DrawRectangle(Theme.ForegroundPen, x, y, size, size);
+                g.DrawLine(Theme.ForegroundPen, x + 2, y + size / 2, x + size - 2, y + size / 2);
+                if (!isExpanded)
                 {
-                    g.FillRectangle(brush, x - 1, y - 1, size + 4, size + 4);
-                }
-                using (Pen pen = new Pen(current.TreeOutlineColor))
-                {
-
-                    g.DrawRectangle(pen, x, y, size, size);
-                    g.DrawLine(pen, x + 2, y + size / 2, x + size - 2, y + size / 2);
-                    if (!isExpanded)
-                    {
-                        g.DrawLine(pen, x + size / 2, y + 2, x + size / 2, y + size - 2);
-                    }
+                    g.DrawLine(Theme.ForegroundPen, x + size / 2, y + 2, x + size / 2, y + size - 2);
                 }
             };
 
@@ -49,46 +42,34 @@ namespace OpenHardwareMonitor.UI
                 int x = rect.Left;
                 int y = rect.Top + 1;
                 int size = 12;
-                using (Brush brush = new SolidBrush(current.BackgroundColor))
+                g.FillRectangle(Theme.BackgroundBrush, x - 1, y - 1, 12, 12);
+                g.DrawRectangle(Theme.ForegroundPen, x, y, size, size);
+                if (isChecked)
                 {
-                    g.FillRectangle(brush, x - 1, y - 1, 12, 12);
-                }
-                using (Pen pen = new Pen(current.TreeOutlineColor))
-                {
-                    g.DrawRectangle(pen, x, y, size, size);
-                    if (isChecked)
-                    {
-                        x += 3;
-                        y += 3;
-                        g.DrawLine(pen, x, y + 3, x + 2, y + 5);
-                        g.DrawLine(pen, x + 2, y + 5, x + 6, y + 1);
-                        g.DrawLine(pen, x, y + 4, x + 2, y + 6);
-                        g.DrawLine(pen, x + 2, y + 6, x + 6, y + 2);
-                    }
+                    x += 3;
+                    y += 3;
+                    g.DrawLine(Theme.ForegroundPen, x, y + 3, x + 2, y + 5);
+                    g.DrawLine(Theme.ForegroundPen, x + 2, y + 5, x + 6, y + 1);
+                    g.DrawLine(Theme.ForegroundPen, x, y + 4, x + 2, y + 6);
+                    g.DrawLine(Theme.ForegroundPen, x + 2, y + 6, x + 6, y + 2);
                 }
             };
 
             TreeViewAdv.CustomColumnBackgroundRenderFunc = (g, rect, isPressed, isHot) =>
             {
-                using (Brush brush = new SolidBrush(current.TreeBackgroundColor))
-                {
-                    g.FillRectangle(brush, rect);
-                }
-                using (Pen pen = new Pen(current.TreeRowSeparatorColor))
-                {
-                    g.DrawLine(pen, rect.Left, rect.Top, rect.Right, rect.Top);
-                    g.DrawLine(pen, rect.Left, rect.Top + 1, rect.Right, rect.Top + 1);
-                }
+                g.FillRectangle(Theme.BackgroundBrush, rect);
+                g.DrawLine(Theme.LinePen, rect.Left, rect.Top, rect.Right, rect.Top);
+                g.DrawLine(Theme.LinePen, rect.Left, rect.Top + 1, rect.Right, rect.Top + 1);
             };
 
             TreeViewAdv.CustomColumnTextRenderFunc = (g, rect, font, text) =>
             {
-                TextRenderer.DrawText(g, text, font, rect, current.TreeTextColor, TextFormatFlags.Left);
+                TextRenderer.DrawText(g, text, font, rect, Theme.Current.ForegroundColor, TextFormatFlags.Left);
             };
 
-            TreeViewAdv.CustomHorizontalLinePen = new Pen(current.TreeRowSeparatorColor);
-            TreeViewAdv.CustomSelectedRowBrush = new SolidBrush(current.TreeSelectedBackgroundColor);
-            TreeViewAdv.CustomSelectedTextColor = current.TreeSelectedTextColor;
+            TreeViewAdv.CustomHorizontalLinePen = Theme.LinePen;
+            TreeViewAdv.CustomSelectedRowBrush = Theme.SelectedBackBrush;
+            TreeViewAdv.CustomSelectedTextColor = Theme.Current.SelectedForegroundColor;
         }
     }
 }
