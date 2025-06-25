@@ -264,6 +264,7 @@ namespace OpenHardwareMonitor.UI
       //
       this.resetMenuItem.Name = "resetMenuItem";
       this.resetMenuItem.Size = new System.Drawing.Size(152, 22);
+      this.resetMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R;
       this.resetMenuItem.Text = "Reset";
       this.resetMenuItem.Click += new System.EventHandler(this.ResetClick);
       //
@@ -346,6 +347,7 @@ namespace OpenHardwareMonitor.UI
       //
       this.exitMenuItem.Name = "exitMenuItem";
       this.exitMenuItem.Size = new System.Drawing.Size(152, 22);
+      this.exitMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W;
       this.exitMenuItem.Text = "Exit";
       this.exitMenuItem.Click += new System.EventHandler(this.ExitClick);
       //
@@ -861,6 +863,7 @@ namespace OpenHardwareMonitor.UI
       //
       this.menuItemSite.Name = "menuItemSite";
       this.menuItemSite.Size = new System.Drawing.Size(170, 22);
+      this.menuItemSite.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F1;
       this.menuItemSite.Text = "Site";
       this.menuItemSite.Click += new System.EventHandler(this.menuItemSite_Click);
       //
@@ -868,6 +871,7 @@ namespace OpenHardwareMonitor.UI
       //
       this.menuItemCheckUpdates.Name = "menuItemCheckUpdates";
       this.menuItemCheckUpdates.Size = new System.Drawing.Size(170, 22);
+      this.menuItemCheckUpdates.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.U;
       this.menuItemCheckUpdates.Text = "Check for updates";
       this.menuItemCheckUpdates.Click += new System.EventHandler(this.menuItemCheckUpdates_Click);
       //
@@ -875,6 +879,7 @@ namespace OpenHardwareMonitor.UI
       //
       this.aboutMenuItem.Name = "aboutMenuItem";
       this.aboutMenuItem.Size = new System.Drawing.Size(170, 22);
+      this.aboutMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
       this.aboutMenuItem.Text = "About";
       this.aboutMenuItem.Click += new System.EventHandler(this.AboutMenuItem_Click);
       //

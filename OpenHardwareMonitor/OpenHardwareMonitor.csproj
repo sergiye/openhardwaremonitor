@@ -8,7 +8,7 @@
     <ApplicationManifest>Resources\app.manifest</ApplicationManifest>
     <StartupObject>OpenHardwareMonitor.Program</StartupObject>
     <UseWindowsForms>true</UseWindowsForms>
-    <OutputPath>..\bin\</OutputPath>
+    <OutputPath>bin\</OutputPath>
 	  <LangVersion>latest</LangVersion>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>

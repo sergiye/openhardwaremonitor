@@ -32,11 +32,11 @@ jobs:
       #   with:
       #     name: OpenHardwareMonitor
       #     path: |
-      #       bin/OpenHardwareMonitor
+      #       OpenHardwareMonitor/bin/net472
 
       - name: Publish Lib build
         uses: actions/upload-artifact@v4
         with:
           name: OpenHardwareMonitorLib
           path: |
-            bin/OpenHardwareMonitorLib
+            OpenHardwareMonitorLib/bin
